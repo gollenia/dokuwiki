@@ -1,0 +1,75 @@
+<nav class="navbar position-fixed top-0 left-0 bg-white  right-0 w-100 navbar-expand-lg shadow-sm navbar-light bg-light">
+	<div class="container-fluid">
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="/dashboard">{{ __("dashboard")}}</a>
+				</li>
+
+				<li class="nav-item dropdown" x-data="{ open: false }">
+					<a class="nav-link dropdown-toggle" href="#" x-on:click="open = ! open">
+						{{ __('administration')}}
+					</a>
+					<ul class="dropdown-menu" :class="open ? 'show' : ''">
+						{% set admin_menu_items = admin_menu() %}
+						{% for item in admin_menu_items.admin %}
+							<li>
+								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}">{{  item.prompt }}</a>
+							</li>
+						{% endfor %}
+						{% for item in admin_menu_items.manager %}
+							<li>
+								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}">{{  item.prompt }}</a>
+							</li>
+						{% endfor %}
+						<hr class="dropdown-divider">
+						{% for item in admin_menu_items.other %}
+							<li>
+								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}">{{  item.prompt }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</li>
+			</li>
+			<li class="nav-item dropdown" x-data="{ open: false }">
+				<a class="nav-link dropdown-toggle" href="#" x-on:click="open = ! open">
+					{{ __('settings') }}
+				</a>
+				<ul class="dropdown-menu" :class="open ? 'show' : ''">
+					<li>
+						<a class="dropdown-item" href="/system/menu">{{ __("set_menu")}}</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="/system/footer">{{ __("set_footer")}}</a>
+					</li>
+				</ul>
+			</li>
+
+
+		</ul>
+		<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+			<li>
+				<form class="d-flex mb-0">
+					<input class="form-control search-input me-2" type="search" placeholder="{{ lang.btn_search }}" aria-label="Search">
+				</form>
+			</li>
+			<li class="nav-item dropdown" x-data="{ open: false }">
+				<a class="nav-link profile" :class="open ? 'bg-primary text-white' : ''" href="#" x-on:click="open = ! open">
+					<i class="material-icons">person</i>
+				</a>
+				<ul class="dropdown-menu  end-0 " :class="open ? 'show' : ''" aria-labelledby="profileDropdown">
+					<li>
+						<a class="dropdown-item" href="#">{{ lang.btn_profile }}</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="#">{{ lang.btn_logout }}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div></nav>

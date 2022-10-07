@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="{{conf.lang}}" dir="{{lang.direction}}">
+
+	{% include "partials/head.twig" with {'colors': colors} %}
+
+	<body class="{{tld}} {{ tpl_classes }} {{ metadata.subject|join(" ") }}">
+
+		{% include "partials/sidebar.twig" with {'menu': menu} %}
+		{% include "partials/menu.twig" with {'menu': menu} %}
+		<main class="wrapper flex-grow-1 p-5">
+
+
+			<article class="bg-gray-100 ">
+
+				<section>
+					<div class="content container">
+						{{tpl_content()|raw}}
+					</div>
+				</section>
+				<div class="clear-both"></div>
+
+			</article>
+
+
+		</ma>
+		<script>
+			DOKU_TPL = "{{ tpl_basedir }}";
+		</script>
+		<script src="{{tpl_basedir}}/public/js/main.js" type="text/javascript"></script>
+		{{ tpl_indexerWebBug() }}
+	</body>
+</html>

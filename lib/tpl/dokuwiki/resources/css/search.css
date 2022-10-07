@@ -1,0 +1,29 @@
+.search_fullpage_result .meta {
+    @apply text-xs text-gray-500;
+}
+
+.search_fullpage_result dt a.wikilink1 {
+    @apply text-lg font-bold;
+}
+
+.search_fullpage_result dt a.wikilink1 + a {
+    display: none;
+}
+
+.search_fullpage_result {
+    @apply py-4
+}
+
+h1#suche {
+    display: none;
+}
+
+#qsearch__in {
+    background: transparent !important;
+    @apply text-white md:text-black;
+}
+
+#qsearch__in:focus + .search-icon {
+    background: transparent !important;
+    @apply text-primary;
+}

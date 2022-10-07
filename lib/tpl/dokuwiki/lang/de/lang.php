@@ -3,15 +3,24 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jürgen Fredriksson <jfriedrich@gmx.at>
- * @author Anika Henke <anika@selfthinker.org>
+ * @author Thomas Gollenia 
  */
-$lang['__background_site__']   = 'Farbe für den Seitenhintergrund (hinter dem Inhaltsbereich)';
-$lang['__link__']              = 'Allgemeine Linkfarbe';
-$lang['__existing__']          = 'Farbe für Links zu existierenden Seiten';
-$lang['__missing__']           = 'Farbe für Links zu nicht-existierenden Seiten';
-$lang['__site_width__']        = 'Breite der ganzen Seite (kann eine beliebige Längeneinheit sein: %, px, em, ...)';
-$lang['__sidebar_width__']     = 'Breite der Seitenleiste, falls vorhanden (kann eine beliebige Längeneinheit sein: %, px, em, ...)';
-$lang['__tablet_width__']      = 'Unter dieser Fensterbreite wechselt die Seite in den Tabletmodus';
-$lang['__phone_width__']       = 'Unter dieser Fensterbreite wechselt die Seite in den Handymodus';
-$lang['__theme_color__']       = 'Farbschema der Webapplikation';
+$lang['administration'] = "Administration";
+$lang['settings'] = "Einstellungen";
+$lang['analytics'] = "Datenanalyse";
+$lang['set_menu'] = "Menü bearbeiten";
+$lang['set_footer'] = "Footer bearbeiten";
+
+$lang['dashboard'] = "Dashboard";
+$lang['accesses_ever'] = "Zugriffe insgesamt";
+$lang['downloads_ever'] = "Downloads insgesamt";
+$lang['access_month'] = "Zugriffe diesen Monat";
+$lang['this_year'] = "Dieses Jahr";
+$lang['access_world'] = "Weltweite Zugriffe";
+$lang['access_os'] = "Betriebssysteme";
+$lang['login'] = "Anmelden";
+$lang['enter_username'] = "Benutzername eingeben";
+$lang['enter_password'] = "Passwort eingeben";
+$lang['remember_me'] = "An mich erinnern";
+$lang['forgot_password'] = "Passwort vergessen?";
+$lang['welcome'] = "Willkommen!";

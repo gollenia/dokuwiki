@@ -1,0 +1,59 @@
+.menu-item {
+    @apply  text-white md:text-gray-900 text-xl md:text-lg flex flex-row items-center w-full px-4 py-4 md:py-1 font-semibold text-left bg-transparent md:rounded-tl-xl md:rounded-br-xl md:hover:bg-primary md:hover:text-primary-contrast md:w-auto md:flex md:mt-0 md:ml-4 cursor-pointer;
+}
+
+.menu-item .open {
+    transform: rotateX(180deg)
+}
+
+.bubble-menu {
+    @apply inline-block;
+    
+}
+
+.bubble-menu:hover > a {
+    @apply bg-primary text-primary-contrast;
+}
+
+.bubble-menu > a {
+    @apply bg-secondary relative leading-none -mb-3 z-40 rounded-full h-12 w-12 ml-4 flex justify-center items-center;
+}
+
+
+
+.bubble-submenu {
+    @apply shadow-md transform scale-y-0 py-4 origin-top rounded-b-full absolute ml-4 bg-white z-30  transition-all duration-300 ease-in-out;
+}
+
+.bubble-menu:hover .bubble-submenu {
+    @apply scale-y-100;
+}
+
+.bubble-submenu > a {
+    @apply flex items-center relative;
+}
+
+.bubble-submenu > a:hover .bubble-description {
+    @apply scale-x-100;
+}
+
+.bubble-submenu > a:hover .bubble-description, .bubble-submenu > a:hover .bubble-icon {
+    @apply bg-secondary;
+}
+
+.bubble-icon {
+    @apply mt-2 text-sm bg-white leading-none rounded-full mx-2 h-8 w-8 flex z-30 justify-center items-center;
+}
+
+.bubble-description {
+    @apply transform scale-x-0 origin-left transition-all duration-300 ease-in-out absolute whitespace-nowrap inline-block mt-2 rounded-r-full z-20 bg-secondary py-0 pr-2 ml-8 pl-6 text-sm
+}
+
+
+.breadcrumbs {
+    @apply absolute flex flex-row justify-end pt-4 top-0 right-0 mr-4 z-10
+}
+
+.breadcrumbs .item {
+    @apply text-xs bg-primary ml-2 px-2 py-1 text-primary-contrast transition ease-in-out transform hover:-translate-y-1
+}

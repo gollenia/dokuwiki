@@ -1,0 +1,8 @@
+{% if breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="/" class="item rounded-tl-md"><i class="text-xs material-icons">home</i></a>
+    {% for item in breadcrumbs %}
+        <a class="item {{ loop.last ? "rounded-br-md" }}" href="{{item.link}}">{{item.title}}</a>
+    {% endfor %}
+</div>
+{% endif %}

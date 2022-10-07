@@ -1,13 +1,20 @@
 <?php
 
-$lang['home'] = 'Home';
-// style.ini values
-$lang['__background_site__'] = 'Color for the very background (behind the content box)';
-$lang['__link__']     = 'The general link color';
-$lang['__existing__'] = 'The color for links to existing pages';
-$lang['__missing__']  = 'The color for links to non-existing pages';
-$lang['__site_width__']    = 'The width of the full site (can be any length unit: %, px, em, ...)';
-$lang['__sidebar_width__'] = 'The width of the sidebar, if any (can be any length unit: %, px, em, ...)';
-$lang['__tablet_width__']  = 'Below screensizes of this width, the site switches to tablet mode';
-$lang['__phone_width__']   = 'Below screensizes of this width, the site switches to phone mode';
-$lang['__theme_color__']   = 'Theme color of the web app';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Thomas Gollenia 
+ */
+$lang['dashboard'] = "Dashboard";
+$lang['accesses_ever'] = "All page accesses";
+$lang['downloads_ever'] = "All downloads";
+$lang['access_month'] = "All Accesses";
+$lang['this_year'] = "This year";
+$lang['access_world'] = "Worldwide accesses";
+$lang['access_os'] = "Operationg systems";
+$lang['login'] = "Login";
+$lang['enter_username'] = "Enter username";
+$lang['enter_password'] = "Enter password";
+$lang['remember_me'] = "Remember Me";
+$lang['forgot_password'] = "Forgot Password?";
+$lang['welcome'] = "Welcome!";

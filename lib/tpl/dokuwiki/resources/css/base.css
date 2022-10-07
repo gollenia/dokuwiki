@@ -1,0 +1,110 @@
+
+
+button, .button { @apply transition duration-300 ease-in-out relative rounded-tl-xl rounded-br-xl inline-block px-4 py-2 overflow-hidden inline-flex items-center; }
+.button-sm { @apply px-2 py-1 text-xs }
+.button-lg { @apply px-6 py-3 text-lg }
+
+.button::after {
+    content: " ";
+    @apply inset-0 absolute;
+    background-color: #00000011;
+    opacity: 0;
+    backdrop-filter: saturate(1.8);
+}
+.button.dark::after {
+    background-color: #ffffff11 !important;
+}
+
+.button.primary {
+    @apply bg-primary text-primary-contrast;
+}
+
+.button.secondary {
+    @apply bg-secondary text-secondary-contrast;
+}
+
+.button.minor {
+    @apply text-gray-400 hover:text-gray-800 hover:bg-gray-200;
+}
+
+.button:not(.outline):hover::after {
+    opacity: 1;
+}
+
+.button-group {
+    @apply flex justify-end;
+}
+
+.button i {
+    @apply pr-4; 
+}
+
+.button.outline.light:hover { color: #000000dd !important; }
+.button.outline.dark:hover { color: #ffffffdd !important; }
+
+.alert { @apply my-6 p-4 md:p-6 rounded-tl-md rounded-br-md text-white }
+
+.card { @apply flex transition transform overflow-hidden shadow-md m-0}
+.card.hover { @apply hover:shadow-2xl hover:scale-105 }
+.card.image-left { @apply flex-row items-center }
+.card.image-right { @apply flex-row-reverse items-center }
+.card.image-top { @apply flex-col }
+.card.image-bottom { @apply flex-col-reverse }
+.card.image-top img.card-image, card-image-bottom img.card-image { @apply object-cover h-64 w-full }
+.card.image-left img.card-image, card-image-right img.card-image { @apply object-cover w-64 self-stretch }
+.card-content  { @apply flex flex-col w-full flex-grow p-4 md:p-6 }
+.card.image-replacement { @apply h-64 w-full  bg-primary }
+.card.first { @apply rounded-tl-3xl}
+.card.last { @apply rounded-br-3xl}
+
+.description-item { @apply flex py-2 items-center }
+.description-item.img { @apply h-16 w-16 rounded-full mx-0 mr-4}
+
+section { @apply px-4 md:px-8 py-20 }
+section .content { @apply max-w-screen-xl mx-auto }
+
+.modal {
+    @apply absolute inset-0 bg-gray-800 bg-transparent grid bg-opacity-75 h-screen place-items-center;
+    backdrop-filter: blur(5px);
+}
+
+.modal .modal-window {
+    @apply w-3/4 bg-white rounded-tl-3xl rounded-br-3xl mx-auto; 
+}
+
+.modal-title {
+    @apply px-8 py-4 bg-primary text-primary-contrast;
+}
+
+.modal-content {
+    @apply px-8 py-8;
+}
+
+.modal-footer {
+    @apply px-8 py-4 bg-gray-200;
+}
+
+.box {
+    @apply my-10 p-4
+}
+
+.box.warning {
+    @apply bg-yellow-200 text-yellow-900
+}
+
+.box.info {
+    @apply bg-blue-200 text-blue-900
+}
+
+.box.error {
+    @apply bg-red-400 text-red-100
+}
+
+.box.tip {
+    @apply bg-gray-700 text-gray-100
+}
+
+.box.help {
+    @apply bg-green-200 text-green-900
+}
+

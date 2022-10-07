@@ -1,0 +1,19 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Contexis\\Core\\": "lib/Core",
+      "Contexis\\Core\\Utilities\\": "lib/Core/Utilities",
+      "Contexis\\Database\\": "lib/Database",
+      "Contexis\\Controllers\\": "lib/Controllers",
+      "Contexis\\Models\\": "lib/Models",
+      "Contexis\\Twig\\": "lib/Twig",
+      "Contexis\\Twig\\Functions\\": "lib/Twig/Functions",
+      "Contexis\\Twig\\Filters\\": "lib/Twig/Filters"
+    }
+  },
+  "require": {
+    "twig/twig": "^2.13",
+    "ozdemirburak/iris": "^2.1",
+    "twig/string-extra": "^3.3"
+  }
+}
