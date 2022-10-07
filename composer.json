@@ -16,7 +16,10 @@
         "marcusschwarz/lesserphp": "^0.5.1",
         "splitbrain/php-cli": "^1.1",
         "splitbrain/slika": "^1.0",
-        "kissifrot/php-ixr": "^1.8"
+        "kissifrot/php-ixr": "^1.8",
+		"twig/twig": "^2.13",
+    	"ozdemirburak/iris": "^2.1",
+    	"twig/string-extra": "^3.3"
     },
     "config": {
         "platform": {
