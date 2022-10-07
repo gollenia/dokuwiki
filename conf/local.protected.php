@@ -1,3 +1,3 @@
 <?php
 
-require_once('local.php');
+require_once('lang.php');
