@@ -16,8 +16,8 @@ class Page extends Controller
 
 	public function ajax_get()
 	{
-		header('Content-Type: application/json');
-		header("Access-Control-Allow-Origin: *");
+
+
 		global $ID;
 		$filter = key_exists('filter', $_REQUEST) ? array_flip(explode(",", $_REQUEST['filter'])) : [];
 		$id = !key_exists("id", $_REQUEST) || $_REQUEST['id'] == '' ? 'start' : $_REQUEST['id'];

@@ -22,7 +22,7 @@ class Pages extends Controller
 	 */
 	public function ajax_get(Input $request)
 	{
-		header('Content-Type: application/json');
+
 
 		$query = $request->str("query", "id");
 		$value = $request->str("value", "start");
@@ -44,7 +44,7 @@ class Pages extends Controller
 
 	public function ajax_get_tag(Input $request)
 	{
-		header('Content-Type: application/json');
+
 
 		$tag = $request->str("tag", "start");
 
