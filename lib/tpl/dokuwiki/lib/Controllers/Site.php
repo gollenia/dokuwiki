@@ -3,7 +3,7 @@
 namespace Contexis\Controllers;
 
 use Contexis\Core\Controller;
-
+use dokuwiki\Language;
 
 class Site extends Controller
 {
@@ -24,10 +24,10 @@ class Site extends Controller
 		return json_encode([
 			'menu' => array_merge(
 				\Contexis\Core\Menu::get("system:menu"),
-				['available_langs' => array_map('basename', glob($_SERVER['DOCUMENT_ROOT'] . '/data/*', GLOB_ONLYDIR)),]
+				['available_langs' => Language::get_available()]
 			),
 			"footer" => rawWiki("system:footer"),
-			"bible" => ["books" => \dokuwiki\plugin\bibleverse\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bibleverse\Bible::info($conf['lang'])]
+			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);
 	}
 }
