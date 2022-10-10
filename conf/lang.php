@@ -14,9 +14,9 @@ class Language
 	{
 		$available = self::get_available();
 
-		if (array_key_exists('lang', $_REQUEST) && in_array($_REQUEST['lang'], $available)) {
-			setcookie("lang", $_REQUEST['lang']);
-			return $_REQUEST['lang'];
+		if (array_key_exists('lang', $_GET) && in_array($_GET['lang'], $available)) {
+			setcookie("lang", $_GET['lang']);
+			return $_GET['lang'];
 		}
 
 		if (isset($_COOKIE["lang"]) && in_array($_COOKIE['lang'], $available)) {
@@ -34,8 +34,7 @@ class Language
 	static function get_available(): array
 	{
 		$available = array_map('basename', glob($_SERVER['DOCUMENT_ROOT'] . '/data/*', GLOB_ONLYDIR));
-
-		return array_values(array_diff($available, array("_template")));
+		return array_diff($available, array("_template"));
 	}
 }
 
