@@ -140,7 +140,7 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 		$controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'search_queries');
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_ajax_handler');
 		$controller->register_hook('DOKUWIKI_DONE', 'BEFORE', $this, '_add__data');
-		$controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'load_js');
+		//$controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'load_js');
 	}
 
 	function isQSfile()
@@ -375,7 +375,7 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 
 	function _add__data($event, $param)
 	{
-		if ($_REQUEST['controller'] != 'page') return;
+		if (array_key_exists('controller', $_REQUEST) && $_REQUEST['controller'] != 'page') return;
 		$this->add_data($event, 'event');
 	}
 
@@ -388,7 +388,7 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 	function add_data($event, $param)
 	{
 		global $ID;
-		global $ACT;
+
 		$xclpages = trim($this->getConf('xcl_pages'));
 		$xclpages = str_replace(',', '|', $xclpages);
 		$xclpages = str_replace('::', ':.*?', $xclpages);
@@ -540,6 +540,7 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 	{
 
 		if (!$ip) return null;
+		if ((substr($_SERVER['REMOTE_ADDR'], 0, 8) == "192.168.") || ($_SERVER['REMOTE_ADDR'] == "127.0.0.1")) return null;
 		//  $ip = '138.201.137.132';
 		$test = false;
 
@@ -557,6 +558,7 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 
 		if ($this->getConf('geoplugin')) {
 			$country_data = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $ip));
+			if (empty($country_data['geoplugin_countryCode'])) return null;
 			return (array('code' => $country_data['geoplugin_countryCode'], 'name' => $country_data['geoplugin_countryName']));
 		}
 
@@ -586,6 +588,8 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 		if (!isset($record)) {
 			return array();
 		}
+
+
 
 		return (array('code' => $record->country_code, 'name' => $record->country_name));
 	}
