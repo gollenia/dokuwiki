@@ -15,6 +15,7 @@
 /conf/*.local.conf
 /conf/acl.auth.php
 /conf/local.php
+!conf/local.protected.php
 /conf/users.auth.php
 /conf/user*.css
 /conf/user*.js
@@ -52,6 +53,8 @@
 !/lib/plugins/authpgsql
 !/lib/plugins/authpdo
 !/lib/plugins/authplain
+!/lib/plugins/bible
+!/lib/plugins/quickstats
 !/lib/plugins/config
 !/lib/plugins/extension
 !/lib/plugins/info
