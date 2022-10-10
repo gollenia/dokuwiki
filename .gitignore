@@ -54,6 +54,7 @@
 !/lib/plugins/authpdo
 !/lib/plugins/authplain
 !/lib/plugins/bible
+/lib/plugins/bible/data
 !/lib/plugins/quickstats
 !/lib/plugins/config
 !/lib/plugins/extension
