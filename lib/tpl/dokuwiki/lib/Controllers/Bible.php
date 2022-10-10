@@ -29,7 +29,7 @@ class Bible extends Controller implements ControllerInterface
 	public function ajax_books($request)
 	{
 		$lang = $request->str("lang", "en");
-		$bible = \dokuwiki\plugin\bibleverse\Book::findAll($lang);
+		$bible = \dokuwiki\plugin\bible\Book::findAll($lang);
 		return json_encode($bible);
 	}
 
@@ -38,7 +38,7 @@ class Bible extends Controller implements ControllerInterface
 	{
 		$query = $request->str("query", "");
 		$value = $request->str("value", "");
-		$bible = \dokuwiki\plugin\bibleverse\Book::where($query, $value);
+		$bible = \dokuwiki\plugin\bible\Book::where($query, $value);
 		return json_encode($bible);
 	}
 
@@ -48,7 +48,7 @@ class Bible extends Controller implements ControllerInterface
 		$book = $request->int("book", 10);
 		$chapter = $request->int("chapter", 1);
 
-		$bible = \dokuwiki\plugin\bibleverse\Book::find($book);
+		$bible = \dokuwiki\plugin\bible\Book::find($book);
 		if ($bible) {
 			return json_encode(count($bible->verses($chapter)));
 		}
@@ -63,7 +63,7 @@ class Bible extends Controller implements ControllerInterface
 			http_response_code(400);
 			return json_encode(false);
 		}
-		$bible = \dokuwiki\plugin\bibleverse\Book::findByName($search["book"]);
+		$bible = \dokuwiki\plugin\bible\Book::findByName($search["book"]);
 		if ($bible) {
 			http_response_code(200);
 			return json_encode([
@@ -84,7 +84,7 @@ class Bible extends Controller implements ControllerInterface
 		$chapter = $request->int("chapter", 1);
 		$verses =  $request->str("verses", "");
 		$lang = $request->str("lang", "");
-		$bible = \dokuwiki\plugin\bibleverse\Book::findByName($book, $lang);
+		$bible = \dokuwiki\plugin\bible\Book::findByName($book, $lang);
 		if ($bible) {
 			http_response_code(200);
 			return json_encode([
@@ -104,7 +104,7 @@ class Bible extends Controller implements ControllerInterface
 		$lang = $request->str("lang", "en");
 		$verses =  $request->str("verses", "");
 
-		$book = \dokuwiki\plugin\bibleverse\Book::find($book_id, $lang);
+		$book = \dokuwiki\plugin\bible\Book::find($book_id, $lang);
 
 		if ($book->id) {
 			http_response_code(200);

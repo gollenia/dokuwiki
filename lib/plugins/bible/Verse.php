@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\bibleverse;
+namespace dokuwiki\plugin\bible;
 
 use SQLite3;
 use PDO;
@@ -10,7 +10,7 @@ use PDO;
  * 
  * represents a single verse of a bible book in a chapter
  * 
- * @package bibleverse
+ * @package bible
  * @author Thomas Gollenia
  * @access 
  * @version 2.0

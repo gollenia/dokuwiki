@@ -1,7 +1,7 @@
-base   bibleverse
+base   bible
 author Thomas Gollenia
 email  thomas@kids-team.at
 date   2020-09-09
 name   Bible Plugin
-desc   Show bibleverses
+desc   Show bible
 url    http://shop.kids-team.local/doku.php?id=system:plugins:bible_verse

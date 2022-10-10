@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\bibleverse;
+namespace dokuwiki\plugin\bible;
 
 use SQLite3;
 
@@ -8,7 +8,7 @@ use SQLite3;
 /**
  * Represents a single book of the bible
  * 
- * @package bibleverse
+ * @package bible
  * @author Thomas Gollenia
  * @version 2.0
  */
