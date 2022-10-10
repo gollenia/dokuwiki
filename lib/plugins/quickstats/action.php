@@ -389,7 +389,6 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 	function add_data($event, $param)
 	{
 		global $ID;
-		var_dump('doing it');
 		$xclpages = trim($this->getConf('xcl_pages'));
 		$xclpages = str_replace(',', '|', $xclpages);
 		$xclpages = str_replace('::', ':.*?', $xclpages);
