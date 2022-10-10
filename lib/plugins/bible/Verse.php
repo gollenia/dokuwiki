@@ -80,6 +80,7 @@ class Verse
 
 		$query = $statement->execute();
 
+
 		$result = [];
 
 		while ($row = $query->fetchArray()) {
