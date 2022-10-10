@@ -375,7 +375,8 @@ class action_plugin_quickstats extends \dokuwiki\Extension\ActionPlugin
 
 	function _add__data($event, $param)
 	{
-		if (!array_key_exists('controller', $_REQUEST) && $_REQUEST['controller'] != 'page') return;
+
+		if ($_REQUEST['controller'] != 'page') return;
 		$this->add_data($event, 'event');
 	}
 
