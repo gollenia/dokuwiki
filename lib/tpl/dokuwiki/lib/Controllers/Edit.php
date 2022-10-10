@@ -37,7 +37,7 @@ class Edit extends Controller implements ControllerInterface
 	public function ajax_save(Input $request)
 	{
 		$data = json_decode($request->str("page"));
-		$page = Page::findOrNew($_REQUEST['id']);
+		$page = Page::findOrNew($_GET['id']);
 		$page->content = cleanText($data->content);
 		$page->abstract = cleanText($data->abstract);
 		$page->tags =  $data->tags;
@@ -49,7 +49,7 @@ class Edit extends Controller implements ControllerInterface
 		$page->template = cleanText($data->template);
 		$page->title = cleanText($data->title);
 		$result = $page->save();
-		return json_encode(['request' => $_REQUEST, 'page' => $result]);
+		return json_encode(['request' => $_GET, 'page' => $result]);
 	}
 
 	public function ajax_list(Input $request)

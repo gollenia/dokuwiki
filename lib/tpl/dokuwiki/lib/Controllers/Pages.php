@@ -27,7 +27,7 @@ class Pages extends Controller
 		$query = $request->str("query", "id");
 		$value = $request->str("value", "start");
 
-		$filter = key_exists('filter', $_REQUEST) ? array_flip(explode(",", $_REQUEST['filter'])) : [];
+		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
 		$pages = \Contexis\Models\Page::where($query, $value, $filter);
 		if (empty($filter)) {
 			return json_encode($pages);
@@ -48,7 +48,7 @@ class Pages extends Controller
 
 		$tag = $request->str("tag", "start");
 
-		$filter = key_exists('filter', $_REQUEST) ? array_flip(explode(",", $_REQUEST['filter'])) : [];
+		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
 		$pages = \Contexis\Models\Page::where('tag', $tag, $filter);
 		if (empty($filter)) {
 			return json_encode(['articles' => $pages, 'root' => \Contexis\Models\Page::find('tag:' . $tag)]);

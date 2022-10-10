@@ -19,13 +19,13 @@ class Page extends Controller
 
 
 		global $ID;
-		$filter = key_exists('filter', $_REQUEST) ? array_flip(explode(",", $_REQUEST['filter'])) : [];
-		$id = !key_exists("id", $_REQUEST) || $_REQUEST['id'] == '' ? 'start' : $_REQUEST['id'];
+		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
+		$id = !key_exists("id", $_GET) || $_GET['id'] == '' ? 'start' : $_GET['id'];
 		$page = \Contexis\Models\Page::find($ID, $filter);
 		if (!$page->exists()) {
 			$page = \Contexis\Models\Page::find('system:de:notfound');
 		}
-		//if (array_key_exists('render', $_REQUEST)) $page->render();
+		//if (array_key_exists('render', $_GET)) $page->render();
 		$tmp = array(); // No event data
 
 		return json_encode($page);

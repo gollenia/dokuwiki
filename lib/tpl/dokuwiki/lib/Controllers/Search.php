@@ -29,8 +29,8 @@ class Search extends Controller
 
 		global $INPUT;
 
-		if (!key_exists('q', $_REQUEST)) return json_encode(["items" => $this->result, "categories" => [], "didyoumean" => $this->didyoumean]);
-		$this->query = $_REQUEST['q'];
+		if (!key_exists('q', $_GET)) return json_encode(["items" => $this->result, "categories" => [], "didyoumean" => $this->didyoumean]);
+		$this->query = $_GET['q'];
 
 		$tags = Tag::getAllTags();
 
@@ -57,7 +57,7 @@ class Search extends Controller
 		header("Access-Control-Allow-Origin: *");
 
 		global $INPUT;
-		$query = $_REQUEST['q'];
+		$query = $_GET['q'];
 		$after = $INPUT->str('min');
 		$before = $INPUT->str('max');
 		$pageLookupResults = ft_pageLookup($query, true, useHeading('navigation'), $after, $before);

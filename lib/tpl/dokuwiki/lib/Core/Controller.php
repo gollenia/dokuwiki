@@ -49,8 +49,6 @@ class Controller implements ControllerInterface
 	{
 
 		global $INPUT;
-
-
 		if (!empty($INPUT->str('controller', ''))) {
 
 			$controllerName = ucfirst($INPUT->str('controller'));
@@ -73,7 +71,7 @@ class Controller implements ControllerInterface
 			}
 			$controller = new $route($site);
 			echo $controller->render();
-			if (!array_key_exists("rest", $_REQUEST)) tpl_indexerWebBug();
+			if (!array_key_exists("rest", $_GET)) tpl_indexerWebBug();
 		}
 	}
 }

@@ -517,6 +517,3 @@ function display_post_data() {
    
    exit;
 }
-?>
-
-
