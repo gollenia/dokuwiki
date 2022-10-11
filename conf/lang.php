@@ -34,7 +34,7 @@ class Language
 	static function get_available(): array
 	{
 		$available = array_map('basename', glob($_SERVER['DOCUMENT_ROOT'] . '/data/*', GLOB_ONLYDIR));
-		return array_diff($available, array("_template"));
+		return array_values(array_diff($available, array("_template")));
 	}
 }
 
