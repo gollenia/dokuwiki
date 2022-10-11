@@ -1,4 +1,4 @@
-base     kids-team
+base     dokuwiki
 author   Thomas Gollenia
 email    thomas@gollenia.at
 date     2020-08-31
