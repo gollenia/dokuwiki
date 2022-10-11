@@ -1,4 +1,5 @@
 <?php
+
 /**
  * english language file
  *
@@ -92,7 +93,7 @@ $lang['useacl']      = 'Use access control lists';
 $lang['autopasswd']  = 'Autogenerate passwords';
 $lang['authtype']    = 'Authentication backend';
 $lang['passcrypt']   = 'Password encryption method';
-$lang['defaultgroup']= 'Default group, all new users will be placed in this group';
+$lang['defaultgroup'] = 'Default group, all new users will be placed in this group';
 $lang['superuser']   = 'Superuser - group, user or comma separated list user1,@group1,user2 with full access to all pages and functions regardless of the ACL settings';
 $lang['manager']     = 'Manager - group, user or comma separated list user1,@group1,user2 with access to certain management functions';
 $lang['profileconfirm'] = 'Confirm profile changes with password';
@@ -111,11 +112,11 @@ $lang['remoteuser']  = 'Restrict remote API access to the comma separated groups
 $lang['remotecors']  = 'Enable Cross-Origin Resource Sharing (CORS) for the remote interfaces. Asterisk (*) to allow all origins. Leave empty to deny CORS.';
 
 /* Anti-Spam Settings */
-$lang['usewordblock']= 'Block spam based on wordlist';
+$lang['usewordblock'] = 'Block spam based on wordlist';
 $lang['relnofollow'] = 'Use rel="ugc nofollow" on external links';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
 $lang['mailguard']   = 'Obfuscate email addresses';
-$lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript or HTML code';
+$lang['iexssprotect'] = 'Check uploaded files for possibly malicious JavaScript or HTML code';
 
 /* Editing Settings */
 $lang['usedraft']    = 'Automatically save a draft while editing';
@@ -278,3 +279,4 @@ $lang['useheading_o_content'] = 'Wiki Content Only';
 $lang['useheading_o_1'] = 'Always';
 
 $lang['readdircache'] = 'Maximum age for readdir cache (sec)';
+$lang['default_lang']          = 'Standard Language';

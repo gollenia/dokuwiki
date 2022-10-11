@@ -232,3 +232,4 @@ $lang['useheading_o_navigation'] = 'Nur Navigation';
 $lang['useheading_o_content']  = 'Nur Wikiinhalt';
 $lang['useheading_o_1']        = 'Immer';
 $lang['readdircache']          = 'Maximales Alter des readdir-Caches (Sekunden)';
+$lang['default_lang']          = 'Standardsprache';
