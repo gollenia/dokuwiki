@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Metadata for configuration manager plugin
  *
@@ -82,97 +83,95 @@
 
 $meta['_basic']   = array('fieldset');
 $meta['title']    = array('string');
-$meta['start']    = array('string','_caution' => 'warning','_pattern' => '!^[^:;/]+$!'); // don't accept namespaces
-$meta['lang']     = array('dirchoice','_dir' => DOKU_INC.'inc/lang/');
-$meta['template'] = array('dirchoice','_dir' => DOKU_INC.'lib/tpl/','_pattern' => '/^[\w-]+$/');
+$meta['default_lang']  = array('multichoice', '_choices' => \dokuwiki\Language::get_available());
+$meta['template'] = array('dirchoice', '_dir' => DOKU_INC . 'lib/tpl/', '_pattern' => '/^[\w-]+$/');
 $meta['tagline']  = array('string');
 $meta['sidebar']  = array('string');
 $meta['license']  = array('license');
-$meta['savedir']  = array('savedir','_caution' => 'danger');
-$meta['basedir']  = array('string','_caution' => 'danger');
-$meta['baseurl']  = array('string','_caution' => 'danger');
-$meta['cookiedir'] = array('string','_caution' => 'danger');
-$meta['dmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
-$meta['fmode']    = array('numeric','_pattern' => '/0[0-7]{3,4}/'); // only accept octal representation
-$meta['allowdebug']  = array('onoff','_caution' => 'security');
+$meta['savedir']  = array('savedir', '_caution' => 'danger', '_code' => true);
+$meta['basedir']  = array('string', '_caution' => 'danger', '_placeholder' => DOKU_INC, '_code' => true);
+$meta['baseurl']  = array('string', '_caution' => 'danger', '_placeholder' => DOKU_URL, '_code' => true);
+$meta['cookiedir'] = array('string', '_caution' => 'danger', '_placeholder' => DOKU_BASE, '_code' => true);
+$meta['dmode']    = array('numeric', '_pattern' => '/0[0-7]{3,4}/', '_code' => true); // only accept octal representation
+$meta['fmode']    = array('numeric', '_pattern' => '/0[0-7]{3,4}/', '_code' => true); // only accept octal representation
+$meta['allowdebug']  = array('onoff', '_caution' => 'security');
 
 $meta['_display']    = array('fieldset');
 $meta['recent']      = array('numeric');
 $meta['recent_days'] = array('numeric');
-$meta['breadcrumbs'] = array('numeric','_min' => 0);
+$meta['breadcrumbs'] = array('numeric', '_min' => 0);
 $meta['youarehere']  = array('onoff');
-$meta['fullpath']    = array('onoff','_caution' => 'security');
-$meta['typography']  = array('multichoice','_choices' => array(0,1,2));
-$meta['dformat']     = array('string');
-$meta['signature']   = array('string');
+$meta['fullpath']    = array('onoff', '_caution' => 'security');
+$meta['typography']  = array('multichoice', '_choices' => array(0, 1, 2));
+$meta['dformat']     = array('string', '_code' => true);
+$meta['signature']   = array('string', '_code' => true);
 $meta['showuseras'] = array(
-    'multichoice',
-    '_choices' => array('loginname', 'username', 'username_link', 'email', 'email_link')
+	'multichoice',
+	'_choices' => array('loginname', 'username', 'username_link', 'email', 'email_link')
 );
-$meta['toptoclevel'] = array('multichoice','_choices' => array(1,2,3,4,5));   // 5 toc levels
-$meta['tocminheads'] = array('multichoice','_choices' => array(0,1,2,3,4,5,10,15,20));
-$meta['maxtoclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5));
-$meta['maxseclevel'] = array('multichoice','_choices' => array(0,1,2,3,4,5)); // 0 for no sec edit buttons
-$meta['camelcase']   = array('onoff','_caution' => 'warning');
-$meta['deaccent']    = array('multichoice','_choices' => array(0,1,2),'_caution' => 'warning');
-$meta['useheading']  = array('multichoice','_choices' => array(0,'navigation','content',1));
+$meta['toptoclevel'] = array('multichoice', '_choices' => array(1, 2, 3, 4, 5));   // 5 toc levels
+$meta['tocminheads'] = array('multichoice', '_choices' => array(0, 1, 2, 3, 4, 5, 10, 15, 20));
+$meta['maxtoclevel'] = array('multichoice', '_choices' => array(0, 1, 2, 3, 4, 5));
+$meta['maxseclevel'] = array('multichoice', '_choices' => array(0, 1, 2, 3, 4, 5)); // 0 for no sec edit buttons
+$meta['camelcase']   = array('onoff', '_caution' => 'warning');
+$meta['deaccent']    = array('multichoice', '_choices' => array(0, 1, 2), '_caution' => 'warning');
+$meta['useheading']  = array('multichoice', '_choices' => array(0, 'navigation', 'content', 1));
 $meta['sneaky_index'] = array('onoff');
 $meta['hidepages']   = array('regex');
 
 $meta['_authentication'] = array('fieldset');
-$meta['useacl']      = array('onoff','_caution' => 'danger');
+$meta['useacl']      = array('onoff', '_caution' => 'danger');
 $meta['autopasswd']  = array('onoff');
-$meta['authtype']    = array('authtype','_caution' => 'danger');
-$meta['passcrypt']   = array('multichoice','_choices' => array(
-    'smd5','md5','apr1','sha1','ssha','lsmd5','crypt','mysql','my411','kmd5','pmd5','hmd5',
-    'mediawiki','bcrypt','djangomd5','djangosha1','djangopbkdf2_sha1','djangopbkdf2_sha256',
-    'sha512','argon2i','argon2id'
+$meta['authtype']    = array('authtype', '_caution' => 'danger');
+$meta['passcrypt']   = array('multichoice', '_choices' => array(
+	'smd5', 'md5', 'apr1', 'sha1', 'ssha', 'lsmd5', 'crypt', 'mysql', 'my411', 'kmd5', 'pmd5', 'hmd5',
+	'mediawiki', 'bcrypt', 'djangomd5', 'djangosha1', 'djangopbkdf2_sha1', 'djangopbkdf2_sha256',
+	'sha512', 'argon2i', 'argon2id'
 ));
-$meta['defaultgroup']= array('string');
-$meta['superuser']   = array('string','_caution' => 'danger');
+$meta['defaultgroup'] = array('string');
+$meta['superuser']   = array('string', '_caution' => 'danger');
 $meta['manager']     = array('string');
 $meta['profileconfirm'] = array('onoff');
 $meta['rememberme'] = array('onoff');
 $meta['disableactions'] = array(
-    'disableactions',
-    '_choices' => array(
-        'backlink',
-        'index',
-        'recent',
-        'revisions',
-        'search',
-        'subscription',
-        'register',
-        'resendpwd',
-        'profile',
-        'profile_delete',
-        'edit',
-        'wikicode',
-        'check',
-        'rss'
-    ),
-    '_combine' => array(
-        'subscription' => array('subscribe', 'unsubscribe'),
-        'wikicode' => array('source', 'export_raw')
-    )
+	'disableactions',
+	'_choices' => array(
+		'backlink',
+		'index',
+		'recent',
+		'revisions',
+		'search',
+		'subscription',
+		'register',
+		'resendpwd',
+		'profile',
+		'profile_delete',
+		'edit',
+		'wikicode',
+		'check',
+		'rss'
+	),
+	'_combine' => array(
+		'subscription' => array('subscribe', 'unsubscribe'),
+		'wikicode' => array('source', 'export_raw')
+	)
 );
 $meta['auth_security_timeout'] = array('numeric');
 $meta['securecookie'] = array('onoff');
-$meta['remote']       = array('onoff','_caution' => 'security');
+$meta['remote']       = array('onoff', '_caution' => 'security');
 $meta['remoteuser']   = array('string');
-$meta['remotecors']   = array('string', '_caution' => 'security');
 
 $meta['_anti_spam']  = array('fieldset');
-$meta['usewordblock']= array('onoff');
+$meta['usewordblock'] = array('onoff');
 $meta['relnofollow'] = array('onoff');
 $meta['indexdelay']  = array('numeric');
-$meta['mailguard']   = array('multichoice','_choices' => array('visible','hex','none'));
-$meta['iexssprotect']= array('onoff','_caution' => 'security');
+$meta['mailguard']   = array('multichoice', '_choices' => array('visible', 'hex', 'none'));
+$meta['iexssprotect'] = array('onoff', '_caution' => 'security');
 
 $meta['_editing']    = array('fieldset');
 $meta['usedraft']    = array('onoff');
-$meta['htmlok']      = array('onoff','_caution' => 'security');
-$meta['phpok']       = array('onoff','_caution' => 'security');
+$meta['htmlok']      = array('onoff', '_caution' => 'security');
+$meta['phpok']       = array('onoff', '_caution' => 'security');
 $meta['locktime']    = array('numeric');
 $meta['cachetime']   = array('numeric');
 
@@ -185,9 +184,9 @@ $meta['target____windows']   = array('string');
 
 $meta['_media']      = array('fieldset');
 $meta['mediarevisions']  = array('onoff');
-$meta['gdlib']       = array('multichoice','_choices' => array(0,1,2));
+$meta['gdlib']       = array('multichoice', '_choices' => array(0, 1, 2));
 $meta['im_convert']  = array('im_convert');
-$meta['jpg_quality'] = array('numeric','_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)
+$meta['jpg_quality'] = array('numeric', '_pattern' => '/^100$|^[1-9]?[0-9]$/');  //(0-100)
 $meta['fetchsize']   = array('numeric');
 $meta['refcheck']    = array('onoff');
 
@@ -200,56 +199,47 @@ $meta['mailfrom']       = array('email', '_placeholders' => true);
 $meta['mailreturnpath']       = array('email', '_placeholders' => true);
 $meta['mailprefix']     = array('string');
 $meta['htmlmail']       = array('onoff');
-$meta['dontlog'] = array(
-    'disableactions',
-    '_choices' => array(
-        'error',
-        'debug',
-        'deprecated',
-    ),
-);
 
 $meta['_syndication'] = array('fieldset');
 $meta['sitemap']     = array('numeric');
-$meta['rss_type']    = array('multichoice','_choices' => array('rss','rss1','rss2','atom','atom1'));
-$meta['rss_linkto']  = array('multichoice','_choices' => array('diff','page','rev','current'));
-$meta['rss_content'] = array('multichoice','_choices' => array('abstract','diff','htmldiff','html'));
-$meta['rss_media']   = array('multichoice','_choices' => array('both','pages','media'));
+$meta['rss_type']    = array('multichoice', '_choices' => array('rss', 'rss1', 'rss2', 'atom', 'atom1'));
+$meta['rss_linkto']  = array('multichoice', '_choices' => array('diff', 'page', 'rev', 'current'));
+$meta['rss_content'] = array('multichoice', '_choices' => array('abstract', 'diff', 'htmldiff', 'html'));
+$meta['rss_media']   = array('multichoice', '_choices' => array('both', 'pages', 'media'));
 $meta['rss_update']  = array('numeric');
 $meta['rss_show_summary'] = array('onoff');
 $meta['rss_show_deleted'] = array('onoff');
 
 $meta['_advanced']   = array('fieldset');
 $meta['updatecheck'] = array('onoff');
-$meta['userewrite']  = array('multichoice','_choices' => array(0,1,2),'_caution' => 'danger');
+$meta['userewrite']  = array('multichoice', '_choices' => array(0, 1, 2), '_caution' => 'danger');
 $meta['useslash']    = array('onoff');
-$meta['sepchar']     = array('sepchar','_caution' => 'warning');
+$meta['sepchar']     = array('sepchar', '_caution' => 'warning');
 $meta['canonical']   = array('onoff');
-$meta['fnencode']    = array('multichoice','_choices' => array('url','safe','utf-8'),'_caution' => 'warning');
+$meta['fnencode']    = array('multichoice', '_choices' => array('url', 'safe', 'utf-8'), '_caution' => 'warning');
 $meta['autoplural']  = array('onoff');
 $meta['compress']    = array('onoff');
-$meta['cssdatauri']  = array('numeric','_pattern' => '/^\d+$/');
+$meta['cssdatauri']  = array('numeric', '_pattern' => '/^\d+$/');
 $meta['gzip_output'] = array('onoff');
 $meta['send404']     = array('onoff');
-$meta['compression'] = array('compression','_caution' => 'warning');
+$meta['compression'] = array('compression', '_caution' => 'warning');
 $meta['broken_iua']  = array('onoff');
-$meta['xsendfile']   = array('multichoice','_choices' => array(0,1,2,3),'_caution' => 'warning');
-$meta['renderer_xhtml'] = array('renderer','_format' => 'xhtml','_choices' => array('xhtml'),'_caution' => 'warning');
+$meta['xsendfile']   = array('multichoice', '_choices' => array(0, 1, 2, 3), '_caution' => 'warning');
+$meta['renderer_xhtml'] = array('renderer', '_format' => 'xhtml', '_choices' => array('xhtml'), '_caution' => 'warning');
 $meta['readdircache'] = array('numeric');
 $meta['search_nslimit'] = array('numeric', '_min' => 0);
-$meta['search_fragment'] = array('multichoice','_choices' => array('exact', 'starts_with', 'ends_with', 'contains'),);
+$meta['search_fragment'] = array('multichoice', '_choices' => array('exact', 'starts_with', 'ends_with', 'contains'),);
 $meta['trustedproxy'] = array('regex');
 
 $meta['_feature_flags'] = ['fieldset'];
 $meta['defer_js']       = ['onoff'];
-$meta['hidewarnings']   = ['onoff'];
 
 $meta['_network']    = array('fieldset');
 $meta['dnslookups']  = array('onoff');
-$meta['jquerycdn']   = array('multichoice', '_choices' => array(0,'jquery', 'cdnjs'));
-$meta['proxy____host'] = array('string','_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
+$meta['jquerycdn']   = array('multichoice', '_choices' => array(0, 'jquery', 'cdnjs'));
+$meta['proxy____host'] = array('string', '_pattern' => '#^(|[a-z0-9\-\.+]+)$#i');
 $meta['proxy____port'] = array('numericopt');
 $meta['proxy____user'] = array('string');
-$meta['proxy____pass'] = array('password','_code' => 'base64');
+$meta['proxy____pass'] = array('password', '_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
 $meta['proxy____except'] = array('string');
