@@ -5,159 +5,165 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_multicheckbox
  */
-class SettingMulticheckbox extends SettingString {
+class SettingMulticheckbox extends SettingString
+{
 
-    protected $choices = array();
-    protected $combine = array();
-    protected $other = 'always';
+	protected $choices = array();
+	protected $combine = array();
+	protected $other = 'always';
 
-    /** @inheritdoc */
-    public function update($input) {
-        if($this->isProtected()) return false;
+	/** @inheritdoc */
+	public function update($input)
+	{
+		if ($this->isProtected()) return false;
 
-        // split any combined values + convert from array to comma separated string
-        $input = ($input) ? $input : array();
-        $input = $this->array2str($input);
+		// split any combined values + convert from array to comma separated string
+		$input = ($input) ? $input : array();
+		$input = $this->array2str($input);
 
-        $value = is_null($this->local) ? $this->default : $this->local;
-        if($value == $input) return false;
+		$value = is_null($this->local) ? $this->default : $this->local;
+		if ($value == $input) return false;
 
-        if($this->pattern && !preg_match($this->pattern, $input)) {
-            $this->error = true;
-            $this->input = $input;
-            return false;
-        }
+		if ($this->pattern && !preg_match($this->pattern, $input)) {
+			$this->error = true;
+			$this->input = $input;
+			return false;
+		}
 
-        $this->local = $input;
-        return true;
-    }
+		$this->local = $input;
+		return true;
+	}
 
-    /** @inheritdoc */
-    public function html(\admin_plugin_config $plugin, $echo = false) {
+	/** @inheritdoc */
+	public function html(\admin_plugin_config $plugin, $echo = false)
+	{
 
-        $disable = '';
+		$disable = '';
 
-        if($this->isProtected()) {
-            $value = $this->protected;
-            $disable = 'disabled="disabled"';
-        } else {
-            if($echo && $this->error) {
-                $value = $this->input;
-            } else {
-                $value = is_null($this->local) ? $this->default : $this->local;
-            }
-        }
+		if ($this->isProtected()) {
+			$value = $this->protected;
+			$disable = 'disabled="disabled"';
+		} else {
+			if ($echo && $this->error) {
+				$value = $this->input;
+			} else {
+				$value = is_null($this->local) ? $this->default : $this->local;
+			}
+		}
 
-        $key = htmlspecialchars($this->key);
+		$key = htmlspecialchars($this->key);
 
-        // convert from comma separated list into array + combine complimentary actions
-        $value = $this->str2array($value);
-        $default = $this->str2array($this->default);
+		// convert from comma separated list into array + combine complimentary actions
+		$value = $this->str2array($value);
+		$default = $this->str2array($this->default);
 
-        $input = '';
-        foreach($this->choices as $choice) {
-            $idx = array_search($choice, $value);
-            $idx_default = array_search($choice, $default);
+		$input = '';
+		foreach ($this->choices as $choice) {
+			$idx = array_search($choice, $value);
+			$idx_default = array_search($choice, $default);
 
-            $checked = ($idx !== false) ? 'checked="checked"' : '';
+			$checked = ($idx !== false) ? 'checked="checked"' : '';
 
-            // @todo ideally this would be handled using a second class of "default"
-            $class = (($idx !== false) == (false !== $idx_default)) ? " selectiondefault" : "";
+			// @todo ideally this would be handled using a second class of "default"
+			$class = (($idx !== false) == (false !== $idx_default)) ? " selectiondefault" : "";
 
-            $prompt = ($plugin->getLang($this->key . '_' . $choice) ?
-                $plugin->getLang($this->key . '_' . $choice) : htmlspecialchars($choice));
+			$prompt = ($plugin->getLang($this->key . '_' . $choice) ?
+				$plugin->getLang($this->key . '_' . $choice) : htmlspecialchars($choice));
 
-            $input .= '<div class="selection' . $class . '">' . "\n";
-            $input .= '<label for="config___' . $key . '_' . $choice . '">' . $prompt . "</label>\n";
-            $input .= '<input id="config___' . $key . '_' . $choice . '" name="config[' . $key .
-                '][]" type="checkbox" class="checkbox" value="' . $choice . '" ' . $disable . ' ' . $checked . "/>\n";
-            $input .= "</div>\n";
+			$input .= '<div class="form-check' . $class . '">' . "\n";
 
-            // remove this action from the disabledactions array
-            if($idx !== false) unset($value[$idx]);
-            if($idx_default !== false) unset($default[$idx_default]);
-        }
+			$input .= '<input id="config___' . $key . '_' . $choice . '" name="config[' . $key .
+				'][]" type="checkbox" class="form-check-input" value="' . $choice . '" ' . $disable . ' ' . $checked . "/>\n";
+			$input .= '<label class="form-check-label" for="config___' . $key . '_' . $choice . '">' . $prompt . "</label>\n";
+			$input .= "</div>\n";
 
-        // handle any remaining values
-        if($this->other != 'never') {
-            $other = join(',', $value);
-            // test equivalent to ($this->_other == 'always' || ($other && $this->_other == 'exists')
-            // use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
-            if($this->other != 'exists' || $other) {
+			// remove this action from the disabledactions array
+			if ($idx !== false) unset($value[$idx]);
+			if ($idx_default !== false) unset($default[$idx_default]);
+		}
 
-                $class = (
-                    (count($default) == count($value)) &&
-                    (count($value) == count(array_intersect($value, $default)))
-                ) ?
-                    " selectiondefault" : "";
+		// handle any remaining values
+		if ($this->other != 'never') {
+			$other = join(',', $value);
+			// test equivalent to ($this->_other == 'always' || ($other && $this->_other == 'exists')
+			// use != 'exists' rather than == 'always' to ensure invalid values default to 'always'
+			if ($this->other != 'exists' || $other) {
 
-                $input .= '<div class="other' . $class . '">' . "\n";
-                $input .= '<label for="config___' . $key . '_other">' .
-                    $plugin->getLang($key . '_other') .
-                    "</label>\n";
-                $input .= '<input id="config___' . $key . '_other" name="config[' . $key .
-                    '][other]" type="text" class="edit" value="' . htmlspecialchars($other) .
-                    '" ' . $disable . " />\n";
-                $input .= "</div>\n";
-            }
-        }
-        $label = '<label>' . $this->prompt($plugin) . '</label>';
-        return array($label, $input);
-    }
+				$class = (
+					(count($default) == count($value)) &&
+					(count($value) == count(array_intersect($value, $default)))
+				) ?
+					" selectiondefault" : "";
 
-    /**
-     * convert comma separated list to an array and combine any complimentary values
-     *
-     * @param string $str
-     * @return array
-     */
-    protected function str2array($str) {
-        $array = explode(',', $str);
+				$input .= '<div class="other' . $class . '">' . "\n";
+				$input .= '<label for="config___' . $key . '_other">' .
+					$plugin->getLang($key . '_other') .
+					"</label>\n";
+				$input .= '<input id="config___' . $key . '_other" name="config[' . $key .
+					'][other]" type="text" class="edit" value="' . htmlspecialchars($other) .
+					'" ' . $disable . " />\n";
+				$input .= "</div>\n";
+			}
+		}
+		$label = '<label>' . $this->prompt($plugin) . '</label>';
+		return array($label, $input);
+	}
 
-        if(!empty($this->combine)) {
-            foreach($this->combine as $key => $combinators) {
-                $idx = array();
-                foreach($combinators as $val) {
-                    if(($idx[] = array_search($val, $array)) === false) break;
-                }
+	/**
+	 * convert comma separated list to an array and combine any complimentary values
+	 *
+	 * @param string $str
+	 * @return array
+	 */
+	protected function str2array($str)
+	{
+		$array = explode(',', $str);
 
-                if(count($idx) && $idx[count($idx) - 1] !== false) {
-                    foreach($idx as $i) unset($array[$i]);
-                    $array[] = $key;
-                }
-            }
-        }
+		if (!empty($this->combine)) {
+			foreach ($this->combine as $key => $combinators) {
+				$idx = array();
+				foreach ($combinators as $val) {
+					if (($idx[] = array_search($val, $array)) === false) break;
+				}
 
-        return $array;
-    }
+				if (count($idx) && $idx[count($idx) - 1] !== false) {
+					foreach ($idx as $i) unset($array[$i]);
+					$array[] = $key;
+				}
+			}
+		}
 
-    /**
-     * convert array of values + other back to a comma separated list, incl. splitting any combined values
-     *
-     * @param array $input
-     * @return string
-     */
-    protected function array2str($input) {
+		return $array;
+	}
 
-        // handle other
-        $other = trim($input['other']);
-        $other = !empty($other) ? explode(',', str_replace(' ', '', $input['other'])) : array();
-        unset($input['other']);
+	/**
+	 * convert array of values + other back to a comma separated list, incl. splitting any combined values
+	 *
+	 * @param array $input
+	 * @return string
+	 */
+	protected function array2str($input)
+	{
 
-        $array = array_unique(array_merge($input, $other));
+		// handle other
+		$other = trim($input['other']);
+		$other = !empty($other) ? explode(',', str_replace(' ', '', $input['other'])) : array();
+		unset($input['other']);
 
-        // deconstruct any combinations
-        if(!empty($this->combine)) {
-            foreach($this->combine as $key => $combinators) {
+		$array = array_unique(array_merge($input, $other));
 
-                $idx = array_search($key, $array);
-                if($idx !== false) {
-                    unset($array[$idx]);
-                    $array = array_merge($array, $combinators);
-                }
-            }
-        }
+		// deconstruct any combinations
+		if (!empty($this->combine)) {
+			foreach ($this->combine as $key => $combinators) {
 
-        return join(',', array_unique($array));
-    }
+				$idx = array_search($key, $array);
+				if ($idx !== false) {
+					unset($array[$idx]);
+					$array = array_merge($array, $combinators);
+				}
+			}
+		}
+
+		return join(',', array_unique($array));
+	}
 }
