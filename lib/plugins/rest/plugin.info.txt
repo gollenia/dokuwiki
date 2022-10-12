@@ -1,0 +1,9 @@
+base    rest
+author  Thomas Gollenia
+email   thomas@kids-team.at
+date 	2022-01-07
+name    REST API
+desc    Provide Data Models and REST API
+url     http://www.dokuwiki.org/plugin:rest
+
+
