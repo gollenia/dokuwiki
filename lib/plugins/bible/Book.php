@@ -55,7 +55,7 @@ class Book
 	 */
 	public static function find(int $id, $lang = 'en')
 	{
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+		$db = Bible::get_db();
 
 		$statement = $db->prepare("SELECT * FROM books WHERE id = :id ORDER BY 'id'");
 		$statement->bindValue(':id', $id);
@@ -97,7 +97,7 @@ class Book
 			return false;
 		}
 
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+		$db = Bible::get_db();
 
 		$statement = $db->prepare("SELECT * FROM books WHERE {$key} = :value ORDER BY 'id'");
 		$statement->bindValue(':value', $value);
@@ -128,7 +128,7 @@ class Book
 	public static function findByName(string $name, $lang = 'en'): self|bool
 	{
 
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+		$db = Bible::get_db();
 
 		$statement = $db->prepare("SELECT * FROM books WHERE short_name = :value ORDER BY 'id'");
 
@@ -151,9 +151,11 @@ class Book
 	 */
 	public static function findAll($lang = 'en')
 	{
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+		$db = Bible::get_db();
 
 		$query = $db->query("SELECT * FROM books");
+
+		if (!$query) return [];
 
 		$result = [];
 		while ($row = $query->fetchArray()) {

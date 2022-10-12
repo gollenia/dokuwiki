@@ -22,10 +22,13 @@ class Bible
 	 */
 	public static function info($lang = 'en')
 	{
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+		global $conf;
+		$db = new SQLite3($conf['savedir'] . "/bible.SQLite3");
 		$statement = $db->prepare("SELECT * from info WHERE 1=1");
 
 		$query = $statement->execute();
+
+		if (!$query) return [];
 
 		while ($row = $query->fetchArray()) {
 			$result[$row["name"]] = $row["value"];
@@ -35,5 +38,11 @@ class Bible
 			return [];
 		}
 		return $result;
+	}
+
+	public static function get_db()
+	{
+		global $conf;
+		return new SQLite3($conf['savedir'] . "/bible.SQLite3");
 	}
 }

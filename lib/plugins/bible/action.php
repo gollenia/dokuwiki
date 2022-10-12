@@ -11,8 +11,6 @@ class action_plugin_bible extends \dokuwiki\Extension\ActionPlugin
 
 	function register(Doku_Event_Handler $controller)
 	{
-
-
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_get_bible');
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_biblepages');
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_set_article');
