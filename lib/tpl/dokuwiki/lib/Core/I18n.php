@@ -2,7 +2,7 @@
 
 namespace Contexis\Core;
 
-use Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 
 class I18n
 {

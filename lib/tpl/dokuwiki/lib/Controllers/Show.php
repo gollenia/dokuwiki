@@ -4,7 +4,7 @@ namespace Contexis\Controllers;
 
 use Contexis\Core\Breadcrumbs;
 use Contexis\Core\Controller;
-use \Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 use Contexis\Models\Template;
 use \Contexis\Twig\Renderer;
 use dokuwiki\Extension\Event;

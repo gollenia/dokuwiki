@@ -5,7 +5,7 @@ namespace Contexis\Controllers;
 use Contexis\Core\Controller;
 use Contexis\Core\Breadcrumbs;
 use Contexis\Core\Statistics;
-use Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 
 class Dashboard extends Controller
 {

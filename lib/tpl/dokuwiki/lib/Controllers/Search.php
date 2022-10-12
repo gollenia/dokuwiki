@@ -5,7 +5,7 @@ namespace Contexis\Controllers;
 use Contexis\Core\Controller;
 use Contexis\Core\Utilities\Strings;
 use Contexis\Database\Tag;
-use Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 
 class Search extends Controller
 {

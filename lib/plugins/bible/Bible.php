@@ -14,9 +14,6 @@ use SQLite3;
  */
 class Bible
 {
-
-
-
 	/**
 	 * Find one book by its's numerical ID and create an instance of this class
 	 *

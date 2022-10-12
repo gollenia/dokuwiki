@@ -3,7 +3,7 @@
 namespace Contexis\Controllers;
 
 use \dokuwiki\Input\Input;
-use \Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 use \Contexis\Models\File;
 
 

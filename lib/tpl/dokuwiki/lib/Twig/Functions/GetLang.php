@@ -4,7 +4,7 @@ namespace Contexis\Twig\Functions;
 
 use Contexis\Twig\CustomFunctions;
 use dokuwiki\Extension\Event;
-use Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 
 /**
  * Get list of files in a given namespace

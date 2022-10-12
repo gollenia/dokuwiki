@@ -3,6 +3,7 @@
 namespace Contexis\Controllers;
 
 use Contexis\Core\Controller;
+use dokuwiki\plugins\rest\Models\Page;
 use \dokuwiki\Input\Input;
 
 
@@ -28,7 +29,7 @@ class Pages extends Controller
 		$value = $request->str("value", "start");
 
 		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
-		$pages = \Contexis\Models\Page::where($query, $value, $filter);
+		$pages = Page::where($query, $value, $filter);
 		if (empty($filter)) {
 			return json_encode($pages);
 		}
@@ -49,9 +50,9 @@ class Pages extends Controller
 		$tag = $request->str("tag", "start");
 
 		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
-		$pages = \Contexis\Models\Page::where('tag', $tag, $filter);
+		$pages = Page::where('tag', $tag, $filter);
 		if (empty($filter)) {
-			return json_encode(['articles' => $pages, 'root' => \Contexis\Models\Page::find('tag:' . $tag)]);
+			return json_encode(['articles' => $pages, 'root' => Page::find('tag:' . $tag)]);
 		}
 
 		$result = [];
@@ -59,6 +60,6 @@ class Pages extends Controller
 		foreach ($pages as $page) {
 			$result[] = $page->to_array();
 		}
-		return json_encode(['articles' => $result, 'tag_page' => \Contexis\Models\Page::find('tag:' . $tag)]);
+		return json_encode(['articles' => $result, 'tag_page' => Page::find('tag:' . $tag)]);
 	}
 }

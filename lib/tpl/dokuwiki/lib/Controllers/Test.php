@@ -3,7 +3,7 @@
 namespace Contexis\Controllers;
 
 use Contexis\Core\Controller;
-use Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 
 
 class Test extends Controller

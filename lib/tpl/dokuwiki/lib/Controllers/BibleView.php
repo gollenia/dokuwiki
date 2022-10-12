@@ -11,6 +11,7 @@ use Contexis\Core\ControllerInterface;
 use Contexis\Core\Site;
 use Contexis\Models\Template;
 use Contexis\Twig\Renderer;
+use dokuwiki\plugins\rest\Models;
 
 use dokuwiki\Extension\Event;
 
@@ -148,8 +149,8 @@ class BibleView extends Controller implements ControllerInterface
 		$this->site->add_data("bible", ["book" => $bible, "verses" => $verses, "chapter" => $path[2], "base" => $path[0]]);
 		$this->site->add_data("all_books", $all_books);
 
-		$articles = \Contexis\Models\Page::where("tag", $bible->short_name);
-		$articles_chapter = \Contexis\Models\Page::where("tag", $bible->short_name . $path[2]);
+		$articles = Page::where("tag", $bible->short_name);
+		$articles_chapter = Page::where("tag", $bible->short_name . $path[2]);
 
 		$this->site->add_data("articles", array_merge($articles, $articles_chapter));
 

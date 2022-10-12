@@ -4,7 +4,7 @@ namespace Contexis\Controllers;
 
 use Contexis\Core\Controller;
 use Contexis\Core\ControllerInterface;
-use Contexis\Models\Page;
+use dokuwiki\plugins\rest\Models\Page;
 use Contexis\Twig\Renderer;
 use \dokuwiki\Input\Input;
 

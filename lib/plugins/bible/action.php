@@ -4,19 +4,26 @@ use dokuwiki\plugin\bible\Article;
 use dokuwiki\plugin\bible\Bible;
 use dokuwiki\plugin\bible\Book;
 use dokuwiki\plugin\bible\Verse;
+use dokuwiki\plugins\bible\ArticleController;
 
 class action_plugin_bible extends \dokuwiki\Extension\ActionPlugin
 {
+
 	function register(Doku_Event_Handler $controller)
 	{
-		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_get_bible');
+		$controller->register_hook(
+			"DOKUWIKI_INIT_DONE",
+			"AFTER",
+			$this,
+			"loadModels",
+		);
 
+		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_get_bible');
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_get_articles');
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_set_article');
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_delete_article');
 		//$controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'load_js');
 	}
-
 
 
 	function _get_bible(Doku_Event $event, $param)
@@ -43,19 +50,17 @@ class action_plugin_bible extends \dokuwiki\Extension\ActionPlugin
 		if ($event->data !== 'biblepages') return;
 		$event->stopPropagation();
 		$event->preventDefault();
-
 		global $INPUT;
-		$book = $INPUT->str('book', '10');
-		$chapter = $INPUT->str('chapter', 1);
-		$verse = $INPUT->str('verse', 0);
-		$lang = $INPUT->str('lang', 'de');
 
-		$book = Book::find($book, $lang);
-
-		$pages = Article::where($book, $chapter);
-		header("Access-Control-Allow-Origin: *");
-		header('Content-Type: application/json');
-		echo json_encode($pages);
+		global $_SERVER;
+		switch ($_SERVER['REQUEST_METHOD']) {
+			case 'GET':
+				BiblePages::get($INPUT);
+			case 'POST':
+				BiblePages::post($INPUT);
+			case 'DELETE':
+				BiblePages::delete($INPUT);
+		}
 	}
 
 	function _set_article(Doku_Event $event, $param)
