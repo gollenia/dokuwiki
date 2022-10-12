@@ -30,8 +30,9 @@ class Book
 	 *
 	 * @param array $result Array filled wit data from the database
 	 */
-	public function __construct(array $result = [], $lang = 'en')
+	public function __construct(array $result = [], $lang = '')
 	{
+		global $conf;
 		if (!$result) return;
 		if (!array_key_exists('id', $result) || !$result["id"]) return;
 		if (!empty($result)) {
@@ -39,7 +40,7 @@ class Book
 			$this->short_name = $result['short_name'];
 			$this->long_name = $result['long_name'];
 			$this->translation = '';
-			$this->lang = $lang;
+			$this->lang = empty($lang) ? $conf['lang'] : $lang;
 			$this->section = $result['section'];
 			$this->chapters = $result['chapters'];
 			$this->testament = $result['testament'];
