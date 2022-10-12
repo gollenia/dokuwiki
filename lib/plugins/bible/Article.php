@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\bible;
 
+use dokuwiki\plugins\rest\Models\Page;
 use SQLite3;
 use PDO;
 
@@ -26,20 +27,24 @@ class Article
 	 * @param integer $verse
 	 * @return array<Page>
 	 */
-	static function where(Book $book, int $chapter = 0, int $verse = 0)
+	static function where(Book $book, int $chapter = 0, $verse = 0)
 	{
-		$lang = $book->lang;
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+		global $conf;
+		$db = new SQLite3(__DIR__ . "/data/" . $conf['lang'] . ".SQLite3");
 
 		$statement = $db->prepare("SELECT id, doku_id, book_id, chapter FROM pages WHERE (book_id = :book AND chapter IN (0, :chapter))");
 
 		$statement->bindValue(':book', $book->id, SQLITE3_INTEGER);
 		$statement->bindParam(':chapter', $chapter, SQLITE3_INTEGER);
+
 		$query = $statement->execute();
 		$result = [];
 
 		while ($row = $query->fetchArray(SQLITE3_ASSOC)) {
-			array_push($result, \dokuwiki\plugins\rest\Models\Page::find($row['doku_id']));
+			array_push(
+				$result,
+				$row
+			);
 		}
 		return $result;
 	}
@@ -82,9 +87,11 @@ class Article
 		return $result;
 	}
 
-	static function remove(Book $book, $id)
+	static function remove($id)
 	{
-		$db = new SQLite3(__DIR__ . "/data/" . $book->lang . ".SQLite3");
+		global $conf;
+
+		$db = new SQLite3(__DIR__ . "/data/" . $conf['lang'] . ".SQLite3");
 		$statement = $db->prepare("DELETE FROM pages WHERE id = :id");
 		$statement->bindValue(':id', $id, SQLITE3_INTEGER);
 		$query = $statement->execute();
