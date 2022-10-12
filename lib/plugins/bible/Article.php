@@ -30,7 +30,7 @@ class Article
 	static function where(Book $book, int $chapter = 0, $verse = 0)
 	{
 		global $conf;
-		$db = new SQLite3(__DIR__ . "/data/" . $conf['lang'] . ".SQLite3");
+		$db = Bible::get_db();
 
 		$statement = $db->prepare("SELECT id, doku_id, book_id, chapter FROM pages WHERE (book_id = :book AND chapter IN (0, :chapter))");
 
@@ -59,7 +59,7 @@ class Article
 	 */
 	static function add(Book $book, $id, $chapter = 0, $verse = 0)
 	{
-		$db = new SQLite3(__DIR__ . "/data/" . $book->lang . ".SQLite3");
+		$db = Bible::get_db();
 		$statement = $db->prepare("SELECT FROM pages WHERE (doku_id = :doku_id AND book_id = :book_id, AND chapter = :chapter");
 		$query = $statement->execute();
 		if ($query && $query->numColumns() > 0) return 0;
@@ -76,7 +76,7 @@ class Article
 	static function hasBiblerefs($id)
 	{
 		global $conf;
-		$db = new SQLite3(__DIR__ . "/data/" . $conf['lang'] . ".SQLite3");
+		$db = Bible::get_db();
 		$statement = $db->prepare("SELECT id, book_id, chapter FROM pages WHERE doku_id = :doku_id");
 		$statement->bindValue(':doku_id', $id, SQLITE3_TEXT);
 		$query = $statement->execute();
@@ -91,7 +91,7 @@ class Article
 	{
 		global $conf;
 
-		$db = new SQLite3(__DIR__ . "/data/" . $conf['lang'] . ".SQLite3");
+		$db = Bible::get_db();
 		$statement = $db->prepare("DELETE FROM pages WHERE id = :id");
 		$statement->bindValue(':id', $id, SQLITE3_INTEGER);
 		$query = $statement->execute();

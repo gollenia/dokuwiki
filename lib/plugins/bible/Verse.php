@@ -70,8 +70,8 @@ class Verse
 	static function where(Book $book, int $chapter, string $verse = "")
 	{
 		$verses = empty($verse) ? "" : "AND verse IN (" . self::parse_verse($verse) . ")";
-		$lang = $book->lang;
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+
+		$db = Bible::get_db();
 
 		$statement = $db->prepare("SELECT * FROM verses WHERE (book_id = :book AND chapter = :chapter " . $verses . ") ORDER BY 'verse'");
 
@@ -95,7 +95,7 @@ class Verse
 
 	static function findAll(Book $book, int $chapter)
 	{
-		$db = new SQLite3(__DIR__ . "/data/" . $book->lang . ".SQLite3");
+		$db = Bible::get_db();
 		$statement = $db->prepare("SELECT * FROM verses WHERE (book_id = :book AND chapter = :chapter) ORDER BY 'verse'");
 
 		$statement->bindValue(':book', $book->id, PDO::PARAM_INT);
