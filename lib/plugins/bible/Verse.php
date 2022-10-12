@@ -93,9 +93,9 @@ class Verse
 	}
 
 
-	static function findAll(Book $book, int $chapter, $lang = "en")
+	static function findAll(Book $book, int $chapter)
 	{
-		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+		$db = new SQLite3(__DIR__ . "/data/" . $book->lang . ".SQLite3");
 		$statement = $db->prepare("SELECT * FROM verses WHERE (book_id = :book AND chapter = :chapter) ORDER BY 'verse'");
 
 		$statement->bindValue(':book', $book->id, PDO::PARAM_INT);
