@@ -55,6 +55,7 @@ class Book
 	public static function find(int $id, $lang = 'en')
 	{
 		$db = new SQLite3(__DIR__ . "/data/" . $lang . ".SQLite3");
+
 		$statement = $db->prepare("SELECT * FROM books WHERE id = :id ORDER BY 'id'");
 		$statement->bindValue(':id', $id);
 
