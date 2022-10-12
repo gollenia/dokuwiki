@@ -1,0 +1,51 @@
+## You should disable Indexes and MultiViews either here or in the
+## global config. Symlinks maybe needed for URL rewriting.
+#Options -Indexes -MultiViews +FollowSymLinks
+
+## make sure nobody gets the htaccess, README, COPYING or VERSION files
+<Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>
+
+## Don't allow access to git directories
+<IfModule alias_module>
+    RedirectMatch 404 /\.git
+</IfModule>
+
+## Uncomment these rules if you want to have nice URLs using
+## $conf['userewrite'] = 1 - not needed for rewrite mode 2
+RewriteEngine on
+#
+RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
+RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
+#RewriteRule ^api/([^/]+)/(.*)     doku.php?call=$1&id=$2  [QSA,L]
+
+RewriteRule ^api/([a-zA-Z]{2})/bible/([0-9]+)/([0-9]+)/?([0-9\-\;]*) lib/exe/ajax.php?call=bible&lang=$1&book=$2&chapter=$3&verse=$4  [QSA,L]
+RewriteRule ^api/([a-zA-Z]{2})/biblepages/?([0-9]*) lib/exe/ajax.php?call=biblepages&lang=$1&id=$2  [QSA,L]
+RewriteRule ^api/([a-zA-Z]{2})/biblepages/?([0-9]*)/?([0-9]*)/?([0-9\-]*)$ lib/exe/ajax.php?call=biblepages&lang=$1&book=$2&chapter=$3&verse=$4  [QSA,L]
+RewriteRule ^api/([a-zA-Z]{2})/site ?controller=site&lang=$1  [QSA,L]
+RewriteRule ^api/([a-zA-Z]{2})/page/(.*) ?controller=page&lang=$1&id=$2  [QSA,L]
+RewriteRule ^api/([a-zA-Z]{2})/tag/(.*) ?controller=tag&lang=$1&id=$2  [QSA,L]
+RewriteRule ^api/([a-zA-Z]{2})/search/(.*) ?controller=search&lang=$1&q=$2  [QSA,L]
+RewriteRule ^$                        doku.php  [L]
+RewriteCond %{REQUEST_FILENAME}       !-f
+RewriteCond %{REQUEST_FILENAME}       !-d
+RewriteRule (.*)                      doku.php?id=$1  [QSA,L]
+RewriteRule ^index.php$               doku.php
+#
+## Not all installations will require the following line.  If you do,
+## change "/dokuwiki" to the path to your dokuwiki directory relative
+## to your document root.
+#RewriteBase /dokuwiki
+#
+## If you enable DokuWikis XML-RPC interface, you should consider to
+## restrict access to it over HTTPS only! Uncomment the following two
+## rules if your server setup allows HTTPS.
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^lib/exe/xmlrpc.php$      https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
