@@ -4,7 +4,7 @@ namespace Contexis\Controllers;
 
 use \dokuwiki\Input\Input;
 use dokuwiki\plugins\rest\Models\Page;
-use \Contexis\Models\File;
+use dokuwiki\plugins\rest\Models\File;
 
 
 class Media
