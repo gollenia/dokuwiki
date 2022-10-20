@@ -1,0 +1,70 @@
+.tree {
+
+	font-size: .75rem;
+
+	ul {
+		list-style-type: none;
+		padding-left: 1rem;
+	}
+
+	.icon-chevron {
+		width: 1.5rem;
+	}
+
+	
+
+	&.tree-root {
+		padding-left: 0rem !important;	
+
+		li.file {
+			padding-left: 1.8rem !important;
+		}
+	}
+	padding-left: .8rem;
+	list-style-type: none;
+
+	a {
+		color: #fff;
+		text-decoration: none;
+		font-size: small;
+		white-space: nowrap;
+	}
+
+	span {
+		
+		display: flex;
+    	align-items: center;
+		white-space: nowrap;
+		cursor: pointer;
+		img {
+			margin-right: .35rem
+		}
+	}
+
+	li {
+		padding: 0.15rem 0.25rem;
+	}
+
+	li.file {
+		padding-left: 1rem;
+	}
+
+	li > ul {
+		max-height: 0;
+		/* height: auto; */
+		overflow: hidden;
+	}
+
+	li.open > ul {
+		max-height: 100%;
+	} 
+
+	li.open > span > .chevron {
+		transform: rotate(90deg);
+	}
+
+	li.active > span {
+		background: var(--bs-primary);
+		color: white;
+	}
+}

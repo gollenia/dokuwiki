@@ -20,7 +20,13 @@ class Edit extends Controller implements ControllerInterface
 	public function render()
 	{
 		global $ID;
-		$this->site->add_data('data', ['text' => rawWiki($ID)]);
+		global $conf;
+		$this->site->add_data('page', Page::find($ID));
+		$this->site->add_data('site', [
+			"tags" => rawWiki("system:tags"),
+			"categories" => rawWiki('system:categories'),
+			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
+		]);
 
 		echo Renderer::compile("pages/edit.twig", $this->site->get());
 	}
@@ -36,18 +42,19 @@ class Edit extends Controller implements ControllerInterface
 
 	public function ajax_save(Input $request)
 	{
-		$data = json_decode($request->str("page"));
-		$page = Page::findOrNew($_GET['id']);
-		$page->content = cleanText($data->content);
-		$page->abstract = cleanText($data->abstract);
-		$page->tags =  $data->tags;
-		$page->pageimage = cleanText($data->pageimage);
-		$page->category = cleanText($data->category);
-		$page->pagelink = cleanText($data->pagelink);
-		$page->icon = strtolower(str_replace(" ", "_", cleanText($data->icon)));
-		$page->exclude = cleanText($data->exclude);
-		$page->template = cleanText($data->template);
-		$page->title = cleanText($data->title);
+
+		$data = json_decode(file_get_contents('php://input'), true);
+		if (!array_key_exists('id', $data)) return false;
+		$page = Page::findOrNew($data['id']);
+		$page->content = cleanText($data['content']);
+		$page->abstract = cleanText($data['abstract']);
+		$page->tags = is_array($data['tags']) ? $data['tags'] : [];
+		$page->pageimage = cleanText($data['pageimage']);
+		$page->category = cleanText($data['category']);
+		$page->pagelink = cleanText($data['pagelink']);
+		$page->icon = strtolower(str_replace(" ", "_", cleanText($data['icon'])));
+		$page->exclude = cleanText($data['exclude']);
+		$page->title = cleanText($data['title']);
 		$result = $page->save();
 		return json_encode(['request' => $_GET, 'page' => $result]);
 	}
@@ -63,7 +70,7 @@ class Edit extends Controller implements ControllerInterface
 	{
 		$id = $request->str("id", "");
 		$pageTree = Page::getTree($id, false, "bibel,system");
-		return json_encode($pageTree);
+		return json_encode($pageTree['tree']);
 	}
 
 	public function ajax_delete(Input $request)
@@ -71,5 +78,19 @@ class Edit extends Controller implements ControllerInterface
 		$id = $request->str("id", "");
 		$page = Page::find($id);
 		$page->delete();
+	}
+
+	public function ajax_site()
+	{
+		global $INFO;
+		global $conf;
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+
+		return json_encode([
+			"tags" => rawWiki("system:tags"),
+			"categories" => rawWiki('system:categories'),
+			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
+		]);
 	}
 }

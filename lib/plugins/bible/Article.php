@@ -75,7 +75,6 @@ class Article
 
 	static function hasBiblerefs($id)
 	{
-		global $conf;
 		$db = Bible::get_db();
 		$statement = $db->prepare("SELECT id, book_id, chapter FROM pages WHERE doku_id = :doku_id");
 		$statement->bindValue(':doku_id', $id, SQLITE3_TEXT);

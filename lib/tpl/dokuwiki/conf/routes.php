@@ -9,6 +9,5 @@ return [
 	"\\Contexis\\Controllers\\Search" => $ACT == "search",
 	"\\Contexis\\Controllers\\MenuEdit" => $ID == "system:menu",
 	"\\Contexis\\Controllers\\Dashboard" => $ID == "dashboard",
-	"\\Contexis\\Controllers\\Tag" => explode(":", $ID)[0] == "tag" && $ACT == "show",
 	"\\Contexis\\Controllers\\Show" => $ACT == "show",
 ];

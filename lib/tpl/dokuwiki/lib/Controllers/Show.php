@@ -16,32 +16,24 @@ class Show extends Controller
 
 	public function __construct($site)
 	{
-		global $INFO;
+		global $conf;
 		global $ID;
 		parent::__construct($site);
 
-		$this->site->add_data('data', ['text' => rawWiki($ID)]);
-		$content = $this->get_content();
+
+
 		$pageTree = Page::getTree($ID, false, "bibel,system");
 		$namespaces = Breadcrumbs::get_namespace($ID);
 
 
-		$this->site->add_data("content", $content);
+		//$this->site->add_data("content", $content);
 		$this->site->add_data("namespaces", $namespaces);
+		$this->site->add_data('site', [
+			"tags" => json_decode(rawWiki("system:tags")) ?? [],
+			"categories" => json_decode(rawWiki('system:categories')) ?? [],
+			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
+		]);
+		$this->site->add_data("page", Page::find($ID));
 		$this->site->add_data("tree", $pageTree);
-	}
-
-
-
-	private function get_content()
-	{
-		global $ACT;
-
-		ob_start();
-		tpl_content(false);
-		//Event::createAndTrigger('TPL_ACT_RENDER', $ACT, 'tpl_content_core');
-		//Event::createAndTrigger('TPL_CONTENT_DISPLAY', $html_output, 'ptln');
-		$html_output = ob_get_clean();
-		return $html_output;
 	}
 }

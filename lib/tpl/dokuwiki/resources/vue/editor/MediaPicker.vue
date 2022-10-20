@@ -112,7 +112,7 @@ export default {
             this.list = listResponse.data
         },
         async upload () {
-            const sec_response = await axios.post('/?controller=media&method=token');
+            const sec_response = await axios.post('/?controller=media&method=token'); 
             var sectok = sec_response.data
             const file = this.fileInput[0]
             const formData = new FormData()

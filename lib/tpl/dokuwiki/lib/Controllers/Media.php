@@ -16,7 +16,7 @@ class Media
 		return json_encode($file);
 	}
 
-	function ajax_token($response)
+	function ajax_sectok($response)
 	{
 		return json_encode(getSecurityToken());
 	}
@@ -28,7 +28,7 @@ class Media
 		$ns = cleanID($request->str('ns', 'none'));
 		$filter = $request->str('filter', '*.*');
 
-		return json_encode(File::findAllByWildcard($ns, $filter));
+		return json_encode(File::findAll($ns));
 	}
 
 	function ajax_get($request)
@@ -60,5 +60,13 @@ class Media
 		$id = $request->str('id', "");
 		$file = File::find($id);
 		return json_encode($file->delete());
+	}
+
+	public function ajax_rename(Input $request)
+	{
+		$id = $request->str('id', "");
+		$name = $request->str('name', "");
+		$file = File::find($id);
+		return json_encode($file->rename($name));
 	}
 }

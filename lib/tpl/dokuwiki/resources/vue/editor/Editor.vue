@@ -5,14 +5,13 @@
                 
         <pageimage-picker v-if="showPageImagePicker" @select="insertPageImage($event); showPageImagePicker = false" @close="showPageImagePicker = false"/>
 
-        <div class="">
-            
+        <div class="">  
             <div class="input-text">
                 <label class="label">Titel</label>
                 <input type="text" class="w-100 form-control form-control-lg" v-model="page.title" required>
             </div>
         </div>
-
+ 
        
 
         <div class="editor max-w-screen-xl border rounded mt-4">
@@ -93,76 +92,7 @@
         <media-picker v-if="showMediaPicker" @select="insertMedia($event); showMediaPicker = false" @close="showMediaPicker = false"/>
     </div>
 	<header class="inspector ">
-		<div class="d-flex justify-content-end gap-2">
-			<button class="right btn btn-secondary" v-shortkey="['ctrl', 's']" @shortkey="save" @click="save">Vorschau</button>
-			<button class="right btn btn-primary" v-shortkey="['ctrl', 's']" @shortkey="save" @click="save">Speichern</button>
-		</div>
-		<hr />
-		<b class="pb-4 d-block">Beitragsbild</b>
-            <img class="object-cover w-100 ratio ratio-16x9" v-if="media.src != '/_media/'" :src="media.src + '?w=600'">
-            <div class="d-flex mt-2 gap-2">
-            <button class="btn btn-outline-secondary btn-sm d-flex" @click="showPageImagePicker = true"><i class="material-icons">image</i> Ändern</button>
-            <button class="btn btn-outline-danger btn-sm d-flex" @click="removePageImage()"><i class="material-icons">delete</i> Löschen</button>
-            </div>
-			<hr/>
-			<b class="pb-4 d-block">Zusammenfassung</b>
-			<div class="max-w-screen-xl">
-            <div class="input-textarea">
-                <textarea class="w-full form-control form-control-sm" rows="5" v-model="page.abstract"></textarea>
-                <p class="text-xs text-secondary">Die Zusammenfassung wird als Vortschau auf den Übersichtsseiten angezeigt. Maximal 100 Buchstaben.</p>
-            </div>
-        	</div>
-			<hr/>
-			<b class="pb-4 d-block">Taxonomie</b>
-            <div class="">
-                <div class=" max-w-screen-xl ">
-                    <div class="input-text">
-                        <label class="label label-sm">Kategorie</label>
-                        <input type="text" class="w-full form-control form-control-sm" v-model="page.category">
-                        <p class="text-xs text-secondary">Normalerweise die übergeordnete Seite. Umlaute im Zweifelsfall korrigieren.</p>
-                    </div>
-                </div>
-            </div>
-			<div class="max-w-screen-xl">
-            <div class="editor-tags input-text">
-                <label class="label label-sm">Schlagworte</label>
-                <input-tag v-model="page.tags" :before-adding="tag => tag.toLowerCase().replace(' ', '_')" placeholder="Tag hinzufügen"></input-tag>
-                <p class="text-xs text-secondary">Den wichtigsten Tag zuerst, dieser wird auf der Übersichtsseite angezeigt.</p>
-            </div>
-        	</div>
-			<hr/>
-			<b class="pb-4 d-block">Erscheinungsbild</b>
-            <div>
-                <div class=" max-w-screen-xl">
-                    <div class="input-text">
-                        <label class="label label-sm">Icon</label>
-                        <input type="text" class="w-full form-control form-control-sm" v-model="page.icon">
-                        <p class="text-xs text-secondary">Ein beliebiges Icon von <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> aus dem "Filled"-Set. Bitte den Namen Kleingeschrieben und mit Unterstrichen angeben</p>
-                    </div>
-                </div>
-            </div>
-			<div class="">
-                
-                <div class="input-text">
-                    <label class="label label-sm">Download-Ausnahmen</label>
-                    <input type="text" class="w-full  form-control form-control-sm" v-model="page.exclude" required>
-                </div>
-                <p class="text-xs">Hier können Dateinnamen oder Muster angegeben werden, die nicht in der Downloadliste erscheinen sollen. Mit *.jpg können zb alle Bilder ausgeblendet werden.</p>
-            </div>
-
-            <div class="">
-                
-                <div class="input-text">
-                    <label class="label label-sm">Seitenlink</label>
-                    <input type="text" @click="showPageLinkPicker = true" class="w-full  form-control form-control-sm" v-model="page.pagelink" required>
-                    <p class="text-xs text-secondary">Hier kann ein Link eingefügt werden, der dann als Button im Titelbild angezeigt wird.</p>
-                </div>
-            </div>
-        
-
-        
-        
-        
+	
         
         
 

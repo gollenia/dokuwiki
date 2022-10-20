@@ -11,53 +11,63 @@ use dokuwiki\plugin\bible\Book;
 
 class Page
 {
+	// Basic data
 	public string $id = "";
-	public array $tags = [];
-	public string $pageimage = "";
 	public string $title = "";
 	public string $content = "";
-	public string $summary = "";
-	public string $link = "";
-	public string $exclude = "";
-	public string $category = "";
-	public string $icon = "";
-	public string $template = "";
-	public string $pagelink = "";
-	public DateTime $date;
-	public string $language = "";
 	public string $abstract = "";
-	public bool $showSubpages = false;
 	public string $namespace;
-	public array $files = [];
-	public array $filter = [];
-	public $user;
 	public bool $minor_change = false;
+	public string $user;
+	public DateTime $date;
+
+	// Taxonomy
+	public string $category = "";
+	public int $audience = 0;
+	public $tags = [];
 	public array $bibleref;
 
+	// Attachments
+	public string $icon = "";
+	public array $files = [];
+	public string $pagelink = "";
+	public string $pageimage = "";
+	public bool $exclude = true;
+
+	// Page Settings
+	public bool $showSubpages = false;
+
+	// API Settings
+	public array $filter = [];
 
 	public function __construct($id = "", $filter = [])
 	{
 		if ($id === "") return;
-		if (class_exists("dokuwiki\\plugin\\bible\\Article")) {
-			$this->bibleref = \dokuwiki\plugin\bible\Article::hasBiblerefs($id);
-		}
-		$this->filter = $filter;
 		$this->id = cleanID($id);
 		$this->namespace = $this->getNamespace();
 		$this->title = $this->getTitle();
-		$this->link = wl($id);
 		$this->content = rawWiki($id);
-		$this->tags = Meta::get($id, 'subject', []);
-		$this->pageimage = Meta::get($id, 'pageimage', '');
-		$this->icon = Meta::get($id, 'icon', '');
-		$this->category = Meta::get($id, 'category', '');
-		$this->pagelink = Meta::get($id, 'pagelink', '');
-		$this->user = Meta::get($id, 'user', '');
 		$this->date = DateTime::createFromFormat('U', Meta::get($id, 'date modified', 0));
-		$this->showSubpages = Meta::get($id, 'showSubpages', false);
-		$this->exclude = Meta::get($id, 'exclude', '');
-		$this->abstract =  Meta::get($id, 'abstract', '');
+
+		$meta = ['abstract', 'user', 'category', 'icon', 'pagelink'];
+
+		foreach ($meta as $key => $value) {
+			$this->$value = Meta::get($id, $value, '');
+		}
+
+		$this->tags = Meta::get($id, 'subject', []);
+		$this->audience = Meta::get($id, 'audience', 0);
+		$this->exclude = Meta::get($id, 'exclude', true);
+		$this->pageimage = $this->getPageImage();
+
+		if (class_exists("dokuwiki\\plugin\\bible\\Article")) {
+			$this->bibleref = \dokuwiki\plugin\bible\Article::hasBiblerefs($id);
+		}
+
 		$this->files = File::findAll($id);
+
+		$this->showSubpages = Meta::get($id, 'showSubpages', false);
+		$this->filter = $filter;
 	}
 
 	/**
@@ -85,6 +95,15 @@ class Page
 		$nsArray = explode(":", $this->id);
 		if (end($nsArray) !== "start") array_pop($nsArray);
 		return implode(":", $nsArray);
+	}
+
+	private function getPageImage()
+	{
+		$imageid = Meta::get($this->id, 'pageimage', '');
+		if (!$imageid) return '';
+		$file = File::find($imageid);
+		if (!$file->exists) return 'error';
+		return $imageid;
 	}
 
 	/**
@@ -223,18 +242,16 @@ class Page
 		p_set_metadata($this->id, ['subject' => Strings::cleanStrings($this->tags)]);
 		p_set_metadata($this->id, ['pageimage' => $this->pageimage]);
 
-		$content = $this->content;
-
 		lock($this->id);
-		saveWikiText($this->id, $content, $this->summary, $this->minor_change);
+		saveWikiText($this->id, $this->content, $this->summary, $this->minor_change);
 		p_set_metadata($this->id, ['abstract' => $this->abstract]);
 		p_set_metadata($this->id, ['showSubpages' => $this->showSubpages]);
 		p_set_metadata($this->id, ['title' => $this->title]);
 		p_set_metadata($this->id, ['pagelink' => $this->pagelink]);
 		p_set_metadata($this->id, ['category' => $this->category]);
 		p_set_metadata($this->id, ['icon' => $this->icon]);
-		p_set_metadata($this->id, ['template' => $this->template]);
 		p_set_metadata($this->id, ['exclude' => $this->exclude]);
+		p_set_metadata($this->id, ['audience' => $this->audience]);
 		idx_addPage($this->id, false, true);
 		unlock($this->id);
 

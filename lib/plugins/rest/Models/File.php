@@ -11,12 +11,13 @@ class File
 	public string $path;
 	public string $thumbnail;
 	public string $src;
-	public string $full;
 	public string $filename;
 	public int $size;
 	public DateTime $modified;
 	public string $count;
 	public string $extension;
+	public bool $exists = false;
+	public bool $private = false;
 	public string $info;
 	public bool $writable;
 	public bool $minor_change = false;
@@ -25,8 +26,13 @@ class File
 	{
 		$filename = mediaFN($id);
 
-		if (!media_ispublic($id) && !file_exists($filename)) return false;
+		$this->private = media_ispublic($id);
 
+		if (!file_exists($filename)) {
+			return;
+		}
+
+		$this->exists = true;
 		$this->id = $id;
 		$this->path = $filename;
 		$this->filename = pathinfo($filename, PATHINFO_BASENAME);
@@ -48,12 +54,6 @@ class File
 	 */
 	public static function find(string $id): File
 	{
-		$filename = mediaFN($id);
-
-		if (!media_ispublic($id) && !file_exists($filename)) {
-			return false;
-		}
-
 		return new self($id);
 	}
 
@@ -63,7 +63,7 @@ class File
 
 		$upload = media_upload($ns, $auth);
 		if ($upload) {
-			return new self($ns . ":" . $upload);
+			return $upload;
 		}
 
 		return $upload;
@@ -168,5 +168,26 @@ class File
 	 */
 	public function move($ns)
 	{
+	}
+
+	public function rename($name)
+	{
+		$old = $this->path;
+		$new = pathinfo($this->path, PATHINFO_DIRNAME) . '/' . $name;
+		if (!rename($old, $new)) return;
+
+		$oldmeta = $this->getMetaFile();
+		$newmeta = pathinfo($oldmeta, PATHINFO_DIRNAME) . '/' . $name . '.' . pathinfo($oldmeta, PATHINFO_EXTENSION);
+		if (!file_exists($oldmeta)) return "no old meta found";
+		rename($oldmeta, $newmeta);
+		return true;
+	}
+
+	function getMetaFile()
+	{
+		global $conf;
+		$id = cleanID($this->id);
+		$id = str_replace(':', '/', $id);
+		return $conf['metadir'] . '/' . utf8_encodeFN($id) . '.meta';
 	}
 }
