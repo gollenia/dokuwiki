@@ -3,17 +3,14 @@
 		<svg class="bi me-2" width="40" height="32">
 			<use xlink:href="#bootstrap"></use>
 		</svg>
-		<span class="fs-4">kids-team</span>
+		<span class="fs-4">Downloads</span>
 	</a>
 	<hr>
 
-
-	<div id="react-tree"></div>
-
-	<div class="dropdown">
-		<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" @click="isOpen = !isOpen" aria-expanded="false">
-			<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-			<strong>mdo</strong>
+	<div class="dropdown py-2">
+		<a href="#" class="d-flex gap-2 align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" @click="isOpen = !isOpen" aria-expanded="false">
+			<img src="/lib/tpl/dokuwiki/public/img/countries/at.svg" alt="" width="24" height="24" class="mr-2">
+			<strong>Deutsch</strong>
 		</a>
 		<ul x-show.important="isOpen" @click.away="isOpen = false" class="dropdown-menu dropdown-menu-dark text-small shadow">
 			<li>
@@ -31,4 +28,7 @@
 			</li>
 		</ul>
 	</div>
+	<div id="react-tree"></div>
+
+
 </div>
