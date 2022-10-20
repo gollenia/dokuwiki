@@ -55,9 +55,9 @@ const TagSelector: React.FC<TagSelectorProps> = (props) => {
 	const filteredOptions = () => {
 		if (inputField.length === 0) return availableTags;
 		if (inputField.slice(-1) == "*") {
-			return availableTags.filter((option) => option.id.startsWith(inputField.slice(0, -1).toLowerCase()))
+			return availableTags.filter((option) => option.name.startsWith(inputField.slice(0, -1).toLowerCase()))
 		}
-		return availableTags.filter((option) => option.id.includes(inputField.toLowerCase()))
+		return availableTags.filter((option) => option.name.includes(inputField.toLowerCase()))
 	}
 
 	const keyPress = (event: any) => {
