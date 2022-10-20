@@ -28,7 +28,7 @@ const Inspector = () => {
 	
 	return (
 		<div className='inspector'>
-			<div className="d-flex justify-content-end gap-2">
+			<div className="d-flex justify-content-end gap-2 py-2">
 							<button className="right btn btn-secondary" >Vorschau</button>
 							<button className="right btn btn-primary" onClick={() => saveArticle()}>Speichern</button>
 			</div>
@@ -84,26 +84,16 @@ const Inspector = () => {
                         <input onChange={() => {}} type="text" className="w-full form-control form-control-sm" value={article.icon} />
                         <p className="text-xs text-secondary">Ein beliebiges Icon von <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> aus dem "Filled"-Set. Bitte den Namen Kleingeschrieben und mit Unterstrichen angeben</p>
                     </div>
-			</Panel>
-
-
-			<div className="">
-                
-                <div className="input-text">
-                    <label className="label label-sm">Bilder ausschließen</label>
-                    <input onChange={() => {}} type="checkbox" className="checkbox-control form-control-sm" checked={article.exclude} />
-                </div>
-                <p className="text-xs">Alle Bilder (Jpg-Dateien) werden von der Download-Liste ausgeschlossen</p>
-            </div>
-
-            <div className="">
-                
-                <div className="input-text">
+					<div className="input-text">
                     <label className="label label-sm">Seitenlink</label>
                     <input onChange={() => {}} type="text"  className="w-full  form-control form-control-sm" v-model="page.pagelink" required />
                     <p className="text-xs text-secondary">Hier kann ein Link eingefügt werden, der dann als Button im Titelbild angezeigt wird.</p>
                 </div>
-            </div>
+			</Panel>
+
+
+
+         
 			</div>
 		</div>
 	)
