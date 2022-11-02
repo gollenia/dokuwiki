@@ -86,8 +86,9 @@ const TagSelector: React.FC<TagSelectorProps> = (props) => {
 			<div className="tagList tags mb-4 mt-2"> { tagList.map((tagList, index) => {
 				return <span className='badge tag bg-primary'>{tagList.name}<i className="material-icons" onClick={() => {removeTag(index)}}>cancel</i></span>} ) } 
 			</div>
+			<label>Schlagworte hinzufügen</label>
 			<div className='combobox' onKeyDown={(event) => keyPress(event)}>
-				<label>Schlagworte hinzufügen</label>
+				
 				<input className="form-control" ref={input} type="text" onMouseOver={() => { setListSelect(-1) }} onClick={(event) => { }} placeholder={selection != -1 ? availableTags[selection].id : placeholder} value={inputField} onChange={(event) => setInputField(event.target.value)} />
 				<ul>
 					{filteredOptions().map((option, index) => {

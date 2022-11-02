@@ -4,6 +4,9 @@ namespace Contexis\Controllers;
 
 use Contexis\Core\Breadcrumbs;
 use Contexis\Core\Controller;
+use Contexis\Models\Audience;
+use Contexis\Models\Category;
+use Contexis\Models\Tag;
 use dokuwiki\plugins\rest\Models\Page;
 use Contexis\Models\Template;
 use \Contexis\Twig\Renderer;
@@ -29,8 +32,9 @@ class Show extends Controller
 		//$this->site->add_data("content", $content);
 		$this->site->add_data("namespaces", $namespaces);
 		$this->site->add_data('site', [
-			"tags" => json_decode(rawWiki("system:tags")) ?? [],
-			"categories" => json_decode(rawWiki('system:categories')) ?? [],
+			"tags" => Tag::findAll(),
+			"categories" => Category::findAll(),
+			"audience" => Audience::findAll(),
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);
 		$this->site->add_data("page", Page::find($ID));

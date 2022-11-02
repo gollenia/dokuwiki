@@ -30,6 +30,12 @@ export type Verse = {
 	linebreak: number;
 }
 
-export type BibleRefAction = { type: 'ADD_BIBLEREF', payload: Verse } 
+export type BibleRef = {
+	book_id: number;
+	id: string;
+	chapter: number;
+}
+
+export type BibleRefAction = { type: 'ADD_BIBLEREF', payload: BibleRef } 
 	| { type: 'DELETE_BIBLEREF', payload: number} 
-	| { type: 'SET_BIBLEREFS', payload: Array<Verse>} 
+	| { type: 'SET_BIBLEREFS', payload: Array<BibleRef>} 

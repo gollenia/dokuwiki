@@ -1,18 +1,20 @@
 import React, { useContext, useRef, useState } from 'react';
-import { store } from '../services/store';
-import UploadService from '../services/uploadService';
-import FileIcon from './FileIcon';
+import { store } from '../../services/store';
+import UploadService from '../../services/uploadService';
+import FileIcon from '../FileManager/FileIcon';
 
 type Props = {
 	fileList: FileList,
-	onlyImages?: boolean
+	onFinish: () => void
+	onlyImages?: boolean,
+	target: string
 }
 
-const Uploader = (props: Props) => {
+const Progress = (props: Props) => {
 
 	const globalState = useContext(store);
 	const { state: {files}, dispatch } = globalState;
-	const { fileList } = props
+	const { fileList, target, onFinish } = props
 
 	const [progressInfos, setProgressInfos] = useState({ val: [] });
 	const [message, setMessage] = useState([]);
@@ -25,7 +27,7 @@ const Uploader = (props: Props) => {
 			(100 * event.loaded) / event.total
 		  );
 		  setProgressInfos({ val: _progressInfos });
-		})
+		}, target )
 		  .then((i) => {
 			console.log(i)
 			setMessage((prevMessage) => ([
@@ -63,14 +65,31 @@ const Uploader = (props: Props) => {
 			 })
 		  })
 		  .then((fileList) => {
-				
+				onFinish()
 		});
 	
 		setMessage([]);
 	}
+
+	
 	
 	return (
-		<div>{progressInfos && progressInfos.val.length > 0 &&
+		<div>
+			<div className='filedropper'>
+				<div className="filedropper-label">
+					<div className='d-flex flex-column'>
+						<div className='d-flex flex-column text-center'>
+							{ [...fileList].map((file: File, index) => {
+								return (
+									<span>{file.name}</span>
+								)
+							} ) }
+						</div>
+					<div className='text-center mt-2'><button className="btn btn-primary" onClick={uploadFiles}>Upload Files</button></div>
+					</div>
+				</div>
+			</div>
+			{progressInfos && progressInfos.val.length > 0 &&
 			progressInfos.val.map((progressInfo, index) => {
 				const processing = progressInfo.percentage != 0 && progressInfo.percentage != 100;
 				const finished = progressInfo.percentage === 100;
@@ -90,6 +109,7 @@ const Uploader = (props: Props) => {
 				
 				return (
 				<div className={classes} key={index}>
+
 					<div className="d-flex gap-3">
 						<div>
 							<FileIcon extension={extension} size={32} />
@@ -117,10 +137,10 @@ const Uploader = (props: Props) => {
 				</div>
 			)})}
 		
-		<button onClick={uploadFiles}>Upload Files</button>
+		
 		</div>
 
 	)
 }
 
-export default Uploader
+export default Progress

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import fileIcon from './img/file.svg';
 import folderIcon from './img/folder.svg';
 
 type TreeItemType = {
 	children: Array<TreeItemType> | undefined
-	name: string
 	title: string
 	id: string
-	folder: Boolean
 }
 
 interface TreeItemProps  {
@@ -20,12 +18,15 @@ const TreeItem= (props: TreeItemProps) => {
 
 	const {item, currentID } = props;
 	
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState<boolean>(false);
+	const [addPage, setAddPage] = useState<boolean>(false);
+	const [newPageName, setNewPageName] = useState<string>('');
 
 	const toggleOpen = () => {
-		console.log("setting")
 		setOpen(!open);
 	}
+
+	const inputField = useRef<HTMLInputElement>();
 
 	useEffect(() => {
 		if(currentID.includes(item.id)) setOpen(true)
@@ -38,22 +39,49 @@ const TreeItem= (props: TreeItemProps) => {
 
 	].filter(Boolean).join(' ')
 
+	const activateAddPage = () => {
+		setAddPage(true);
+		setOpen(true);
+	}
+
+	const inputKeyDown = (event: React.KeyboardEvent) => {
+		if(event.key == 'Enter') {
+			
+			if(!inputField.current.value) {
+				setAddPage(false);
+				return;
+			}
+
+			let newPage: string = inputField.current.value;
+			newPage.replace(' ', '_');
+			console.log('new Page', item.id + ':' + inputField.current.value)
+		}
+
+		if(event.key == "Escape") {
+			setAddPage(false);
+			inputField.current.value = ''
+		}
+	}
+
 	return (
 		<li className={classes}  >
 			{!item.children && <span><img src={fileIcon} width="16px" height="16px"/> <a href={'/'+item.id}>{item.title}</a></span> }
-
 			{item.children && <>
 				<span>
-					<i onClick={() => toggleOpen()} className='material-icons icon-chevron'>chevron_right</i>
+					<i onClick={() => toggleOpen()} className='material-symbols-outlined icon-chevron'>chevron_right</i>
 					<img src={folderIcon} width="16px" height="16px"/>
 					<a href={'/'+item.id}>{item.title}</a>
-					
+					<i className='add-page material-symbols-outlined' onClick={() => activateAddPage()}>add</i>
 				</span>
-				<ul> { item.children.map((child, index) => {
-				return(
-				    <TreeItem key={index} currentID={currentID}  item={child} />
-				)}
-				)} </ul></> }
+				<ul>
+					{ addPage && <li><input className="fomr-control new-page-input"  autoFocus onKeyDown={(event) => {inputKeyDown(event)}} ref={inputField} type="text"/></li>}
+					{ item.children.map((child, index) => {
+					return(
+						<TreeItem key={index} currentID={currentID}  item={child} />
+					)}
+					)} 
+				</ul>
+			</> }
 		</li>
 	)
 }

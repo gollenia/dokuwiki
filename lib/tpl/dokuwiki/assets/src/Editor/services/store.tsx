@@ -2,7 +2,7 @@ import React, { createContext, Dispatch, useReducer } from 'react';
 import getCurrentLanguage from './getCurrentLanguage';
 import Article, { ArticleAction, emptyArticle } from './models/Article';
 import { Attachment, AttachmentAction } from './models/Attachment';
-import { BibleRefAction, Verse } from './models/Bible';
+import { BibleRef, BibleRefAction } from './models/Bible';
 import { Site, SiteAction } from './models/Site';
 
 
@@ -10,11 +10,11 @@ type InitialStateType = {
 	site: Site;
 	article: Article;
 	files: Array<Attachment>;
-	bibleRefs: Array<Verse>;
+	bibleRefs: Array<BibleRef>;
 	error: string;
 	lang: string;
 	status: string;
-	mediamanager: boolean;
+	mediamanager: 'editor' | 'inspector' | '';
 	filemanager: boolean;
 };
 
@@ -22,6 +22,7 @@ const initialState: InitialStateType = {
 	site: {
 		tags: [],
 		categories: [],
+		audience: [],
 		bible: {
 			books: [],
 			info: {}
@@ -33,16 +34,17 @@ const initialState: InitialStateType = {
 	error: '',
 	lang: getCurrentLanguage(),
 	status: 'init',
-	mediamanager: false,
+	mediamanager: '',
 	filemanager: false
 }
 
 type Action = SiteAction | ArticleAction | AttachmentAction | BibleRefAction 
 			| { type: 'SET_ERROR' | 'SET_LANG' | 'SET_STATUS', payload: string} 
-			| { type: 'SHOW_MEDIAMANAGER' | 'SHOW_FILEMANAGER', payload: boolean }
+			| { type: 'SHOW_FILEMANAGER', payload: boolean } 
+			| { type: 'SHOW_MEDIAMANAGER', payload: 'editor' | 'inspector' | '' }
 
 type ProviderProps = {
-	children: React.ReactNode; // 👈️ type children
+	children: React.ReactNode;
 };
 
 const store = createContext<{
@@ -72,7 +74,9 @@ const StateProvider: React.FC<ProviderProps> = (props) => {
 				return {...state, bibleRefs: [...state.bibleRefs, action.payload]}
 			}
 			case 'DELETE_BIBLEREF':
-				return {...state, bibleRefs: state.bibleRefs.splice(action.payload, 1)}
+				let tempRefs = [...state.bibleRefs]
+				tempRefs.splice(action.payload, 1)
+				return {...state, bibleRefs: tempRefs}
 			case 'ADD_FILES': {
 				return {...state, files: state.files.concat(action.payload)}
 			}

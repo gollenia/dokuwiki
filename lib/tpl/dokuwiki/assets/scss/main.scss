@@ -2,25 +2,53 @@ $enable-grid-classes: true;
 $enable-cssgrid: true;
 $btn-font-size: 0.8125rem;
 $btn-font-size-sm: 0.75rem;
-$border-radius: 2px;
-$border-radius-sm: 2px;
-$border-radius-lg: 2px;
+$btn-border-radius: 99px;
+$border-radius: 5px;
+$border-radius-sm: 5px; 
+$border-radius-lg: 5px;
 $input-font-size: 0.8125rem;
 $input-font-size-sm:0.75rem;
 $badge-font-size: .75rem;
 $badge-font-weight: normal;
+$badge-border-radius: 99px;
+$min-contrast-ratio: 3;
+$modal-header-border-width: 0px;
+$modal-footer-border-width: 0px;
+$modal-content-border-radius: 1.5rem;
+
+
+$primary:    #0059c8;
+$secondary:  #575e71;
+$success:    #d2ef52;
+$info:       #d9e2ff;
+$warning:    #fdb528;
+$danger:     #ba1a1a;
+$dark:      rgba(76, 78, 100, 0.87);
+$light:       #f7f7f9;
+
+.object-contain {
+	object-fit: contain
+}
+
+
+.object-cover {
+	object-fit: cover
+}
 
 @import "~bootstrap/scss/bootstrap";	
+
+
 
 .sidebar {
 	width: 280px;
 	top: 0;
+	background-color: #3a3f51;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
 :root {
-	--bs-font-sans-serif: "Inter", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--bs-font-sans-serif: "Source Sans Pro", "Times New Roman";
 	--bs-body-font-size: 0.8125rem;
 	--bs-body-font-color: #515558;
 	--bs-body-color: #515558;
@@ -28,6 +56,12 @@ $badge-font-weight: normal;
   	--bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   	--bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
+
+@import './components/combobox';
+@import './components/inspector';
+@import './components/filemanager';
+@import './components/mediamanager';
+@import './components/toolbar';
 
 body {
 	background: #f1f5f8;
@@ -57,18 +91,7 @@ body {
 	box-shadow: 0 0 0 1px var(--bs-primary);
 } 
 
-.inspector {
-	
-    background: #ffffff;
-    position: fixed;
-    right: 0;
-    z-index: 50;
-	width: 400px;
-    overflow-y: scroll;
-    bottom: 0;
-    top: 70px;
-	border-left: 1px solid #d1d5d8;
-}
+
 
 main {
 	margin-top: 70px;
@@ -146,48 +169,7 @@ main {
 	@extend .btn-danger;
 }
 
-.inspector-panel {
-	
-	.panel-header {
-		background: #fafcfe;
-		padding: .5rem 1rem;
-		cursor: pointer;
-		font-weight: 600;
-		border-top: 1px solid #e1e5e8;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		i {
-			display: grid;
-			aspect-ratio: 1/1;
-			place-content: center;
-			background: #e1e5e8;
-			border-radius: 999px;
-			width: 32px;
-		}
-	}
-	.panel-content {
-		padding-left: 1rem;
-		padding-right: 1rem;
-		overflow: hidden;
-		height: 0;
-		transition:all 200ms;
-	}
-	&.open {
-		.panel-content {
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-			height: auto;
-		}
-		.panel-header {
-			border-bottom: 1px solid #e1e5e8;
-			i {
-				transform: rotate(180deg);
-				
-			}
-		}
-	}
-}
+
 
 .image-error {
 	div {
@@ -208,223 +190,8 @@ main {
 
 }
 
-.filelist {
-
-	&-row {
-		padding: .25rem 0;
-		align-items: center;
-		&:hover {
-			background: #d1d5d8;
-		}
-	}
-
-	&-row:not(:last-child) {
-		border-bottom: 1px solid #d1d5d8;
-	}
-
-	&-name {
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		flex: 1;
-		overflow: hidden;
-		a {
-			text-decoration: none;
-			color: var(--bs-body-color);
-		}
-	}
-	&-icon {
-		margin-right: .5rem;
-	}
-
-	&-size {
-		width: 3rem 
-	}
-
-	&-delete {
-		margin-left: .5rem;
-		background: var(--bs-red);
-		border-radius: 99px;
-		display: grid;
-		place-content: center;
-		text-decoration: none;
-		color: #fff;
-		cursor: pointer;
-		a {
-			
-		}
-	}
+.filter {
+	background: var(--bs-light);
+    margin-bottom: 1rem;
+    border-radius: 1.5rem;
 }
-
-.filetable {
-	font-size: 0.815rem;
-	a {
-		text-decoration: none;
-		color: var(--bs-body-color);
-	}
-
-	th {
-		text-transform: uppercase;
-		color: #919598;
-	}
-
-	tr td:last-child {
-		width: 1%;
-		white-space: nowrap;
-	}
-
-	
-
-	&-action {
-		aspect-ratio: 1/1;
-		display: inline-grid;
-		place-content: center;
-		border-radius: 99px;
-		padding: 5px;
-		cursor: pointer;
-		&:hover {
-			background: var(--bs-primary);
-			color: #fff;
-		}
-	}
-}
-
-.filedropper {
-	height: 16rem;
-	width: 100%;
-	max-width: 100%;
-	position: relative;
-
-	&-input {
-		display: none;
-	}
-
-	&-label {
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-width: 2px;
-		border-radius: $border-radius;
-		border-style: dashed;
-		border-color: #d1d5d8;
-		background-color: #f1f5f8;
-
-		&.active {
-			border-color: var(--bs-primary);
-			background-color: #0d6efd11;
-			color: var(--bs-primary);
-		}
-	}
-
-	&-surface {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		border-radius: $border-radius;
-		top: 0px;
-		right: 0px;
-		bottom: 0px;
-		left: 0px;
-	}
-
-	&-help {
-		text-align: center;
-		i {
-			font-size: 8rem
-		}
-	}
-}
-
-.fileupload {
-	background: #e1e5e8;
-    padding: 1rem;
-    border-radius: $border-radius;
-
-	&.uploading {
-		background: #0d6efd11;
-		.progress-bar {
-			background-color: var(--bs-primary);
-		}
-	}
-	&.finished {
-		background: #19875411;
-		color: #198754;
-		.progress-bar {
-			background-color: #198754;
-		}
-	}
-
-	.progress {
-		height: 5px;
-	}
-}
-
-.combobox {
-	ul {
-		position: absolute;
-		visibility: hidden;
-		max-height: 10rem;
-		width: 100%;
-		padding: 0;
-		overflow-y: scroll;
-		background: #fff;
-		margin-top: 1px;
-		border-bottom-right-radius: .5rem;
-
-		display: flex;
-		flex-direction: column;
-
-		li {
-			line-height: 1.5rem;
-			display: flex;
-			align-items: center;
-			gap: 1rem;
-			padding: 0.25rem 1rem;
-			cursor: pointer;
-
-			&:hover,
-			&.selected {
-				background-color: var(--bs-primary);
-				color: #fff;
-
-				span {
-					color: #ffffff88
-				}
-			}
-
-			img {
-				width: 32px;
-				height: 32px;
-				border-radius: 99px;
-			}
-
-			.combobox__dummy {
-				width: 32px;
-				height: 32px;
-			}
-
-			span {
-				font-size: 0.75rem;
-				line-height: 0.5rem;
-				color: var(--gray-600);
-			}
-
-			&.muted {
-				color: var(--gray-600);
-			}
-		}
-	}
-
-	&--open,
-	&:focus-within {
-		input[type=text] {
-			border-bottom-right-radius: 0;
-		}
-
-		ul {
-			visibility: visible;
-			z-index: 999;
-		}
-	}
-}
-

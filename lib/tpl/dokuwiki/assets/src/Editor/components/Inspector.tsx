@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { store } from '../services/store';
-import Combobox from './Combobox';
-import FileList from './FileList';
+import BibleRef from './BibleRef';
+import Combobox from './Elemets/Combobox';
+import FileList from './FileManager/FileList';
 import Panel from './Panel';
 import TagSelector from './TagSelector';
 
@@ -26,10 +27,12 @@ const Inspector = () => {
 	}
 
 	
+
+	
 	return (
 		<div className='inspector'>
-			<div className="d-flex justify-content-end gap-2 py-2">
-							<button className="right btn btn-secondary" >Vorschau</button>
+			<div className="d-flex justify-content-end gap-2 py-4 px-4">
+							<button className="right btn btn-outline-danger" >Löschen</button>
 							<button className="right btn btn-primary" onClick={() => saveArticle()}>Speichern</button>
 			</div>
 			<div className='inspector-panels'>
@@ -46,8 +49,8 @@ const Inspector = () => {
 					</div> 
 				}
 				<div className="d-flex mt-2 gap-2">
-					<button className="btn btn-outline-secondary btn-sm d-flex" onClick={() => {}}><i className="material-icons">image</i> Ändern</button>
-					<button className="btn btn-outline-danger btn-sm d-flex" onClick={() => {}}><i className="material-icons">delete</i> Löschen</button>
+					<button className="btn btn-outline-secondary btn-sm d-flex" onClick={() => {dispatch({type: 'SHOW_MEDIAMANAGER', payload: 'inspector'})}}><i className="material-symbols-outlined">image</i> Ändern</button>
+					<button className="btn btn-outline-danger btn-sm d-flex" onClick={() => {}}><i className="material-symbols-outlined">delete</i> Entfernen</button>
 				</div>
 			</Panel>
 
@@ -65,10 +68,15 @@ const Inspector = () => {
 				</div>
 			</Panel>
 			
-			<Panel title="Kategorie">
-                    <div className="input-text">
+			<Panel title="Taxonomie">
+                    <div className="input-text mb-4">
                         <label className="label label-sm">Kategorie</label>
-                        <Combobox options={site.categories} />
+                        <Combobox placeholder={site.categories?.find(category => category.value == article.category)?.label} options={site.categories} onChange={(e) => dispatch({type: 'SET_ARTICLE_DATA', key: 'category', payload: e})}/>
+                    </div>    
+		
+                    <div className="input-text">
+                        <label className="label label-sm">Zielgruppe</label>
+                        <Combobox placeholder={site.audience?.find(audience => audience.value == article.audience)?.label} options={site.audience} onChange={(e) => dispatch({type: 'SET_ARTICLE_DATA', key: 'audience', payload: e})}/>
                     </div>    
 			</Panel>
 
@@ -77,16 +85,20 @@ const Inspector = () => {
 					<TagSelector availableTags={site.tags} savedTags={article.tags} onChange={(tags) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'tags', payload: tags})}}/>
 				</div>
 			</Panel>
+
+			<Panel title="Bibelstellen">
+				<BibleRef />
+			</Panel>
 			
 			<Panel title="Erscheinungsbild">
 			        <div className="input-text">
                         <label className="label label-sm">Icon</label>
-                        <input onChange={() => {}} type="text" className="w-full form-control form-control-sm" value={article.icon} />
+                        <input onChange={(event) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'icon', payload: event.target.value})}} type="text" className="w-full form-control form-control-sm" value={article.icon} />
                         <p className="text-xs text-secondary">Ein beliebiges Icon von <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> aus dem "Filled"-Set. Bitte den Namen Kleingeschrieben und mit Unterstrichen angeben</p>
                     </div>
 					<div className="input-text">
                     <label className="label label-sm">Seitenlink</label>
-                    <input onChange={() => {}} type="text"  className="w-full  form-control form-control-sm" v-model="page.pagelink" required />
+                    <input onChange={(event) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'pagelink', payload: event.target.value})}} type="text"  className="w-full  form-control form-control-sm" value={article.pagelink} required />
                     <p className="text-xs text-secondary">Hier kann ein Link eingefügt werden, der dann als Button im Titelbild angezeigt wird.</p>
                 </div>
 			</Panel>

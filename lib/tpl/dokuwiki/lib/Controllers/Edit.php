@@ -24,7 +24,8 @@ class Edit extends Controller implements ControllerInterface
 		$this->site->add_data('page', Page::find($ID));
 		$this->site->add_data('site', [
 			"tags" => rawWiki("system:tags"),
-			"categories" => rawWiki('system:categories'),
+
+			"audience" => page_exists('system:audience') ? rawWiki('system:audience') : [],
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);
 
@@ -55,6 +56,7 @@ class Edit extends Controller implements ControllerInterface
 		$page->icon = strtolower(str_replace(" ", "_", cleanText($data['icon'])));
 		$page->exclude = cleanText($data['exclude']);
 		$page->title = cleanText($data['title']);
+		$page->audience = cleanText($data['audience']);
 		$result = $page->save();
 		return json_encode(['request' => $_GET, 'page' => $result]);
 	}
@@ -62,15 +64,15 @@ class Edit extends Controller implements ControllerInterface
 	public function ajax_list(Input $request)
 	{
 		$id = $request->str("id", ":");
-		$page = Page::where("id", $id);
+		$page = Page::getFlatTree($id);
 		return json_encode($page);
 	}
 
 	public function ajax_tree(Input $request)
 	{
 		$id = $request->str("id", "");
-		$pageTree = Page::getTree($id, false, "bibel,system");
-		return json_encode($pageTree['tree']);
+		$pageTree = Page::getTree($id, "bibel,system");
+		return json_encode($pageTree);
 	}
 
 	public function ajax_delete(Input $request)
@@ -88,8 +90,9 @@ class Edit extends Controller implements ControllerInterface
 		header("Access-Control-Allow-Origin: *");
 
 		return json_encode([
-			"tags" => rawWiki("system:tags"),
-			"categories" => rawWiki('system:categories'),
+			"tags" => page_exists('system:tags') ? rawWiki("system:tags") : '[]',
+			"categories" => page_exists('system:categories') ? rawWiki('system:categories') : '[]',
+			"audience" => page_exists('system:audience') ? rawWiki('system:audience') : ['sdfdf'],
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);
 	}

@@ -1,9 +1,12 @@
+import { BibleRef } from './Bible';
 import { PhpDate } from "./PhpDate";
 
 type Article = {
 	id: string;
 	tags: Array<string>;
 	pageimage: string;
+	audience: string;
+	bibleref: Array<BibleRef>;
 	title: string;
 	content: string;
 	summary: string;
@@ -28,6 +31,8 @@ const emptyArticle = {
 	title: '',
 	content: '',
 	summary: '',
+	audience: '',
+	bibleref: new Array,
 	exclude: true,
 	category: '',
 	icon: '',

@@ -19,11 +19,12 @@ const TreeView = () => {
 			.then(response => response.json())
 			.then(data => setTree(data))
 	},[]);
+	console.log(tree)
 
   return (
 	<>
 		<ul className='tree tree-root'>
-		{ tree.map((item, index) => {
+		{ tree?.map((item, index) => {
 			return <TreeItem key={index} currentID={currentId} item={item} />
 		}) }
 		</ul>

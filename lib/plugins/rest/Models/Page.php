@@ -23,7 +23,7 @@ class Page
 
 	// Taxonomy
 	public string $category = "";
-	public int $audience = 0;
+	public string $audience = "";
 	public $tags = [];
 	public array $bibleref;
 
@@ -125,7 +125,13 @@ class Page
 		return new self($id);
 	}
 
-	public function to_array($filter = [])
+	/**
+	 * Convert Page to an array, with filtering options
+	 *
+	 * @param array<string> $filter Which filter
+	 * @return array
+	 */
+	public function to_array(array $filter = []): array
 	{
 		$ret = (array) $this;
 		if (!empty($filter)) {
@@ -134,18 +140,24 @@ class Page
 		return $ret;
 	}
 
-	public function exists()
+	/**
+	 * Check if the current page exists
+	 *
+	 * @return bool
+	 */
+	public function exists(): bool
 	{
 		return page_exists($this->id);
 	}
 
 	/**
-	 * get raw wiki test either without or with template
+	 * get raw wiki text
 	 *
+	 * @deprecated 2.0
 	 * @param string $id
 	 * @return string raw wiki text
 	 */
-	public function get_raw(string $id)
+	public function get_raw(string $id): string
 	{
 		if (p_get_metadata($id, 'raw')) {
 			return (p_get_metadata($id, 'raw'));
@@ -161,7 +173,7 @@ class Page
 	 * @return \Contexis\Models\Page $instance 
 	 * 
 	 */
-	public static function findOrNew(string $id, array $data = [])
+	public static function findOrNew(string $id, array $data = []): Page
 	{
 		if (!($instance = self::find($id))) {
 			$instance = new self($id);
@@ -181,7 +193,7 @@ class Page
 	 * @param bool $as_array Return pages as arrays, not objects
 	 * @return array of Pages
 	 */
-	public static function where(string $key, string $value, array $filter = [], bool $as_array = false): array
+	public static function where(string $key, string $value, array $filter = [], bool $as_array = false)
 	{
 
 		$pages = [];
@@ -264,10 +276,10 @@ class Page
 	 * @param [type] $namespace
 	 * @return void
 	 */
-	public static function findAll($namespace = "", $excludePages = false, $excludes = "")
+	public static function getFlatTree($namespace = "", $excludes = "")
 	{
 		$index = new Index();
-		$result = $index->tree($namespace, $excludes, $excludePages);
+		return $index->tree($namespace, $excludes, true);
 	}
 
 	/**
@@ -276,10 +288,10 @@ class Page
 	 * @param [type] $namespace
 	 * @return void
 	 */
-	public static function getTree($namespace = "", $excludePages = false, $excludes = "")
+	public static function getTree($namespace = "", $excludes = "")
 	{
 		$index = new Index();
-		return $index->tree($namespace, $excludes, $excludePages);
+		return $index->tree($namespace, $excludes);
 	}
 
 	/**

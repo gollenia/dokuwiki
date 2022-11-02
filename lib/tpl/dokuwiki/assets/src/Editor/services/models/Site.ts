@@ -3,7 +3,8 @@ import { Bible } from "./Bible"
 export type Site = {
 	tags: Array<Tag>
 	categories: Array<Category>
-	bible: Bible
+	bible: Bible,
+	audience: Array<Category>
 }
 
 export type Tag = { 

@@ -60,15 +60,19 @@ class Article
 	static function add(Book $book, $id, $chapter = 0, $verse = 0)
 	{
 		$db = Bible::get_db();
-		$statement = $db->prepare("SELECT FROM pages WHERE (doku_id = :doku_id AND book_id = :book_id, AND chapter = :chapter");
-		$query = $statement->execute();
-		if ($query && $query->numColumns() > 0) return 0;
-		$query->finalize();
-		$statement = $db->prepare("INSERT INTO pages (doku_id, book_id, chapter, verse) VALUES (:doku_id, :book_id, :chapter, :verse)");
+		$statement = $db->prepare("SELECT * FROM pages WHERE (doku_id = :doku_id AND book_id = :book_id AND chapter = :chapter)");
 		$statement->bindValue(':doku_id', $id, SQLITE3_TEXT);
 		$statement->bindValue(':book_id', $book->id, SQLITE3_INTEGER);
 		$statement->bindValue(':chapter', $chapter, SQLITE3_INTEGER);
-		$statement->bindValue(':verse', $verse, SQLITE3_INTEGER);
+		$query = $statement->execute();
+
+
+		$query->finalize();
+		$statement = $db->prepare("INSERT INTO pages (doku_id, book_id, chapter) VALUES (:doku_id, :book_id, :chapter)");
+
+		$statement->bindValue(':doku_id', $id, SQLITE3_TEXT);
+		$statement->bindValue(':book_id', $book->id, SQLITE3_INTEGER);
+		$statement->bindValue(':chapter', $chapter, SQLITE3_INTEGER);
 		$query = $statement->execute();
 		return $db->lastInsertRowID();
 	}

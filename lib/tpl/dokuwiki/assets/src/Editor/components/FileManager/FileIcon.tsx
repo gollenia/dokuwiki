@@ -1,12 +1,12 @@
 import React from 'react';
-import docIcon from '../images/doc.svg';
-import fileIcon from '../images/file.svg';
-import jpgIcon from '../images/jpg.svg';
-import mpgIcon from '../images/mp3.svg';
-import pdfIcon from '../images/pdf.svg';
-import pptIcon from '../images/ppt.svg';
-import xlsIcon from '../images/xls.svg';
-import zipIcon from '../images/zip.svg';
+import docIcon from '../../images/doc.svg';
+import fileIcon from '../../images/file.svg';
+import jpgIcon from '../../images/jpg.svg';
+import mpgIcon from '../../images/mp3.svg';
+import pdfIcon from '../../images/pdf.svg';
+import pptIcon from '../../images/ppt.svg';
+import xlsIcon from '../../images/xls.svg';
+import zipIcon from '../../images/zip.svg';
 
 interface Props {
 	extension: string;

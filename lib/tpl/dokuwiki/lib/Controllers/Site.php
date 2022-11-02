@@ -3,6 +3,9 @@
 namespace Contexis\Controllers;
 
 use Contexis\Core\Controller;
+use Contexis\Models\Audience;
+use Contexis\Models\Category;
+use Contexis\Models\Tag;
 use dokuwiki\Language;
 
 class Site extends Controller
@@ -26,6 +29,11 @@ class Site extends Controller
 				\Contexis\Core\Menu::get("system:menu"),
 				['available_langs' => Language::get_available()]
 			),
+			'taxonomies' => [
+				'tags' => Tag::findAll(true),
+				'categories' => Category::findAll(true),
+				'audience' => Audience::findAll(true),
+			],
 			"footer" => rawWiki("system:footer"),
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);

@@ -15,16 +15,14 @@ class Page extends Controller
 		parent::__construct($site);
 	}
 
-	public function ajax_get()
+	public function ajax_get($request)
 	{
-
-
 		global $ID;
 		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
 		$id = !key_exists("id", $_GET) || $_GET['id'] == '' ? 'start' : $_GET['id'];
 		$page = \dokuwiki\plugins\rest\Models\Page::find($ID, $filter);
-		if (!$page->exists()) {
-			$page = \dokuwiki\plugins\rest\Models\Page::find('system:de:notfound');
+		if (!$page->exists() && !$request->has('edit')) {
+			$page = \dokuwiki\plugins\rest\Models\Page::find('system:notfound');
 		}
 		//if (array_key_exists('render', $_GET)) $page->render();
 		$tmp = array(); // No event data

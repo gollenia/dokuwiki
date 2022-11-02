@@ -65,4 +65,11 @@ class Strings
 
 		return "";
 	}
+
+	static function json_to_array($string)
+	{
+		$result = json_decode($string, true);
+		if (!$result) return [];
+		return $result;
+	}
 }

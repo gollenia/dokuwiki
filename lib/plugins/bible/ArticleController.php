@@ -10,13 +10,12 @@ class ArticleController
 	{
 		global $INPUT;
 		global $conf;
-		$book = $INPUT->int('book', '10');
+		$book = $INPUT->int('id', '10');
 
 		$chapter = $INPUT->int('chapter', 1);
 		$verse = $INPUT->int('verse', 0);
 
 		$book = Book::find($book);
-
 		$pages = Article::where($book, $chapter, $verse);
 		header("Access-Control-Allow-Origin: *");
 		header('Content-Type: application/json');
@@ -27,19 +26,21 @@ class ArticleController
 	{
 		$error = [];
 
-		global $INPUT;
-		$book = $INPUT->int('book', 0);
-		$chapter = $INPUT->str('chapter', 0);
+		global $INPUT, $conf;
+		$book = $INPUT->int('book_id', 0);
+		$chapter = $INPUT->int('chapter', 0);
 		$id = $INPUT->str('id', 0);
-		$lang = $INPUT->str('lang', '');
+		$lang = $INPUT->str('lang', $conf['lang']);
 
 		if (empty($lang)) $error[] = 'language missing';
 		if ($book == 0) $error[] = 'book missing';
 		if (empty($id)) $error[] = 'id missing';
 
+
+
 		if (!empty($error)) {
 			http_response_code(400);
-			echo json_encode(['error' => join(', ', $error)]);
+			echo json_encode(['error' => $error]);
 			return;
 		}
 

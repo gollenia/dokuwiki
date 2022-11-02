@@ -1,8 +1,8 @@
 import React, { KeyboardEvent, useContext, useEffect, useRef, useState } from 'react';
 import { FormattedNumber } from 'react-intl';
-import fileSize from '../services/fileSize';
-import { Attachment } from '../services/models/Attachment';
-import { store } from '../services/store';
+import fileSize from '../../services/fileSize';
+import { Attachment } from '../../services/models/Attachment';
+import { store } from '../../services/store';
 import FileIcon from './FileIcon';
 
 type Props = {

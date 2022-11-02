@@ -23,6 +23,12 @@ class Index
 
 	public $startpages = ["start"];
 
+	private $exclusions = '';
+
+	private array $data = [];
+	private array $flatTree = [];
+	private bool $flat = false;
+
 	public function cleanID($ajax)
 	{
 		$id = $ajax->str('id', 'none');
@@ -66,14 +72,13 @@ class Index
 	 * @param boolean $excludePages Exclude Pages and only show Dirs
 	 * @return array NEsted array with Site Tree
 	 */
-	public function tree($namespace = "", $excludes = "", $excludePages = false)
+	public function tree($namespace = "", $excludes = "", $flat = false)
 	{
-		$data = [
-			'exclunsns' => false,
-			'exclutype' => false
-		];
-		$r = $this->_walk($data, $namespace, $excludes, $excludePages);
-		return $data;
+		$this->flat = $flat;
+		$this->excludes = $excludes;
+		$r = $this->_walk($namespace);
+
+		return $this->data;
 	}
 
 
@@ -151,19 +156,14 @@ class Index
 		return $return;
 	}
 
-	function _isExcluded($item, $exclutype, $arrayRegex, $exclusions = false)
+	function _isExcluded($item)
 	{
-		if ($arrayRegex === true) return true;
+
 		global $conf;
 		if ((strlen($conf['hidepages']) != 0) && preg_match('/' . $conf['hidepages'] . '/i', $item['id'])) return true;
-		if (is_array($arrayRegex)) foreach ($arrayRegex as $regex) {
-			if (preg_match('/' . $regex . (($exclutype == 'title') ? '/' : '/i'), $item[$exclutype])) {
-				return true;
-			}
-		}
 
-		if ($exclusions) {
-			$exclusion_array = explode(",", $exclusions);
+		if ($this->exclusions) {
+			$exclusion_array = explode(",", $this->exclusions);
 			foreach ($exclusion_array as $exclusion) {
 				if ($exclusion == $item['id']) {
 
@@ -171,6 +171,8 @@ class Index
 				}
 			}
 		}
+
+		if (substr($item['id'], 0, 6) == 'system') return true;
 
 		return false;
 	}
@@ -202,15 +204,14 @@ class Index
 			return false;
 	}
 
-	function _walk(&$data, $ns, $exclusions = "", $excluPages = false)
+	function _walk($ns = '')
 	{
 		global $conf;
-		// Prepare
-		$ns = $data['ns'];
 
 		$path = $conf['savedir'] . '/pages/' . str_replace(':', '/', $ns);
 		$path = utf8_encodeFN($path);
 		if (!is_dir($path)) {
+
 			return false;
 		}
 		// Main page
@@ -219,24 +220,21 @@ class Index
 			'exist' => false,
 			'title' => NULL
 		);
-		resolve_pageid('', $main['id'], $main['exist']);
 
 		$main['title'] = p_get_first_heading($main['id'], true);
 		if (is_null($main['title']))
 			$main['title'] = end(explode(':', $ns));
 
-		$data['main'] = $main;
+
 		// Recursion
-		$data['tree'] = array();
-		$data['index_pages'] = array($main['id']);
-		$data['index_priority'] = 0;
-		$this->_walk_recurse($data, $path, $exclusions, $ns, $excluPages, false, 1, $data['maxdepth'], $data['tree'], $data['index_pages']);
+		$this->data = $this->_walk_recurse($path, $ns, 1, 0);
 		return true;
 	}
 
-	function _walk_recurse(&$data, $path, $exclusions = "", $ns, $excluPages, $excluNS, $depth, $maxdepth, &$_TREE)
+	function _walk_recurse($path, $ns, $depth, $maxdepth)
 	{
-		$scanDirs = @scandir($path, $data['scandir_sort']);
+		$result = [];
+		$scanDirs = @scandir($path, 0);
 		if ($scanDirs === false) {
 			msg("catlist: can't open directory of namespace " . $ns, -1);
 			return;
@@ -245,73 +243,42 @@ class Index
 
 			if ($file[0] == '.' || $file[0] == '_') continue;
 			$name = utf8_decodeFN(str_replace('.txt', '', $file));
+
 			$id = ($ns == '') ? $name : $ns . ':' . $name;
 
-			$item = array('id' => $id, 'name'  => $name, 'title' => NULL);
-			// It's a namespace
+			$item = array('id' => $id, 'title' => NULL);
+
+			if ($this->_isExcluded($item)) continue;
+
+			$item['title'] = p_get_metadata($id, 'title', p_get_first_heading($id, true)) ?? $name;
+
+
 			if (is_dir($path . '/' . $file)) {
-				// Index page of the namespace
 
-				$index_exists = false;
-				$index_id = $this->_getStartPage($data['index_priority'], $ns, $path, $name, ($data['nsLinks'] == CATLIST_NSLINK_FORCE), $index_exists);
-				if ($index_exists)
-					$data['index_pages'][] = $index_id;
-				// Exclusion
-				if ($excluNS) continue;
-
-				if (array_key_exists('exclutype', $data) && $this->_isExcluded($item, $data['exclutype'], $data['excluns'], $exclusions)) continue;
-				// Namespace
-
-				$item['startpage'] = false;
-				$item['title'] = p_get_first_heading($id, true);
 				if (page_exists($id . ':start')) {
-					$item['startpage'] = true;
 					$item['title'] = p_get_first_heading($id . ":start", true);
 				}
 
 				if (is_null($item['title']))
 					$item['title'] = ucfirst(end(explode(":", $id)));
-				$item['folder'] = true;
-				// Button
-				$item['buttonid'] = $data['createPageButtonSubs'] ? $id . ':' : NULL;
-				// Recursion if wanted
+
 				$item['children'] = array();
 				$okdepth = ($depth < $maxdepth) || ($maxdepth == 0);
-				if (!$this->_isExcluded($item, $data['exclutype'], $data['exclunsall']) && $okdepth) {
-					$exclunspages = array_key_exists('exclunspages', $data) ? $this->_isExcluded($item, $data['exclutype'], $data['exclunspages']) : false;
-					$exclunsns = array_key_exists('exclunsns', $data) ? $this->_isExcluded($item, $data['exclutype'], $data['exclunsns']) : false;
-					$this->_walk_recurse($data, $path . '/' . $file, $exclusions, $id, $exclunspages, $exclunsns, $depth + 1, $maxdepth, $item['children']);
+				if (!$this->_isExcluded($item) && $okdepth) {
+					$children = $this->_walk_recurse($path . '/' . $file, $id, $depth + 1, $maxdepth);
 				}
 				// Tree
-				$_TREE[] = $item;
-			} else
-				// It's a page
-				if (!$excluPages) {
+				$item['children'] = $children;
+				$result[] = $item;
+				continue;
+			}
 
-					if ($file == "start.txt") {
-						continue;
-					}
-					if (substr($file, -4) != ".txt") continue;
-					// Page title
+			if ($file == "start.txt" || substr($file, -4) != ".txt") continue;
 
-					$title = p_get_first_heading($id, true);
-					if (!is_null($title))
-						$item['title'] = $title;
-
-					if (is_null($item['title']))
-						$item['title'] = $name;
-					// Exclusion
-					if (array_key_exists('exclupage', $data) && $this->_isExcluded($item, $data['exclutype'], $data['exclupage'])) continue;
-					// Tree
-
-					$item['folder'] = false;
-					if ($name == "start") {
-						$item['folder'] = true;
-					}
-					if (strcmp(end($_TREE)['id'], $item['id']) !== 0) {
-						$_TREE[] = $item;
-					}
-				}
+			if (strcmp(end($result)['id'], $item['id']) !== 0) {
+				$result[] = $item;
+			}
 		}
+		return $result;
 	}
 }

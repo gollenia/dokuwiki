@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { store } from '../services/store';
+import { store } from '../../services/store';
 import FileTableRow from './FileTableRow';
 
 

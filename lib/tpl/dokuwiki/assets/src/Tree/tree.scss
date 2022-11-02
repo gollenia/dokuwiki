@@ -1,5 +1,9 @@
-.tree {
+#react-tree {
+	overflow: auto;
+}
 
+.tree {
+	
 	font-size: .75rem;
 
 	ul {
@@ -11,6 +15,21 @@
 		width: 1.5rem;
 	}
 
+	.add-page {
+		display: none;
+		font-size: 20px;
+		background: #67B82A;
+		border-radius: 99px;
+		margin-left: auto;
+	}
+
+	.new-page-input {
+		margin-left: 1.5rem;
+		font-size: .75rem;
+		line-height: 1rem;
+		padding: 0.2rem;
+		width: auto;
+	}
 	
 
 	&.tree-root {
@@ -43,6 +62,13 @@
 
 	li {
 		padding: 0.15rem 0.25rem;
+		
+	}
+
+	li>span:hover {
+		.add-page {		
+			display: inline-block;
+		}
 	}
 
 	li.file {
@@ -67,4 +93,6 @@
 		background: var(--bs-primary);
 		color: white;
 	}
+
+	
 }

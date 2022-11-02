@@ -30,11 +30,9 @@ class Verse
 	 * @param int $verse 
 	 * @return void 
 	 */
-	public function __construct($result)
+	public function __construct($result = false)
 	{
 		if ($result) {
-
-
 			$this->text = $result['text'];
 			$this->chapter = $result['chapter'];
 			$this->verse = $result['verse'];

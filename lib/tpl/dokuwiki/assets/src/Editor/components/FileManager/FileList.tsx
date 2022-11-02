@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { FormattedNumber } from 'react-intl';
-import fileSize from '../services/fileSize';
-import { store } from '../services/store';
+import fileSize from '../../services/fileSize';
+import { store } from '../../services/store';
 import FileIcon from './FileIcon';
 
 

@@ -4,7 +4,7 @@ type Props = {
 	onChange: (e: FileList) => void
 }
 
-const DragDrop = (props: Props) => {
+const FileDrop = (props: Props) => {
 
 	const { onChange } = props
 
@@ -54,4 +54,4 @@ const DragDrop = (props: Props) => {
 	)
 }
 
-export default DragDrop
+export default FileDrop

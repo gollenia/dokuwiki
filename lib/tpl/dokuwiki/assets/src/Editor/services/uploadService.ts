@@ -9,7 +9,7 @@ const http = axios.create({
 
   
 
-const upload = (file: File, onUploadProgress: any) => {
+const upload = (file: File, onUploadProgress: any, target = '') => {
 
 	let formData = new FormData();
 		
@@ -17,8 +17,10 @@ const upload = (file: File, onUploadProgress: any) => {
 	console.log(window.localStorage.getItem('sectok'));
 	
 	formData.append('sectok', window.localStorage.getItem('sectok'))
+	console.log(target)
+	if(target == '') target = window.DOKU_ID;
 
-	return axios.post("/?controller=media&method=upload&id=" + window.DOKU_ID, formData, {
+	return axios.post("/?controller=media&method=upload&id=" + target, formData, {
 		headers: {
 			"Content-Type": "multipart/form-data",
 		},

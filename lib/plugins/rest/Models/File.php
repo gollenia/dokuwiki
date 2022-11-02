@@ -97,7 +97,7 @@ class File
 	 * @param string $excludes 
 	 * @return array List of files
 	 */
-	public static function findAll($ns, $excludes = "")
+	public static function findAll($ns, $excludes = "", $sort = 'natural')
 	{
 		global $conf;
 
@@ -107,7 +107,7 @@ class File
 
 		$dir = utf8_encodeFN(str_replace(':', '/', $ns));
 		$data = [];
-		search($data, $conf['mediadir'], 'search_media', ['showmsg' => false, 'depth' => 1], $dir);
+		search($data, $conf['mediadir'], 'search_media', ['showmsg' => false, 'depth' => 1], $dir, 1, $sort);
 
 		$result = [];
 

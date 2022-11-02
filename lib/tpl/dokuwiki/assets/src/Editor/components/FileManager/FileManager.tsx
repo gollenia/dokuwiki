@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { store } from '../services/store';
-import DragDrop from './DragDrop';
+import { store } from '../../services/store';
+import Uploader from '../Uploader/Uploader';
 import FileTable from './FileTable';
-import Uploader from './Uploader';
 
 type Props = {
 
@@ -13,17 +12,13 @@ const FileManager = (props: Props) => {
 	const globalState = useContext(store);
 	const { state: {filemanager, files, article}, dispatch } = globalState;
 
-	const [ uploadList, setUploadList ] = useState<FileList>()
+	const [ uploadMode, setUploadMode ] = useState<boolean>(false)
 
 	const closeModal = () => {
 		dispatch({type: 'SHOW_FILEMANAGER', payload: false})
 	}
 
-	const filesChanged = (files: FileList) => {
-		setUploadList(files)
-	}
 
-	const hasUploads = uploadList != undefined
 
   	return (
 		<div>
@@ -40,18 +35,21 @@ const FileManager = (props: Props) => {
 						<h5 className="modal-title" id="exampleModalLabel">Dateimanager</h5>
 						<button type="button" className="btn-close" aria-label="Close" onClick={() => {closeModal()}}></button>
 					</div>
-					<div className="container">
-						<div className="row ">
-							<div className="col-7 p-4 bg-gray-200">
+					<div className="">
+						<div className="p-4">
+							{ !uploadMode && <div className="">
 							<FileTable />
-							</div>
-							<div className="col-5 p-4">
-							<DragDrop onChange={filesChanged} />
-							{ hasUploads && <Uploader fileList={uploadList} />}
-							</div>
+							</div> }
+							{ uploadMode && 
+							<div className="p-4">
+							<Uploader onFinish={() => setUploadMode(false)} target={window.DOKU_ID}/>
+							</div> }
 						</div>
 					</div>
-	
+					<div className="modal-footer">
+						
+						<button type="button" className="btn btn-primary" onClick={() => {setUploadMode(true)}}>Upload</button>
+					</div>
 					</div>
 				</div>
 			</div>
