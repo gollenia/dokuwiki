@@ -9,8 +9,6 @@ use dokuwiki\plugins\rest\Models\Page;
 
 class Search extends Controller
 {
-
-	public $template = "search";
 	private array $result = [];
 	private array $ids = [];
 	private $query;

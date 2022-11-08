@@ -14,7 +14,6 @@ use dokuwiki\Extension\Event;
 
 class Show extends Controller
 {
-
 	public $template = "show";
 
 	public function __construct($site)

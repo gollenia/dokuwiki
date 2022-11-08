@@ -54,7 +54,7 @@ class Site
 		$this->twig_array['metadata'] = $metadata;
 		$this->twig_array['tld'] = \Contexis\Core\Utilities\Domain::get_tld();
 		$this->twig_array['page_exists'] = page_exists($ID);
-		$this->twig_array['pageimage'] = $this->getPageImage($metadata);
+		//$this->twig_array['pageimage'] = $this->getPageImage($metadata);
 	}
 
 	public function add_data($key, $value)

@@ -28,7 +28,7 @@ const Panel: React.FC<PanelProps> = (props) => {
 	return (
 		<div className={classNames}>
 			<div className='panel-header' onClick={() => toggleOpen(!open)}>
-				<span>{title}</span><i className="material-icons">expand_more</i>
+				<span>{title}</span><i className="material-symbols-outlined">expand_more</i>
 			</div>
 			<div className='panel-content'>{children}</div>
 		</div>

@@ -1,5 +1,3 @@
-//_tsconfig.json_
-
 {
     "compilerOptions": {
       "outDir": "./dist/",

@@ -18,6 +18,7 @@ class Page extends Controller
 	public function ajax_get($request)
 	{
 		global $ID;
+		header("Access-Control-Allow-Origin: *");
 		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
 		$id = !key_exists("id", $_GET) || $_GET['id'] == '' ? 'start' : $_GET['id'];
 		$page = \dokuwiki\plugins\rest\Models\Page::find($ID, $filter);

@@ -172,6 +172,7 @@ class File
 
 	public function rename($name)
 	{
+
 		$old = $this->path;
 		$new = pathinfo($this->path, PATHINFO_DIRNAME) . '/' . $name;
 		if (!rename($old, $new)) return;

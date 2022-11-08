@@ -38,13 +38,21 @@ const Inspector = () => {
 			<div className='inspector-panels'>
 			<Panel title="Beitragsbild">
 				{ article.pageimage && article.pageimage !== 'error' &&
-					<img className="object-cover w-100 ratio ratio-16x9" src={'/_media/' + article.pageimage + '?w=600'} /> 
+					<img onClick={() => {dispatch({type: 'SHOW_MEDIAMANAGER', payload: 'inspector'})}} className="object-cover w-100 ratio ratio-16x9" src={'/_media/' + article.pageimage + '?w=600'} /> 
 				}
 				{ article.pageimage && article.pageimage === 'error' &&
-					<div className="image-error w-100 ratio ratio-16x9 bg-red" >
+					<div onClick={() => {dispatch({type: 'SHOW_MEDIAMANAGER', payload: 'inspector'})}} className="image-error w-100 ratio ratio-16x9" >
 						<div>
-						<i className='material-icons'>image_not_supported</i>
+						<i className='material-symbols-outlined'>image_not_supported</i>
 						<span>Bild nicht gefunden</span>
+						</div>
+					</div> 
+				}
+				{ !article.pageimage &&
+					<div onClick={() => {dispatch({type: 'SHOW_MEDIAMANAGER', payload: 'inspector'})}} className="image-empty w-100 ratio ratio-16x9" >
+						<div>
+						<i className='material-symbols-outlined'>photo_library</i>
+						<span>Bild aussuchen</span>
 						</div>
 					</div> 
 				}

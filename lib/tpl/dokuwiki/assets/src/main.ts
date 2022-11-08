@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import 'Main/newPage';
+import './Main/newPage';
 
 declare global {
     interface Window { Alpine: typeof Alpine }

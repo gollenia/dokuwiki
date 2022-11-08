@@ -137,24 +137,7 @@ class BibleView extends Controller implements ControllerInterface
 	public function render()
 	{
 
-		global $ID;
-		$path = explode(":", $ID);
-
-		if ($path[1] == "start" || count($path) == 1) {
-			return Renderer::compile("pages/show.twig", $this->site->get());
-		}
-		$bible = $this->get_book($path[1]);
-		$verses = $this->get_verses($bible, $path[2]);
-		$all_books = $this->get_books();
-		$this->site->add_data("bible", ["book" => $bible, "verses" => $verses, "chapter" => $path[2], "base" => $path[0]]);
-		$this->site->add_data("all_books", $all_books);
-
-		$articles = Page::where("tag", $bible->short_name);
-		$articles_chapter = Page::where("tag", $bible->short_name . $path[2]);
-
-		$this->site->add_data("articles", array_merge($articles, $articles_chapter));
-
-		return Renderer::compile("pages/bible.twig", $this->site->get());
+		return "no view";
 	}
 
 	static function parse_reference(string $reference)

@@ -10,7 +10,6 @@ use Contexis\Twig\Renderer;
 class Tag extends Controller
 {
 
-	public $template = "tag";
 
 	public function __construct($site)
 	{
@@ -29,13 +28,5 @@ class Tag extends Controller
 		$pages = Page::where("tag", $tag);
 		$this->site->add_data("pages", $pages);
 		$this->site->add_data("tag", $tag);
-	}
-
-
-
-
-	public function render()
-	{
-		echo Renderer::compile("pages/" . $this->template . ".twig", $this->site->get());
 	}
 }
