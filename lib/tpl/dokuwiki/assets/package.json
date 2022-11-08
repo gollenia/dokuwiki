@@ -44,6 +44,8 @@
     "react-arborist": "^1.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.2.1",
-    "react-redux": "^8.0.4"
+    "react-redux": "^8.0.4",
+    "remove-console-webpack-plugin": "^0.2.0",
+    "uglifyjs-webpack-plugin": "^2.2.0"
   }
 }
