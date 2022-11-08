@@ -90,8 +90,8 @@ const FileTableRow = (props: Props) => {
 			<td>{file.count}</td>
 			<td>
 				<div className='d-flex'>
-					<a onClick={() => deleteFile()} className="filetable-action"><i className=' material-icons'>close</i></a>
-					<a onClick={() => activateRenameMode()} className="filetable-action"><i className=" material-icons">drive_file_rename_outline</i></a>
+					<a onClick={() => deleteFile()} className="filetable-action"><i className=' material-symbols-outlined'>close</i></a>
+					<a onClick={() => activateRenameMode()} className="filetable-action"><i className=" material-symbols-outlined">drive_file_rename_outline</i></a>
 				</div>
 			</td>
 		</tr>

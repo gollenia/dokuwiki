@@ -325,7 +325,7 @@ class Setting
 		];
 
 		if (!$this->caution()) return "";
-		$result = '<span class="input-group-text" id="basic-addon2"><i class="material-icons ' . $colors[$this->caution()] . '">' . $icons[$this->caution()] . '</i></span>';
+		$result = '<span class="input-group-text" id="basic-addon2"><i class="material-symbols-outlined ' . $colors[$this->caution()] . '">' . $icons[$this->caution()] . '</i></span>';
 		return $result;
 	}
 }

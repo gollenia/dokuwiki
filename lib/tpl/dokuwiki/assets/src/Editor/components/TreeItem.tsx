@@ -44,7 +44,7 @@ const TreeItem= (props: TreeItemProps) => {
 
 			{item.children && <>
 				<span>
-					<i onClick={() => toggleOpen()} className='material-icons icon-chevron'>chevron_right</i>
+					<i onClick={() => toggleOpen()} className='material-symbols-outlined icon-chevron'>chevron_right</i>
 					<i className='material-symbols-outlined'>folder</i>
 					<span onClick={(event) => {onClickCallback((item.id))}}>{item.title}</span>
 					

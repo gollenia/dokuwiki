@@ -128,7 +128,7 @@ const Progress = (props: Props) => {
 								</div>
 							</div>
 						</div>
-						<i className='material-icons'>
+						<i className='material-symbols-outlined'>
 						{ finished && <>check_circle</>}
 						{ notstarted && <>pending</>}
 						{ processing && <>sync</>}

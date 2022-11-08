@@ -117,7 +117,7 @@ main {
 .tag {
 	display: inline-flex;
 	align-items: center;
-	i.material-icons {
+	i.material-symbols-outlined {
 		cursor: pointer;
 		font-size: 15px;
 		margin-left: .5rem;
@@ -152,7 +152,7 @@ main {
 	border-radius: 999px;
 	&::after {
 		content: "search";
-		@extends .material-icons;
+		@extends .material-symbols-outlined;
 	}
 }
 

@@ -56,7 +56,7 @@ const BibleRef = (props: Props) => {
 					{ article.bibleref?.map((ref, index) => {
 						console.log(site)
 						const book = site.bible.books.find(book => book.id == ref.book_id)
-						return (<span key={index} className='badge tag bg-primary'>{book.long_name} {ref.chapter} <i className="material-icons" onClick={() => {removeBibleRef(index)}}>cancel</i></span>)
+						return (<span key={index} className='badge tag bg-primary'>{book.long_name} {ref.chapter} <i className="material-symbols-outlined" onClick={() => {removeBibleRef(index)}}>cancel</i></span>)
 					}) }
 				</div>
 				<div className='d-flex gap-1'>

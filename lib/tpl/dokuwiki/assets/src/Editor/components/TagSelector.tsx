@@ -84,7 +84,7 @@ const TagSelector: React.FC<TagSelectorProps> = (props) => {
 	return (
 		<div>
 			<div className="tagList tags mb-4 mt-2"> { tagList.map((tagList, index) => {
-				return <span className='badge tag bg-primary'>{tagList.name}<i className="material-icons" onClick={() => {removeTag(index)}}>cancel</i></span>} ) } 
+				return <span className='badge tag bg-primary'>{tagList.name}<i className="material-symbols-outlined" onClick={() => {removeTag(index)}}>cancel</i></span>} ) } 
 			</div>
 			<label>Schlagworte hinzufügen</label>
 			<div className='combobox' onKeyDown={(event) => keyPress(event)}>

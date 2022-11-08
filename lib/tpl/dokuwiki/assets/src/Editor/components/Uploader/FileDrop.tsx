@@ -44,7 +44,7 @@ const FileDrop = (props: Props) => {
 			<input ref={fileInput} type="file" className="filedropper-input" multiple={true} onChange={handleChange}/>
 			<label onClick={onButtonClick} htmlFor="input-file-upload" className={"filedropper-label " + (dragActive ? "active" : "" )}>
 				<div className='filedropper-help'>
-					<i className="material-icons">cloud_upload</i>
+					<i className="material-symbols-outlined">cloud_upload</i>
 					<p>Klicken oder Dateien Drüberziehen</p>
 				
 				</div> 
