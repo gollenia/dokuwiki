@@ -70,7 +70,7 @@ const Inspector = () => {
 			</Panel>
 
 			<Panel title="Zusammenfassung">
-			<div className="input-textarea">
+				<div className="input-textarea">
 					<textarea onChange={() => {}} className="w-full form-control form-control-sm" rows={5} value={article.abstract}></textarea>
 					<p className="text-xs text-secondary">Die Zusammenfassung wird als Vortschau auf den Übersichtsseiten angezeigt. Maximal 100 Buchstaben.</p>
 				</div>
@@ -99,20 +99,29 @@ const Inspector = () => {
 			</Panel>
 			
 			<Panel title="Erscheinungsbild">
-			        <div className="input-text">
-                        <label className="label label-sm">Icon</label>
-                        <input onChange={(event) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'icon', payload: event.target.value})}} type="text" className="w-full form-control form-control-sm" value={article.icon} />
-                        <p className="text-xs text-secondary">Ein beliebiges Icon von <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> aus dem "Filled"-Set. Bitte den Namen Kleingeschrieben und mit Unterstrichen angeben</p>
-                    </div>
-					<div className="input-text">
+			    <div className="input-text">
+                    <label className="label label-sm">Icon</label>
+                    <input onChange={(event) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'icon', payload: event.target.value})}} type="text" className="w-full form-control form-control-sm" value={article.icon} />
+                     <p className="text-xs text-secondary">Ein beliebiges Icon von <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> aus dem "Filled"-Set. Bitte den Namen Kleingeschrieben und mit Unterstrichen angeben</p>
+                </div>
+				<div className="input-text">
                     <label className="label label-sm">Seitenlink</label>
                     <input onChange={(event) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'pagelink', payload: event.target.value})}} type="text"  className="w-full  form-control form-control-sm" value={article.pagelink} required />
                     <p className="text-xs text-secondary">Hier kann ein Link eingefügt werden, der dann als Button im Titelbild angezeigt wird.</p>
                 </div>
+				
+				<div className="form-check form-switch">
+					<input className="form-check-input" type="checkbox" checked={article.showSubpages} onChange={(event) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'showSubpages', payload: !article.showSubpages})}}/>
+					
+					<label className="form-check-label" htmlFor="flexSwitchCheckChecked">Zugehörige Seiten anzeigen</label>
+				</div>
+                
+				<div className="input-text">
+                    <label className="label label-sm">Copyright</label>
+                    <input onChange={(event) => {dispatch({type: 'SET_ARTICLE_DATA', key: 'copyright', payload: event.target.value})}} type="text"  className="w-full  form-control form-control-sm" value={article.copyright} required />
+                    <p className="text-xs text-secondary">Optionaler Copyright-Vermerk</p>
+                </div>
 			</Panel>
-
-
-
          
 			</div>
 		</div>
