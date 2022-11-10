@@ -50,7 +50,7 @@ class Pages extends Controller
 		$tag = $request->str("tag", "start");
 
 		$filter = key_exists('filter', $_GET) ? array_flip(explode(",", $_GET['filter'])) : [];
-		$pages = Page::where('tag', $tag, $filter);
+		$pages = Page::where('subject', $tag, $filter);
 		if (empty($filter)) {
 			return json_encode(['articles' => $pages, 'root' => Page::find('tag:' . $tag)]);
 		}

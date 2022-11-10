@@ -213,6 +213,7 @@ class Page
 				break;
 			case "tag":
 				$data = \Contexis\Database\Tag::getPagesByTag($value);
+
 				break;
 			case "bible":
 				list($book_id, $chapter) = explode(':', $value);
