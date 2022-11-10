@@ -57,6 +57,7 @@ class Edit extends Controller implements ControllerInterface
 		$page->exclude = cleanText($data['exclude']);
 		$page->title = cleanText($data['title']);
 		$page->audience = cleanText($data['audience']);
+		$page->showSubpages = cleanText($data['showSubpages']);
 		$result = $page->save();
 		return json_encode(['request' => $_GET, 'page' => $result]);
 	}
