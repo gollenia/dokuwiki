@@ -62,4 +62,16 @@ class Pages extends Controller
 		}
 		return json_encode(['articles' => $result, 'tag_page' => Page::find('tag:' . $tag)]);
 	}
+
+	public function ajax_newest(Input $request)
+	{
+		$pages = Page::newest($request->int('count', 10));
+		return json_encode($pages);
+	}
+
+	public function ajax_popular(Input $request)
+	{
+		$pages = Page::popular($request->int('count', 10));
+		return json_encode($pages);
+	}
 }
