@@ -81,6 +81,14 @@ class Index
 		return $this->data;
 	}
 
+	public function getByDate()
+	{
+		global $conf;
+		$indexdir = $conf['indexdir'];
+	}
+
+
+
 
 	public static function _pages(&$data, $base, $file, $type, $lvl, $opts)
 	{
