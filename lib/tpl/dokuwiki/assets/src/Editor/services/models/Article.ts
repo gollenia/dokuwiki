@@ -1,54 +1,65 @@
+import { Attachment } from './Attachment';
 import { BibleRef } from './Bible';
 import { PhpDate } from "./PhpDate";
 
 type Article = {
 	id: string;
-	tags: Array<string>;
-	pageimage: string;
-	audience: string;
-	bibleref: Array<BibleRef>;
 	title: string;
 	content: string;
-	summary: string;
-	exclude: boolean;
-	category: string;
-	icon: string
-	template: string;
-	pagelink: string;
-	date: PhpDate;
-	language: string
 	abstract: string;
-	showSubpages: boolean;
 	namespace: string;
+
 	user: string;
-	minor_change: boolean;
+	date: PhpDate;
+	created: PhpDate;
+
+	category: string;
+	audience: string;
+	tags: Array<string>;
+	bibleref: Array<BibleRef>;
+	
+	icon: string;
+	files: Array<Attachment>;
+	pagelink: string;
+	pageimage: string;
+	headersize: number;
+	copyright: string;
+
+	showSubpages: boolean;
 }
 
 const emptyArticle = {
 	id: '',
-	tags: new Array,
-	pageimage: '',
 	title: '',
 	content: '',
-	summary: '',
-	audience: '',
-	bibleref: new Array,
-	exclude: true,
-	category: '',
-	icon: '',
-	template: '',
-	pagelink: '',
+	abstract: '',
+	namespace: '',
+
+	user: '',
 	date: {
 		date: '',
 		timezone: '',
 		timezone_type: 0
 	},
-	language: '',
-	abstract: '',
-	showSubpages: false,
-	namespace: '',
-	user: '',
-	minor_change: false
+	created: {
+		date: '',
+		timezone: '',
+		timezone_type: 0
+	},
+
+	category: '',
+	audience: '',
+	tags: new Array,
+	bibleref: new Array,
+
+	icon: '',
+	files: new Array,
+	pagelink: '',
+	pageimage: '',
+	headersize: 21,
+	copyright: '',
+	
+	showSubpages: false
 }
 
 export const articleReducer = (state: Article, action: ArticleAction) => {
