@@ -43,14 +43,29 @@ class Statistics
 		if (!$this->plugin_exists) return [];
 		$today = getdate();
 		$ns =  "quickstats:" . $today['mon'] . '_'  . $today['year'] . ':';
+		date("d_Y", strtotime("-1 month"));
+		$ns_last_month = "quickstats:" . date("n_Y", strtotime("-1 month")) . ':';
+
 		$usersfile = metaFN($ns . 'misc_data', '.ser');
 		$pagesfile = metaFN($ns . 'pages', '.ser');
+		$usersfile_last = metaFN($ns_last_month . 'misc_data', '.ser');
+		$pagesfile_last = metaFN($ns_last_month . 'pages', '.ser');
 		$users = unserialize(io_readFile($usersfile, false));
 		$pages = unserialize(io_readFile($pagesfile, false));
+		$users_last = unserialize(io_readFile($usersfile_last, false));
+		$pages_last = unserialize(io_readFile($pagesfile_last, false));
 		if (!$users || !$pages) return [];
 		$users['platform'] = $sort_platforms ? $this->sort_platforms($users['platform']) : $users['platform'];
-		return array_merge($users, $pages);
+		$users_last['platform'] = $sort_platforms ? $this->sort_platforms($users_last['platform']) : $users_last['platform'];
+		$statistics = [
+			"page" => array_merge($pages['page'], $pages_last['page']),
+			"country" => $users_last['country'],
+			"platform" => array_merge($users_last['platform'], $users_last['platform']),
+			"site_total" => $pages['site_total']
+		];
+		return $statistics;
 	}
+
 
 	/**
 	 * Collect visitors over 12 months
