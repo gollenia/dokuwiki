@@ -17,9 +17,11 @@ class Page
 	public string $content = "";
 	public string $abstract = "";
 	public string $namespace;
-	public bool $minor_change = false;
+
+	// Dates and user (author) info
 	public string $user;
 	public DateTime $date;
+	public DateTime $created;
 
 	// Taxonomy
 	public string $category = "";
@@ -32,7 +34,7 @@ class Page
 	public array $files = [];
 	public string $pagelink = "";
 	public string $pageimage = "";
-	public bool $exclude = true;
+	public string $copyright;
 
 	// Page Settings
 	public bool $showSubpages = false;
@@ -45,19 +47,20 @@ class Page
 		if ($id === "") return;
 		$this->id = cleanID($id);
 		$this->namespace = $this->getNamespace();
+
+		if (!$this->exists()) return;
 		$this->title = $this->getTitle();
 		$this->content = rawWiki($id);
 		$this->date = DateTime::createFromFormat('U', Meta::get($id, 'date modified', 0));
+		$this->created = DateTime::createFromFormat('U', Meta::get($id, 'date created', 0));
 
-		$meta = ['abstract', 'user', 'category', 'icon', 'pagelink'];
+		$meta = ['abstract', 'user', 'category', 'icon', 'pagelink', 'copyright', 'audience'];
 
-		foreach ($meta as $key => $value) {
+		foreach ($meta as $value) {
 			$this->$value = Meta::get($id, $value, '');
 		}
 
 		$this->tags = Meta::get($id, 'subject', []);
-		$this->audience = Meta::get($id, 'audience', 0);
-		$this->exclude = Meta::get($id, 'exclude', true);
 		$this->pageimage = $this->getPageImage();
 
 		if (class_exists("dokuwiki\\plugin\\bible\\Article")) {
@@ -234,6 +237,45 @@ class Page
 		return $pages;
 	}
 
+	public static function newest($count)
+	{
+		global $conf;
+		$index_links_file = $conf['indexdir'] . '/page.idx';
+
+		$index_links = file($index_links_file);
+
+		$pages = array_reverse($index_links);
+		$result = [];
+		foreach ($pages as $line => $id) {
+			if ($line > $count) break;
+			$result[] = new Page($id);
+		}
+		return $result;
+	}
+
+	public static function popular($count = 10)
+	{
+		$today = getdate();
+		$ns =  "quickstats:" . $today['mon'] . '_'  . $today['year'] . ':';
+		date("d_Y", strtotime("-1 month"));
+		$ns_last_month = "quickstats:" . date("n_Y", strtotime("-1 month")) . ':';
+		$pagesfile = metaFN($ns . 'pages', '.ser');
+		$pagesfile_last = metaFN($ns_last_month . 'pages', '.ser');
+		$pages = unserialize(io_readFile($pagesfile, false));
+		$pages_last = unserialize(io_readFile($pagesfile_last, false));
+		if (!$pages) return [];
+		$pages = array_merge($pages['page'], $pages_last['page']);
+		arsort($pages);
+		$i = 0;
+		$result = [];
+		foreach ($pages as $id => $value) {
+			if ($id == 'start') continue;
+			$result[] = new Page($id);
+			$i++;
+			if ($i == $count) break;
+		}
+		return $result;
+	}
 
 	/**
 	 * Save page including it's metadata
@@ -255,14 +297,14 @@ class Page
 		p_set_metadata($this->id, ['pageimage' => $this->pageimage]);
 
 		lock($this->id);
-		saveWikiText($this->id, $this->content, $this->summary, $this->minor_change);
+		saveWikiText($this->id, $this->content, $this->summary, false);
 		p_set_metadata($this->id, ['abstract' => $this->abstract]);
 		p_set_metadata($this->id, ['showSubpages' => $this->showSubpages]);
 		p_set_metadata($this->id, ['title' => $this->title]);
 		p_set_metadata($this->id, ['pagelink' => $this->pagelink]);
 		p_set_metadata($this->id, ['category' => $this->category]);
 		p_set_metadata($this->id, ['icon' => $this->icon]);
-		p_set_metadata($this->id, ['exclude' => $this->exclude]);
+		p_set_metadata($this->id, ['copyright' => $this->copyright]);
 		p_set_metadata($this->id, ['audience' => $this->audience]);
 		idx_addPage($this->id, false, true);
 		unlock($this->id);
@@ -318,23 +360,8 @@ class Page
 		return true;
 	}
 
-	public static function findAndRender()
-	{
-		$page = self::find($_GET['id']);
-		if ($page) {
-			$page->render();
-		}
-	}
-
-	public function render()
-	{
-		ob_start();
-		$this->content = tpl_content();
-		$this->content = ob_get_clean();
-	}
-
 	/**
-	 * Move page to new location
+	 * Move page to new location.
 	 *
 	 * @return void
 	 */
