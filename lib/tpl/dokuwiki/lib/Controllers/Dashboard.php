@@ -21,7 +21,10 @@ class Dashboard extends Controller
 
 		$statistic = new Statistics();
 
-		$this->site->add_data('stats', array_merge($statistic->get_data(), ['total' => $statistic->get_total(), 'year' => $statistic->get_year(), 'downloads' => $statistic->download_counter()]));
+		$this->site->add_data('stats', array_merge(
+			$statistic->get_data(),
+			['total' => $statistic->get_total(), 'year' => $statistic->get_year(), 'downloads' => $statistic->download_counter()]
+		));
 
 		$pageTree = Page::getTree($ID, false, "bibel,system");
 		$namespaces = Breadcrumbs::get_namespace($ID);
