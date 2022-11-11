@@ -248,7 +248,7 @@ class Page
 		$result = [];
 		$i = 0;
 		foreach ($pages as $line => $id) {
-			if (preg_match('/(system|start|wiki|test)/', $id)) continue;
+			if (preg_match('/(system|start|wiki|test|tag|category|audience)/', $id)) continue;
 			$i++;
 			if ($i > $count) break;
 			$result[] = new Page($id);
