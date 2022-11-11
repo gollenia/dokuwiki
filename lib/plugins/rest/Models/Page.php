@@ -213,7 +213,6 @@ class Page
 				break;
 			case "tag":
 				$data = \Contexis\Database\Tag::getPagesByTag($value);
-
 				break;
 			case "bible":
 				list($book_id, $chapter) = explode(':', $value);
@@ -247,8 +246,11 @@ class Page
 
 		$pages = array_reverse($index_links);
 		$result = [];
+		$i = 0;
 		foreach ($pages as $line => $id) {
-			if ($line > $count) break;
+			if (preg_match('/(system|start|wiki|test)/', $id)) continue;
+			$i++;
+			if ($i > $count) break;
 			$result[] = new Page($id);
 		}
 		return $result;
@@ -307,10 +309,10 @@ class Page
 		p_set_metadata($this->id, ['icon' => $this->icon]);
 		p_set_metadata($this->id, ['copyright' => $this->copyright]);
 		p_set_metadata($this->id, ['audience' => $this->audience]);
-		idx_addPage($this->id, false, true);
 		unlock($this->id);
+		$result = idx_addPage($this->id, false, true);
 
-		return true;
+		return $result;
 	}
 
 	/**
