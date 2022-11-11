@@ -104,7 +104,7 @@ class Tag
 	function tagOccurrences($tags, $namespaces = NULL, $allTags = false, $recursive = NULL)
 	{
 		// map with trim here in order to remove newlines from tags
-		if ($allTags) $tags = array_map('trim', idx_getIndex('subject', '_w'));
+
 		$tags = $this->_cleanTagList($tags);
 		$otags = array(); //occurrences
 		if (!$namespaces || $namespaces[0] == '' || !is_array($namespaces)) $namespaces = NULL; // $namespaces not specified
@@ -242,9 +242,25 @@ class Tag
 	/**
 	 * Clean a list (array) of tags using _cleanTag
 	 */
-	function _cleanTagList($tags)
+	function _cleanTagList($tags): array
 	{
 		return array_unique(array_map(array($this, '_cleanTag'), $tags));
+	}
+
+	/**
+	 * Clean a list (array) of tags using _cleanTag
+	 */
+	static function cleanTagList($tags): array
+	{
+		return array_unique(array_map(function ($tag) {
+			$prefix = substr($tag, 0, 1);
+
+			if ($prefix === '-' || $prefix === '+') {
+				return $prefix . cleanID($tag);
+			} else {
+				return cleanID($tag);
+			}
+		}, $tags));
 	}
 
 	/**
