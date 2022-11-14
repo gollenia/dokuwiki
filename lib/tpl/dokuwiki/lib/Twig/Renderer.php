@@ -4,7 +4,6 @@ namespace Contexis\Twig;
 
 use Contexis\Twig\CustomFunctions;
 use Contexis\Twig\CustomFilters;
-use Contexis\Twig\Colors;
 
 use Twig\Extra\String\StringExtension;
 
@@ -27,7 +26,7 @@ class Renderer
 		$twig->addExtension(new StringExtension());
 		CustomFunctions::register($twig);
 		CustomFilters::register($twig);
-		Colors::add_twig_filter($twig);
+
 
 		return $twig->render($filenames, $data);
 	}
