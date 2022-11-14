@@ -111,4 +111,22 @@ class Verse
 		}
 		return $result;
 	}
+
+	static function count(Book $book, int $chapter)
+	{
+		$db = Bible::get_db();
+		$statement = $db->prepare("SELECT * FROM verses WHERE (book_id = :book AND chapter = :chapter) ORDER BY 'verse'");
+
+		$statement->bindValue(':book', $book->id, PDO::PARAM_INT);
+		$statement->bindValue(':chapter', $chapter, PDO::PARAM_INT);
+
+		$query = $statement->execute();
+
+		$result = 0;
+		//return $query->count;
+		while ($row = $query->fetchArray()) {
+			$result++;
+		}
+		return $result;
+	}
 }

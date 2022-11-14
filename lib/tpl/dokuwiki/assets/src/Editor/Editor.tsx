@@ -37,16 +37,16 @@ const Editor = () => {
 		fetch('/?controller=media&method=sectok').then(response => response.json()).then(data => {
 			window.localStorage.setItem('sectok', data)
 		})
-	}, [])
+	}, []);
 
 	return (
 		<IntlProvider locale={currentLanguage} defaultLocale="en" messages={messages}>
 		<div className="d-flex container">
 			<div className="edit-wrapper">
-			<div className="input-text my-4">
-				<label className="label">Titel</label>
-				<input className="w-100 form-control form-control-lg" value={article.title} onChange={(event) => dispatch({type: 'SET_ARTICLE_DATA', payload: event.target.value, key: 'title'})}/>
-			</div>
+				<div className="input-text my-4">
+					<label className="label">Titel</label>
+					<input className="w-100 form-control form-control-lg" value={article.title} onChange={(event) => dispatch({type: 'SET_ARTICLE_DATA', payload: event.target.value, key: 'title'})}/>
+				</div>
 			<div className="">
 			<TextEditor />
 			<MediaManager />
@@ -56,7 +56,7 @@ const Editor = () => {
 			<Inspector />
 		</div>
 		</IntlProvider>
-	)
+	);
 }
 
 export default Editor

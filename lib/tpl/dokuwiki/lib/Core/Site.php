@@ -47,12 +47,9 @@ class Site
 		$this->twig_array['tpl_favicon'] = tpl_favicon();
 		$this->twig_array['tpl_basedir'] = tpl_basedir();
 		$this->twig_array['tpl_inc'] = DOKU_TPLINC;
-		$this->twig_array['menu'] = \Contexis\Core\Menu::get("system:menu")['items'];
 		$this->twig_array['breadcrumbs'] = \Contexis\Core\Breadcrumbs::get();
-		$this->twig_array['colors'] = \Contexis\Core\Config::load('colors');
-		$metadata = p_get_metadata($ID);
-		$this->twig_array['metadata'] = $metadata;
-		$this->twig_array['tld'] = \Contexis\Core\Utilities\Domain::get_tld();
+		$this->twig_array['metadata'] = p_get_metadata($ID);
+		//$this->twig_array['tld'] = \Contexis\Core\Utilities\Domain::get_tld();
 		$this->twig_array['page_exists'] = page_exists($ID);
 		//$this->twig_array['pageimage'] = $this->getPageImage($metadata);
 	}
@@ -70,14 +67,5 @@ class Site
 
 
 		return $this->twig_array[$key];
-	}
-
-	private function getPageImage($metadata)
-	{
-		if ($metadata && $metadata['pageimage']) {
-			$image = $metadata['pageimage'];
-
-			return $image;
-		}
 	}
 }

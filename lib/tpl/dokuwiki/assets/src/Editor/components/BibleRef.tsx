@@ -16,7 +16,6 @@ const BibleRef = (props: Props) => {
 			method: 'DELETE'
 		}).then(response => response.json()).then(data => {
 			if(data) {
-				console.log(data)
 				const refs = article.bibleref;
 				refs.splice(index, 1)
 				dispatch({type: "SET_ARTICLE_DATA", payload: refs, key: 'bibleref'})

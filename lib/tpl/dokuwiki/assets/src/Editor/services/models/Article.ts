@@ -62,6 +62,7 @@ const emptyArticle = {
 	showSubpages: false
 }
 
+
 export const articleReducer = (state: Article, action: ArticleAction) => {
 	switch (action.type) {
 		case 'SET_ARTICLE':

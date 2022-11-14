@@ -27,13 +27,14 @@ export type Verse = {
 	text: string;
 	chapter: number;
 	verse: number;
-	linebreak: number;
+	linebreak?: number;
 }
 
 export type BibleRef = {
 	book_id: number;
 	id: string;
 	chapter: number;
+	verse?: number;
 }
 
 export type BibleRefAction = { type: 'ADD_BIBLEREF', payload: BibleRef } 

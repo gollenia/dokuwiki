@@ -1,6 +1,8 @@
 import { EditorView } from 'codemirror'
 import React, { useState } from 'react'
-import LinkPicker, { Link } from '../LinkPicker'
+import BibleVerse from '../Dialogs/BibleVerse'
+import LinkPicker, { Link } from '../Dialogs/LinkPicker'
+import YouTube from '../Dialogs/YouTube'
 
 type Props = {
 	view: EditorView
@@ -11,7 +13,10 @@ const ToolBar = (props: Props) => {
 	const { view } = props
 
 	const [ picker, setPicker ] = useState<boolean>(false)
-	const [selection, setSelection] = useState<string>('')
+	const [ youtube, setYoutube ] = useState<boolean>(false)
+	const [ box, setBox ] = useState<boolean>(false)
+	const [ bible, setBible ] = useState<boolean>(false)
+	const [ selection, setSelection ] = useState<string>('')
 
 	const wrapSelection = (wrapper: string, wrapperEnd: string | false = false) => {
 		if(!wrapperEnd) wrapperEnd = wrapper
@@ -81,12 +86,13 @@ const ToolBar = (props: Props) => {
 			<button onClick={() => {prependLine('  * ')}}><i className='material-symbols-outlined'>format_list_numbered</i><span>Nummerierte Liste</span></button>
 			<button onClick={() => {appendLine('\n----\n')}}><i className='material-symbols-outlined'>horizontal_rule</i><span>Trennlinie</span></button>
 			<button><i className='material-symbols-outlined'>image</i><span>Bild einfügen</span></button>
-			<button><i className='material-symbols-outlined'>auto_stories</i><span>Bibelstelle</span></button>
+			<button><i onClick={() => { setSelection(getSelection()); setBible(true) }} className='material-symbols-outlined'>auto_stories</i><span>Bibelstelle</span></button>
 			<button><i className='material-symbols-outlined'>article</i><span>Box</span></button>
-			<button><i className='material-symbols-outlined'>youtube_activity</i><span>Youtube</span></button>
+			<button><i onClick={() => { setSelection(getSelection()); setYoutube(true) }} className='material-symbols-outlined'>youtube_activity</i><span>Youtube</span></button>
 		</div>
 		<LinkPicker title={selection} onChange={(link: Link) => {insertAtSelection('[[' + link.id + '|' + link.title + ']]')}} setShowPicker={setPicker} showPicker={picker}/>
-		
+		<YouTube onChange={(video) => {}} setShowYouTube={setYoutube} showYouTube={youtube} />
+		<BibleVerse title={selection} showBibleVerse={bible} setShowBibleVerse={setBible} onChange={(bibleref) => {}}/>
 		</>
 	)
 }
