@@ -278,7 +278,7 @@ class Page
 		$result = [];
 		foreach ($pages as $id => $value) {
 			if (preg_match('/(system|start|wiki|test|tag|category|audience)/', $id)) continue;
-			if(Meta::get($id, 'excludeFromPage', false)) continue;
+			if(Meta::get($id, 'excludeFromIndex', false)) continue;
 			$result[] = new Page($id);
 			$i++;
 			if ($i == $count) break;
