@@ -13,7 +13,9 @@ interface Props {
 type BibleVerseObject = Verse & {
 	title: string
 }
-
+function hallo(i: number) {
+	return i+5
+}
 
 const BibleVerse = (props: Props) => {
 
@@ -35,6 +37,8 @@ const BibleVerse = (props: Props) => {
 	});
 
 	const [ maxVerses, setMaxVerses ] = useState(0);
+
+	
 
 	const getMaxChapters = () => {
 		if(!bibleObject.book) return 0
