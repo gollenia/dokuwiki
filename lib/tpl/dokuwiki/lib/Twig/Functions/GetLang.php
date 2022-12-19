@@ -20,6 +20,6 @@ class GetLang extends CustomFunctions
 		$result = tpl_getLang($id);
 		if ($result) return $result;
 		if (array_key_exists($id, $lang)) return $lang[$id];
-		return "";
+		return $id;
 	}
 }

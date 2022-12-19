@@ -14,7 +14,7 @@
 					<a class="nav-link dropdown-toggle" href="#" x-on:click="open = ! open">
 						{{ __('administration')}}
 					</a>
-					<ul class="dropdown-menu" :class="open ? 'show' : ''">
+					<ul class="drop-menu" x-show="open" @click.away="open = false">
 						{% set admin_menu_items = admin_menu() %}
 						{% for item in admin_menu_items.admin %}
 							<li>
@@ -39,12 +39,18 @@
 				<a class="nav-link dropdown-toggle" href="#" x-on:click="open = ! open">
 					{{ __('settings') }}
 				</a>
-				<ul class="dropdown-menu" :class="open ? 'show' : ''">
+				<ul class="drop-menu" x-show="open" @click.away="open = false">
 					<li>
 						<a class="dropdown-item" href="/system/menu">{{ __("set_menu")}}</a>
 					</li>
 					<li>
 						<a class="dropdown-item" href="/system/footer">{{ __("set_footer")}}</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="/system/tags">{{ __("edit_tags")}}</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="/system/categories">{{ __("edit_categories")}}</a>
 					</li>
 				</ul>
 			</li>

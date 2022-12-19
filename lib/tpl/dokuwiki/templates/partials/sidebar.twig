@@ -6,26 +6,22 @@
 		<span class="fs-4">Downloads</span>
 	</a>
 	<hr>
-
-	<div class="dropdown py-2">
-		<a href="#" class="d-flex gap-2 align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" @click="isOpen = !isOpen" aria-expanded="false">
-			<img src="/lib/tpl/dokuwiki/public/img/countries/at.svg" alt="" width="24" height="24" class="mr-2">
-			<strong>Deutsch</strong>
+	<div class="dropdown py-2" x-data="{ open: false }">
+		<a href="#" class="d-flex gap-2 align-items-center text-white text-decoration-none dropdown-toggle lang-select" x-on:click="open = ! open" aria-expanded="false">
+			<img src="/lib/tpl/dokuwiki/img/countries/{{conf.lang}}.svg" alt="" width="24" height="24" class="mr-2">
+			<strong>{{__(lang_name(conf.lang))}}</strong>
 		</a>
-		<ul x-show.important="isOpen" @click.away="isOpen = false" class="dropdown-menu dropdown-menu-dark text-small shadow">
+		<ul x-show="open" @click.away="open = false" class="dropdown-menu-dark drop-menu text-small shadow">
+			{% for language in get_langs() %}
+			{% if language != conf.lang %}
 			<li>
-				<a class="dropdown-item" href="#">New project...</a>
+				<a class="dropdown-item" href="/?lang={{language}}">
+					<img src="/lib/tpl/dokuwiki/img/countries/{{language}}.svg" alt="" width="24" height="24" class="mr-2"> 
+					{{__(lang_name(language))}}
+				</a>
 			</li>
-			<li>
-				<a class="dropdown-item" href="#">Settings</a>
-			</li>
-			<li>
-				<a class="dropdown-item" href="#">Profile</a>
-			</li>
-			<li><hr class="dropdown-divider"></li>
-			<li>
-				<a class="dropdown-item" href="#">Sign out</a>
-			</li>
+			{% endif %}
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="react-tree"></div>
