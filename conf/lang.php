@@ -36,6 +36,22 @@ class Language
 		$available = array_map('basename', glob($_SERVER['DOCUMENT_ROOT'] . '/data/*', GLOB_ONLYDIR));
 		return array_values(array_diff($available, array("_template")));
 	}
+
+
+	static function get_translation_name(string $country): string {
+		$langs = [
+			"de" => "German",
+			"fr" => "French",
+			"en" => "English",
+			"it" => "Italian",
+			"es" => "Spanish",
+			"tr" => "Turkish",
+			"el" => "Greek"
+		];
+
+		return key_exists($country, $langs) ? $langs[$country] : '';
+
+	}
 }
 
 $default = array_key_exists('default_lang', $conf) ? $conf['default_lang'] : "en";
