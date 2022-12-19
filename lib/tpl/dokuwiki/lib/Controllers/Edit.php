@@ -72,7 +72,9 @@ class Edit extends Controller implements ControllerInterface
 	public function ajax_tree(Input $request)
 	{
 		$id = $request->str("id", "");
-		$pageTree = Page::getTree($id, "bibel,system");
+		$current_id = $request->str("current_id", "");
+		
+		$pageTree = Page::getTree($id, "bibel,bible,system", $current_id);
 		return json_encode($pageTree);
 	}
 

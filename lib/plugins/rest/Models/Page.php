@@ -17,6 +17,7 @@ class Page
 	public string $content = "";
 	public string $abstract = "";
 	public string $namespace;
+	public string $label = "";
 
 	// Dates and user (author) info
 	public string $user;
@@ -28,6 +29,7 @@ class Page
 	public string $audience = "";
 	public $tags = [];
 	public array $bibleref;
+	
 
 	// Attachments
 	public string $icon = "";
@@ -56,7 +58,7 @@ class Page
 		$this->date = DateTime::createFromFormat('U', Meta::get($id, 'date modified', 0));
 		$this->created = DateTime::createFromFormat('U', Meta::get($id, 'date created', 0));
 
-		$meta = ['abstract', 'user', 'category', 'icon', 'pagelink', 'copyright', 'audience'];
+		$meta = ['abstract', 'user', 'category', 'icon', 'pagelink', 'copyright', 'audience', 'label'];
 
 		foreach ($meta as $value) {
 			$this->$value = Meta::get($id, $value, '');
@@ -312,6 +314,7 @@ class Page
 		p_set_metadata($this->id, ['title' => $this->title]);
 		p_set_metadata($this->id, ['pagelink' => $this->pagelink]);
 		p_set_metadata($this->id, ['category' => $this->category]);
+		p_set_metadata($this->id, ['label' => $this->label]);
 		p_set_metadata($this->id, ['icon' => $this->icon]);
 		p_set_metadata($this->id, ['excludeFromIndex' => $this->exclude]);
 		p_set_metadata($this->id, ['lock' => $this->lock]);
@@ -341,9 +344,11 @@ class Page
 	 * @param [type] $namespace
 	 * @return void
 	 */
-	public static function getTree($namespace = "", $excludes = "")
+	public static function getTree($namespace = "", $excludes = "", $current_id = '')
 	{
 		$index = new Index();
+		$index->current_id = $current_id;
+		
 		return $index->tree($namespace, $excludes);
 	}
 

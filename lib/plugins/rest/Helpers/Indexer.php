@@ -25,6 +25,14 @@ class Index
 
 	private $exclusions = '';
 
+	public $current_id = '';
+
+	public $newpage = [
+		'ns' => false
+	];
+
+	public $newpage_added = false;
+
 	private array $data = [];
 	private array $flatTree = [];
 	private bool $flat = false;
@@ -76,9 +84,20 @@ class Index
 	{
 		$this->flat = $flat;
 		$this->excludes = $excludes;
+		$this->set_new_page();
 		$r = $this->_walk($namespace);
-
+		
 		return $this->data;
+	}
+
+	public function set_new_page() {
+		if($this->current_id == '' || page_exists($this->current_id)) return;
+		$current = explode(':', str_replace('/', ':', $this->current_id));
+		$this->newpage = [
+			'set' => true,
+			'name' => array_pop($current),
+			'ns' => page_findnearest(join(':', $current))
+		];
 	}
 
 	public function getByDate()
@@ -88,7 +107,9 @@ class Index
 	}
 
 
+	public function search_children() {
 
+	}
 
 	public static function _pages(&$data, $base, $file, $type, $lvl, $opts)
 	{
@@ -252,8 +273,11 @@ class Index
 			if ($file[0] == '.' || $file[0] == '_') continue;
 			$name = utf8_decodeFN(str_replace('.txt', '', $file));
 
+			
+
 			$id = ($ns == '') ? $name : $ns . ':' . $name;
 
+			
 			$item = array('id' => $id, 'title' => NULL);
 
 			if ($this->_isExcluded($item)) continue;
@@ -271,9 +295,18 @@ class Index
 					$item['title'] = ucfirst(end(explode(":", $id)));
 
 				$item['children'] = array();
+
 				$okdepth = ($depth < $maxdepth) || ($maxdepth == 0);
 				if (!$this->_isExcluded($item) && $okdepth) {
 					$children = $this->_walk_recurse($path . '/' . $file, $id, $depth + 1, $maxdepth);
+				}
+
+				if($this->newpage['ns'] && $id == $this->newpage['ns']) {
+					array_unshift($children, [
+						'title' => $this->newpage['name'],
+						'id' => $this->newpage['ns'] . ':' . $this->newpage['name'],
+						'is_new' => true
+					]);
 				}
 				// Tree
 				$item['children'] = $children;

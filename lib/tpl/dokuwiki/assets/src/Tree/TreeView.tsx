@@ -16,7 +16,7 @@ const TreeView = () => {
     const [tree, setTree] = useState([]);
 
     useEffect(() => {
-        fetch('/?controller=edit&method=tree')
+        fetch('/?controller=edit&method=tree&current_id=' + currentId)
             .then(response => response.json())
             .then(data => setTree(data));
     }, []);
