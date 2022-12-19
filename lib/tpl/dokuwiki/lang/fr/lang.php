@@ -10,8 +10,6 @@ $lang['settings'] = "Einstellungen";
 $lang['analytics'] = "Datenanalyse";
 $lang['set_menu'] = "Menü bearbeiten";
 $lang['set_footer'] = "Footer bearbeiten";
-$lang['edit_tags'] = "Tags bearbeiten";
-$lang['edit_categories'] = "Kategorien bearbeiten";
 
 $lang['dashboard'] = "Dashboard";
 $lang['accesses_ever'] = "Zugriffe insgesamt";
@@ -26,9 +24,9 @@ $lang['enter_password'] = "Passwort eingeben";
 $lang['remember_me'] = "An mich erinnern";
 $lang['forgot_password'] = "Passwort vergessen?";
 $lang['welcome'] = "Willkommen!";
-$lang['German'] = "Deutsch";
-$lang['English'] = "Englisch";
-$lang['Italian'] = "Italienisch";
-$lang['Greek'] = "Griechisch";
-$lang['French'] = "Französisch";
+$lang['german'] = "Deutsch";
+$lang['english'] = "Englisch";
+$lang['italian'] = "Italienisch";
+$lang['greece'] = "Griechisch";
+$lang['French'] = "Francaise";
 
