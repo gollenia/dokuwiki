@@ -16,11 +16,9 @@ namespace Contexis\Core;
 class Site
 {
 	private array $twig_array;
-	public I18n $language;
 
 	public function __construct()
 	{
-		$this->language = new I18n();
 		global $conf;
 		global $ID;
 		global $ACT;
