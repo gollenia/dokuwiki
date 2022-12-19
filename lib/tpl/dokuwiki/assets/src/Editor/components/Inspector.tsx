@@ -124,13 +124,29 @@ const Inspector = () => {
                         />
                     </div>
 
-                    <div className="input-text">
+                    <div className="input-text mb-4">
                         <label className="label label-sm">Zielgruppe</label>
                         <Combobox
                             placeholder={site.audience?.find(audience => audience.value == article.audience)?.label}
                             options={site.audience}
                             onChange={e => dispatch({ type: 'SET_ARTICLE_DATA', key: 'audience', payload: e })}
                         />
+                    </div>
+
+                    <div className="input-text">
+                        <label className="label label-sm">Label</label>
+                        <input
+                            onChange={event => {
+                                dispatch({ type: 'SET_ARTICLE_DATA', key: 'label', payload: event.target.value });
+                            }}
+                            type="text"
+                            className="w-full  form-control form-control-sm"
+                            value={article.label}
+                            required
+                        />
+                        <p className="text-xs text-secondary">
+                            Hier kann ein Label angegeben werden, das in der Kartenübersicht angezeigt wird.
+                        </p>
                     </div>
                 </Panel>
 
@@ -150,7 +166,7 @@ const Inspector = () => {
                     <BibleRef />
                 </Panel>
 
-                <Panel title="Erscheinungsbild">
+                <Panel title="Extras">
                     <div className="input-text">
                         <label className="label label-sm">Icon</label>
                         <input
@@ -163,46 +179,13 @@ const Inspector = () => {
                         />
                         <p className="text-xs text-secondary">
                             Ein beliebiges Icon von{' '}
-                            <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> aus dem
-                            "Filled"-Set. Bitte den Namen Kleingeschrieben und mit Unterstrichen angeben
-                        </p>
-                    </div>
-                    <div className="input-text">
-                        <label className="label label-sm">Seitenlink</label>
-                        <input
-                            onChange={event => {
-                                dispatch({ type: 'SET_ARTICLE_DATA', key: 'pagelink', payload: event.target.value });
-                            }}
-                            type="text"
-                            className="w-full  form-control form-control-sm"
-                            value={article.pagelink}
-                            required
-                        />
-                        <p className="text-xs text-secondary">
-                            Hier kann ein Link eingefügt werden, der dann als Button im Titelbild angezeigt wird.
+                            <a target="_blank" href="https://fonts.google.com/icons">
+                                https://fonts.google.com/icons
+                            </a>
                         </p>
                     </div>
 
-                    <div className="form-check form-switch">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            checked={article.showSubpages}
-                            onChange={event => {
-                                dispatch({
-                                    type: 'SET_ARTICLE_DATA',
-                                    key: 'showSubpages',
-                                    payload: !article.showSubpages,
-                                });
-                            }}
-                        />
-
-                        <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
-                            Zugehörige Seiten anzeigen
-                        </label>
-                    </div>
-
-                    <div className="input-text">
+                    <div className="input-text mb-4">
                         <label className="label label-sm">Copyright</label>
                         <input
                             onChange={event => {
