@@ -8,6 +8,7 @@ type Article = {
     content: string;
     abstract: string;
     namespace: string;
+    label: string;
 
     user: string;
     date: PhpDate;
@@ -20,7 +21,6 @@ type Article = {
 
     icon: string;
     files: Array<Attachment>;
-    pagelink: string;
     pageimage: string;
     headersize: number;
     copyright: string;
@@ -34,6 +34,7 @@ const emptyArticle = {
     content: '',
     abstract: '',
     namespace: '',
+    label: '',
 
     user: '',
     date: {
@@ -54,7 +55,6 @@ const emptyArticle = {
 
     icon: '',
     files: new Array(),
-    pagelink: '',
     pageimage: '',
     headersize: 21,
     copyright: '',
