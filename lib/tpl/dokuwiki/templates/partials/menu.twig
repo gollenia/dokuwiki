@@ -7,7 +7,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/dashboard">{{ __("dashboard")}}</a>
+					<a class="nav-link" aria-current="page" href="/dashboard">{{ __("dashboard")}}</a>
 				</li>
 
 				<li class="nav-item dropdown" x-data="{ open: false }">
@@ -69,10 +69,10 @@
 				</a>
 				<ul class="dropdown-menu  end-0 " :class="open ? 'show' : ''" aria-labelledby="profileDropdown">
 					<li>
-						<a class="dropdown-item" href="#">{{ lang.btn_profile }}</a>
+						<a class="dropdown-item" href="/?do=profile">{{ lang.btn_profile }}</a>
 					</li>
 					<li>
-						<a class="dropdown-item" href="#">{{ lang.btn_logout }}</a>
+						<a class="dropdown-item" href="/?do=logout&sectok={{tpl_sectok()}}">{{ lang.btn_logout }}</a>
 					</li>
 				</ul>
 			</li>
