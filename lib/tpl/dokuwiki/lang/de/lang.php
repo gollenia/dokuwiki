@@ -10,8 +10,8 @@ $lang['settings'] = "Einstellungen";
 $lang['analytics'] = "Datenanalyse";
 $lang['set_menu'] = "Menü bearbeiten";
 $lang['set_footer'] = "Footer bearbeiten";
-$lang['edit_tags'] = "Tags bearbeiten";
-$lang['edit_categories'] = "Kategorien bearbeiten";
+$lang['edit_tags'] = "Tags";
+$lang['edit_categories'] = "Kategorien";
 
 $lang['dashboard'] = "Dashboard";
 $lang['accesses_ever'] = "Zugriffe insgesamt";

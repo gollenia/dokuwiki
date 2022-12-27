@@ -6,27 +6,29 @@
  * @author Thomas Gollenia 
  */
 $lang['administration'] = "Administration";
-$lang['settings'] = "Einstellungen";
-$lang['analytics'] = "Datenanalyse";
-$lang['set_menu'] = "Menü bearbeiten";
-$lang['set_footer'] = "Footer bearbeiten";
+$lang['settings'] = "Réglages";
+$lang['analytics'] = "L'analyse des données";
+$lang['set_menu'] = "Modifier le menu";
+$lang['set_footer'] = "Modifier le pied de page";
+$lang['edit_tags'] = "Mots clés";
+$lang['edit_categories'] = "Catégories";
 
 $lang['dashboard'] = "Dashboard";
-$lang['accesses_ever'] = "Zugriffe insgesamt";
-$lang['downloads_ever'] = "Downloads insgesamt";
-$lang['access_month'] = "Zugriffe diesen Monat";
-$lang['this_year'] = "Dieses Jahr";
-$lang['access_world'] = "Weltweite Zugriffe";
-$lang['access_os'] = "Betriebssysteme";
-$lang['login'] = "Anmelden";
-$lang['enter_username'] = "Benutzername eingeben";
-$lang['enter_password'] = "Passwort eingeben";
-$lang['remember_me'] = "An mich erinnern";
-$lang['forgot_password'] = "Passwort vergessen?";
-$lang['welcome'] = "Willkommen!";
-$lang['german'] = "Deutsch";
-$lang['english'] = "Englisch";
-$lang['italian'] = "Italienisch";
-$lang['greece'] = "Griechisch";
-$lang['French'] = "Francaise";
+$lang['accesses_ever'] = "Nombre total de visites";
+$lang['downloads_ever'] = "Téléchargements totaux";
+$lang['access_month'] = "Hits ce mois-ci";
+$lang['this_year'] = "Cette année";
+$lang['access_world'] = "Accès mondial";
+$lang['access_os'] = "Systèmes d'exploitation";
+$lang['login'] = "Enregistrer";
+$lang['enter_username'] = "Saisissez votre nom";
+$lang['enter_password'] = "Entrer le mot de passe";
+$lang['remember_me'] = "Souviens-toi de moi";
+$lang['forgot_password'] = "Mot de passe oublié?";
+$lang['welcome'] = "Bienvenue!";
+$lang['german'] = "Allemand";
+$lang['english'] = "Anglais";
+$lang['italian'] = "Italien";
+$lang['greece'] = "Grec";
+$lang['French'] = "Français";
 
