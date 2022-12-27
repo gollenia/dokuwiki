@@ -3,6 +3,7 @@
 
 	{% include "partials/head.twig" with {'colors': colors} %}
 
+
 	<body class="{{tld}} {{ tpl_classes }} {{ metadata.subject|join(" ") }}">
 		<style>
 			a {
@@ -29,7 +30,7 @@
 								<div class="g-col-7 pe-0">
 									<div class="form-left h-100 py-5 px-5">
 										<form id="dw__login" action="{{tpl_link(id)}}" method="post" class="grid g-4">
-											<input type="hidden" name="sectok" value="{{tpl_sectok()}}">
+											<input type="hidden" name="sectok" value="">
 											<input type="hidden" name="id" value="{{id}}">
 											<input type="hidden" name="do" value="login">
 											<div class="g-col-12">
@@ -86,4 +87,4 @@
 			</body>
 		</html>
 	</body>
-</html></div></div><script>DOKU_TPL = "{{ tpl_basedir }}";</script><script src="{{tpl_basedir}}assets/dist/main.js" type="text/javascript"></script>{{ tpl_indexerWebBug() }}</body></html>
+</html></div></div><script>DOKU_TPL = "{{ tpl_basedir }}";</script><script src="{{tpl_basedir}}/public/js/main.js" type="text/javascript"></script>{{ tpl_indexerWebBug() }}</body></html>
