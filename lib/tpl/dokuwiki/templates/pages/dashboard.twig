@@ -4,14 +4,14 @@
 	{% include "partials/head.twig" with {'colors': colors} %}
 
 	<body class="{{tld}} {{ tpl_classes }} {{ metadata.subject|join(" ") }}">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css"/>
+		
 
 		{% include "partials/sidebar.twig" with {'menu': menu} %}
 		{% include "partials/menu.twig" with {'menu': menu} %}
 		<main class="wrapper flex-grow-1 p-5" style="background: #f1f5f8;">
 
 
-			<article class="p-4 container">
+			<article class="p-4 container dashboard">
 
 
 				<h3>Dashboard</h3>
