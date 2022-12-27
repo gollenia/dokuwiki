@@ -21,7 +21,7 @@ class Show extends Controller
 		global $conf;
 		global $ID;
 		parent::__construct($site);
-
+		global $INFO;
 
 
 		$pageTree = Page::getTree($ID, false, "bibel,system");
@@ -35,6 +35,12 @@ class Show extends Controller
 			"categories" => Category::findAll(),
 			"audience" => Audience::findAll(),
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
+		]);
+		$this->site->add_data("user", [
+			'name' => $INFO['user'],
+			'fullname' => $INFO['userinfo']['name'],
+			'email' => $INFO['userinfo']['mail'],
+			'acl' => auth_quickaclcheck($ID)
 		]);
 		$this->site->add_data("page", Page::find($ID));
 		$this->site->add_data("tree", $pageTree);

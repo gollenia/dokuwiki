@@ -33,6 +33,7 @@ class Controller implements ControllerInterface
 	{
 		global $ACT;
 		global $INFO;
+		global $USERINFO;
 
 		$template = $this->template;
 
@@ -40,7 +41,7 @@ class Controller implements ControllerInterface
 			$template = strtolower(end(explode("\\", get_class($this))));
 		}
 
-		$template = ($INFO['isadmin'] || $INFO['ismanager']) ? $template : 'login';
+		$template = ($USERINFO !== null) ? $template : 'login';
 
 		return Renderer::compile("pages/{$template}.twig", $this->site->get());
 	}
