@@ -5,6 +5,7 @@ import FileManager from './components/FileManager/FileManager';
 import Inspector from './components/Inspector';
 import MediaManager from './components/MediaManager/MediaManager';
 import { Site } from './services/models/Site';
+import User from './services/models/User';
 import { store } from './services/store';
 import useTranslation from './services/useTranslation';
 
@@ -12,6 +13,7 @@ declare global {
     interface Window {
         DOKU_ID: string;
         DOKU_SITE: Site;
+        DOKU_USER: User;
     }
 }
 
@@ -26,6 +28,7 @@ const Editor = () => {
 
     const messages = useTranslation(currentLanguage);
     console.log(article);
+
     useEffect(() => {
         dispatch({ type: 'SET_SITE', payload: window.DOKU_SITE });
         fetch('/?controller=page&edit=true&lang=' + window.DOKU_LANG + '&id=' + window.DOKU_ID)
@@ -49,6 +52,7 @@ const Editor = () => {
                     <div className="input-text my-4">
                         <label className="label">Titel</label>
                         <input
+                            disabled={article.locked}
                             className="w-100 form-control form-control-lg"
                             value={article.title}
                             onChange={event =>

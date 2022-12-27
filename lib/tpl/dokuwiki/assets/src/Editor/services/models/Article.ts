@@ -13,6 +13,7 @@ type Article = {
     user: string;
     date: PhpDate;
     created: PhpDate;
+    locked: boolean;
 
     category: string;
     audience: string;
@@ -47,6 +48,7 @@ const emptyArticle = {
         timezone: '',
         timezone_type: 0,
     },
+    locked: false,
 
     category: '',
     audience: '',

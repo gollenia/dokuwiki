@@ -55,7 +55,9 @@ class Edit extends Controller implements ControllerInterface
 		$page->pagelink = cleanText($data['pagelink']);
 		$page->icon = strtolower(str_replace(" ", "_", cleanText($data['icon'])));
 		$page->exclude = cleanText($data['exclude']);
+		$page->locked = cleanText($data['locked']);
 		$page->title = cleanText($data['title']);
+		$page->label = cleanText($data['label']);
 		$page->audience = cleanText($data['audience']);
 		$page->showSubpages = cleanText($data['showSubpages']);
 		$result = $page->save();

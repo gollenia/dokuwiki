@@ -41,7 +41,7 @@ class Page
 	// Page Settings
 	public bool $showSubpages = false;
 	public bool $exclude = false;
-	public bool $lock = false;
+	public bool $locked = false;
 
 	// API Settings
 	public array $filter = [];
@@ -67,7 +67,7 @@ class Page
 		$this->tags = Meta::get($id, 'subject', []);
 		$this->pageimage = $this->getPageImage();
 		$this->exclude = Meta::get($id, 'excludeFromIndex', false);
-		$this->lock = Meta::get($id, 'lock', false);
+		$this->locked = Meta::get($id, 'locked', false);
 
 		if (class_exists("dokuwiki\\plugin\\bible\\Article")) {
 			$this->bibleref = \dokuwiki\plugin\bible\Article::hasBiblerefs($id);
@@ -304,6 +304,8 @@ class Page
 			return false;
 		}
 
+		
+
 		p_set_metadata($this->id, ['subject' => Strings::cleanStrings($this->tags)]);
 		p_set_metadata($this->id, ['pageimage' => $this->pageimage]);
 
@@ -317,7 +319,7 @@ class Page
 		p_set_metadata($this->id, ['label' => $this->label]);
 		p_set_metadata($this->id, ['icon' => $this->icon]);
 		p_set_metadata($this->id, ['excludeFromIndex' => $this->exclude]);
-		p_set_metadata($this->id, ['lock' => $this->lock]);
+		p_set_metadata($this->id, ['locked' => $this->locked]);
 		p_set_metadata($this->id, ['copyright' => $this->copyright]);
 		p_set_metadata($this->id, ['audience' => $this->audience]);
 		unlock($this->id);
