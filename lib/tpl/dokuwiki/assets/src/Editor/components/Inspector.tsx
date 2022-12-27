@@ -26,7 +26,7 @@ const Inspector = () => {
     };
 
     const saveForbidden =
-        (article.locked && window.DOKU_USER.acl > 255) || article.title === '' || article.content === '';
+        (article.locked && window.DOKU_USER.acl < 255) || article.title === '' || article.content === '';
 
     return (
         <div className="inspector">
@@ -35,7 +35,7 @@ const Inspector = () => {
                     Löschen
                 </button>
                 <button
-                    disabled={article.locked && window.DOKU_USER.acl > 255}
+                    disabled={article.locked && window.DOKU_USER.acl < 255}
                     className="right btn btn-primary"
                     onClick={() => saveArticle()}
                 >
