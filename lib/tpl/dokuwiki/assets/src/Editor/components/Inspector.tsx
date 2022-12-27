@@ -243,7 +243,7 @@ const Inspector = () => {
                         <input
                             className="form-check-input"
                             type="checkbox"
-                            disabled={article.locked || window.DOKU_USER.acl < 255}
+                            disabled={window.DOKU_USER.acl < 255}
                             checked={article.locked}
                             onChange={() => {
                                 dispatch({
