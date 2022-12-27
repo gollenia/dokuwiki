@@ -1,0 +1,24 @@
+.cm-editor {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background: none;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.cm-focused {
+    //box-shadow: 0px 0px 0px var(--bs-primary);
+    outline: none !important;
+}
+
+.cm-line {
+    padding: 0 1rem 0 1rem !important;
+}
+
+.ͼ2 .cm-activeLine {
+    background-color: #0d6efd11;
+}
+
+.cm-scroller {
+    font-family: 'Source Code Pro' !important;
+}

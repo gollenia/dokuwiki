@@ -1,98 +1,96 @@
 #react-tree {
-	overflow: auto;
+    overflow: auto;
 }
 
 .tree {
-	
-	font-size: .75rem;
+    font-size: 0.75rem;
 
-	ul {
-		list-style-type: none;
-		padding-left: 1rem;
-	}
+    ul {
+        list-style-type: none;
+        padding-left: 1rem;
+    }
 
-	.icon-chevron {
-		width: 1.5rem;
-	}
+    .icon-chevron {
+        width: 1.5rem;
+    }
 
-	.add-page {
-		display: none;
-		font-size: 20px;
-		background: #67B82A;
-		border-radius: 99px;
-		margin-left: auto;
-	}
+    .add-page {
+        display: none;
+        font-size: 20px;
+        background: #67b82a;
+        border-radius: 99px;
+        margin-left: auto;
 
-	.new-page-input {
-		margin-left: 1.5rem;
-		font-size: .75rem;
-		line-height: 1rem;
-		padding: 0.2rem;
-		width: auto;
-	}
-	
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
 
-	&.tree-root {
-		padding-left: 0rem !important;	
+    .new-page-input {
+        margin-left: 1.5rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        padding: 0.2rem;
+        width: auto;
+    }
 
-		li.file {
-			padding-left: 1.8rem !important;
-		}
-	}
-	padding-left: .8rem;
-	list-style-type: none;
+    &.tree-root {
+        padding-left: 0rem !important;
 
-	a {
-		color: #fff;
-		text-decoration: none;
-		font-size: small;
-		white-space: nowrap;
-	}
+        li.file {
+            padding-left: 1.8rem !important;
+        }
+    }
+    padding-left: 0.8rem;
+    list-style-type: none;
 
-	span {
-		
-		display: flex;
-    	align-items: center;
-		white-space: nowrap;
-		cursor: pointer;
-		img {
-			margin-right: .35rem
-		}
-	}
+    a {
+        color: #fff;
+        text-decoration: none;
+        font-size: small;
+        white-space: nowrap;
+    }
 
-	li {
-		padding: 0.15rem 0.25rem;
-		
-	}
+    span {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        cursor: pointer;
+        img {
+            margin-right: 0.35rem;
+        }
+    }
 
-	li>span:hover {
-		.add-page {		
-			display: inline-block;
-		}
-	}
+    li {
+        padding: 0.15rem 0.25rem;
+    }
 
-	li.file {
-		padding-left: 1rem;
-	}
+    li > span:hover {
+        .add-page {
+            display: inline-block;
+        }
+    }
 
-	li > ul {
-		max-height: 0;
-		/* height: auto; */
-		overflow: hidden;
-	}
+    li.file {
+        padding-left: 1rem;
+    }
 
-	li.open > ul {
-		max-height: 100%;
-	} 
+    li > ul {
+        max-height: 0;
+        /* height: auto; */
+        overflow: hidden;
+    }
 
-	li.open > span > .chevron {
-		transform: rotate(90deg);
-	}
+    li.open > ul {
+        max-height: 100%;
+    }
 
-	li.active > span {
-		background: var(--bs-primary);
-		color: white;
-	}
+    li.open > span > .chevron {
+        transform: rotate(90deg);
+    }
 
-	
+    li.active > span {
+        background: var(--bs-primary);
+        color: white;
+    }
 }

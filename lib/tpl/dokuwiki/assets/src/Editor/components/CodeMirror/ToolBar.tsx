@@ -1,6 +1,7 @@
 import { EditorView } from 'codemirror';
 import React, { useState } from 'react';
 import BibleVerse from '../Dialogs/BibleVerse';
+import Box from '../Dialogs/Box';
 import LinkPicker, { Link } from '../Dialogs/LinkPicker';
 import YouTube from '../Dialogs/YouTube';
 
@@ -37,9 +38,16 @@ const ToolBar = (props: Props) => {
         });
     };
 
+    const replaceSelection = (text: string) => {
+        view.dispatch({
+            changes: [{ from: view.state.selection.main.from, to: view.state.selection.main.to, insert: text }],
+            selection: { anchor: view.state.selection.main.from },
+            userEvent: 'input.type',
+        });
+    };
+
     const getSelection = () => {
         const t = view.state.sliceDoc(view.state.selection.main.from, view.state.selection.main.to);
-
         return view.state.sliceDoc(view.state.selection.main.from, view.state.selection.main.to);
     };
 
@@ -186,8 +194,16 @@ const ToolBar = (props: Props) => {
                     <span>Bibelstelle</span>
                 </button>
                 <button>
-                    <i className="material-symbols-outlined">article</i>
-                    <span>Box</span>
+                    <i
+                        onClick={() => {
+                            setSelection(getSelection());
+                            setBox(true);
+                        }}
+                        className="material-symbols-outlined"
+                    >
+                        article
+                    </i>
+                    <span>Kasten</span>
                 </button>
                 <button>
                     <i
@@ -205,17 +221,33 @@ const ToolBar = (props: Props) => {
             <LinkPicker
                 title={selection}
                 onChange={(link: Link) => {
-                    insertAtSelection('[[' + link.id + '|' + link.title + ']]');
+                    console.log(link);
+                    replaceSelection('[[' + link.id + '|' + (link.title == '' ? link.placeholder : link.title) + ']]');
                 }}
                 setShowPicker={setPicker}
                 showPicker={picker}
             />
-            <YouTube onChange={video => {}} setShowYouTube={setYoutube} showYouTube={youtube} />
+            <Box
+                onChange={box => {
+                    wrapSelection(box, '</box>');
+                }}
+                setShowBox={setBox}
+                showBox={box}
+            ></Box>
+            <YouTube
+                onChange={video => {
+                    insertAtSelection(video);
+                }}
+                setShowYouTube={setYoutube}
+                showYouTube={youtube}
+            />
             <BibleVerse
                 title={selection}
                 showBibleVerse={bible}
                 setShowBibleVerse={setBible}
-                onChange={bibleref => {}}
+                onChange={bibleRef => {
+                    insertAtSelection(bibleRef);
+                }}
             />
         </>
     );

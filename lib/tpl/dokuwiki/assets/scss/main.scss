@@ -2,6 +2,7 @@ $enable-grid-classes: true;
 $enable-cssgrid: true;
 $btn-font-size: 0.8125rem;
 $btn-font-size-sm: 0.75rem;
+$btn-font-weight: 600;
 $btn-border-radius: 99px;
 $border-radius: 5px;
 $border-radius-sm: 5px;
@@ -41,13 +42,14 @@ $light: #f7f7f9;
     background-color: #3a3f51;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-    --bs-font-sans-serif: 'Source Sans Pro', 'Times New Roman';
+    --bs-font-sans-serif: 'Source Sans Pro';
     --bs-body-font-size: 0.8125rem;
-    --bs-body-font-color: #515558;
-    --bs-body-color: #515558;
+    --bs-body-font-color: #394549;
+    --bs-body-color: #394549;
+    --bs-body-font-weight: 600;
     --bs-btn-font-size: 0.8125rem;
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
@@ -59,9 +61,11 @@ $light: #f7f7f9;
 @import './components/mediamanager';
 @import './components/toolbar';
 @import './components/dropdown';
+@import './components/editor';
+@import './components/map';
 
 body {
-    background: #f1f5f8;
+    background: #f0f6fa;
 }
 
 .btn-sm {
@@ -102,6 +106,7 @@ main {
     height: 70px;
     border-bottom: 1px solid #ddd;
     background: #f1f5f8;
+    font-size: 1rem;
 
     .dropdown-menu {
         margin-top: 15px;
@@ -149,69 +154,17 @@ main {
     }
 }
 
-.map-holder {
-    aspect-ratio: 16 / 9;
+.card {
+    box-shadow: 0 0.125rem 0.5rem rgb(0 0 0 / 8%) !important;
 }
 
-.jvm-tooltip {
-    background-color: #313538 !important;
-    font-family: 'Exo 2' !important;
-    font-size: 0.75rem !important;
+.map-holder {
+    aspect-ratio: 16 / 9;
 }
 
 #usrmgr__del {
     @extend .btn;
     @extend .btn-danger;
-}
-
-.image-error {
-    div {
-        background-color: #fdf2f3;
-        border: 2px solid #fdf2f3;
-        display: grid;
-        place-content: center;
-        text-align: center;
-        color: #dc3545;
-        border-radius: 1rem;
-        cursor: pointer;
-
-        i {
-            font-size: 3rem;
-        }
-
-        span {
-            font-weight: bold;
-        }
-    }
-
-    &:hover div {
-        border: 2px solid #dc3545;
-    }
-}
-
-.image-empty {
-    div {
-        background-color: #f2f8ff;
-        border: 2px solid #f2f8ff;
-        display: grid;
-        place-content: center;
-        text-align: center;
-        color: #006fff;
-        border-radius: 1rem;
-        cursor: pointer;
-
-        i {
-            font-size: 3rem;
-        }
-
-        span {
-            font-weight: bold;
-        }
-    }
-
-    &:hover div {
-        border: 2px solid #006fff;
-    }
 }
 
 .filter {
@@ -227,5 +180,48 @@ main {
 
     strong {
         flex: 1;
+    }
+}
+
+input[type='color'] {
+    width: 3rem;
+    padding: 4px 6px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.dashboard {
+    h1,
+    h2 {
+        font-weight: 800;
+        color: #39454999;
+    }
+}
+
+.jvm-zoom-btn.jvm-zoomout {
+    top: 39px;
+}
+.jvm-zoom-btn {
+    border-radius: 3px;
+    background-color: #f1f5f8;
+    padding: 6px;
+    box-sizing: border-box;
+    position: absolute;
+    line-height: 10px;
+    cursor: pointer;
+    color: #394549;
+    height: 24px;
+    width: 24px;
+    left: 0px;
+    display: grid;
+    place-content: center;
+    font-weight: bold;
+    font-size: 21px;
+
+    &:hover {
+        background: #006fff;
+        color: #fff;
     }
 }

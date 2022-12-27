@@ -88,6 +88,7 @@ const YouTube = (props: Props) => {
 
     const clickOk = () => {
         onChange(createSyntax());
+        setShowYouTube(false);
     };
 
     return (

@@ -25,11 +25,20 @@ const Inspector = () => {
             .then(data => console.log(data));
     };
 
+    const saveForbidden =
+        (article.locked && window.DOKU_USER.acl > 255) || article.title === '' || article.content === '';
+
     return (
         <div className="inspector">
             <div className="d-flex justify-content-end gap-2 py-4 px-4">
-                <button className="right btn btn-outline-danger">Löschen</button>
-                <button className="right btn btn-primary" onClick={() => saveArticle()}>
+                <button disabled={saveForbidden} className="right btn btn-outline-danger">
+                    Löschen
+                </button>
+                <button
+                    disabled={article.locked && window.DOKU_USER.acl > 255}
+                    className="right btn btn-primary"
+                    onClick={() => saveArticle()}
+                >
                     Speichern
                 </button>
             </div>
@@ -38,9 +47,10 @@ const Inspector = () => {
                     {article.pageimage && article.pageimage !== 'error' && (
                         <img
                             onClick={() => {
+                                if (article.locked) return;
                                 dispatch({ type: 'SHOW_MEDIAMANAGER', payload: 'inspector' });
                             }}
-                            className="object-cover w-100 ratio ratio-16x9"
+                            className="object-cover w-100 ratio ratio-16x9 cursor-pointer"
                             src={'/_media/' + article.pageimage + '?w=600'}
                         />
                     )}
@@ -72,6 +82,7 @@ const Inspector = () => {
                     )}
                     <div className="d-flex mt-2 gap-2">
                         <button
+                            disabled={article.locked}
                             className="btn btn-outline-secondary btn-sm d-flex"
                             onClick={() => {
                                 dispatch({ type: 'SHOW_MEDIAMANAGER', payload: 'inspector' });
@@ -79,7 +90,11 @@ const Inspector = () => {
                         >
                             <i className="material-symbols-outlined">image</i> Ändern
                         </button>
-                        <button className="btn btn-outline-danger btn-sm d-flex" onClick={() => {}}>
+                        <button
+                            disabled={article.locked}
+                            className="btn btn-outline-danger btn-sm d-flex"
+                            onClick={() => {}}
+                        >
                             <i className="material-symbols-outlined">delete</i> Entfernen
                         </button>
                     </div>
@@ -89,6 +104,7 @@ const Inspector = () => {
                     <FileList />
                     <div className="d-flex flex-row-reverse mt-4">
                         <button
+                            disabled={article.locked}
                             onClick={() => {
                                 dispatch({ type: 'SHOW_FILEMANAGER', payload: true });
                             }}
@@ -105,6 +121,7 @@ const Inspector = () => {
                             onChange={() => {}}
                             className="w-full form-control form-control-sm"
                             rows={5}
+                            disabled={article.locked}
                             value={article.abstract}
                         ></textarea>
                         <p className="text-xs text-secondary">
@@ -136,6 +153,7 @@ const Inspector = () => {
                     <div className="input-text">
                         <label className="label label-sm">Label</label>
                         <input
+                            disabled={article.locked}
                             onChange={event => {
                                 dispatch({ type: 'SET_ARTICLE_DATA', key: 'label', payload: event.target.value });
                             }}
@@ -170,6 +188,7 @@ const Inspector = () => {
                     <div className="input-text">
                         <label className="label label-sm">Icon</label>
                         <input
+                            disabled={article.locked}
                             onChange={event => {
                                 dispatch({ type: 'SET_ARTICLE_DATA', key: 'icon', payload: event.target.value });
                             }}
@@ -188,6 +207,7 @@ const Inspector = () => {
                     <div className="input-text mb-4">
                         <label className="label label-sm">Copyright</label>
                         <input
+                            disabled={article.locked}
                             onChange={event => {
                                 dispatch({ type: 'SET_ARTICLE_DATA', key: 'copyright', payload: event.target.value });
                             }}
@@ -199,9 +219,10 @@ const Inspector = () => {
                         <p className="text-xs text-secondary">Optionaler Copyright-Vermerk</p>
                     </div>
 
-                    <div className="form-check form-switch">
+                    <div className="form-check form-switch mb-4">
                         <input
                             className="form-check-input"
+                            disabled={article.locked}
                             type="checkbox"
                             checked={article.exclude}
                             onChange={event => {
@@ -215,6 +236,26 @@ const Inspector = () => {
 
                         <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
                             Seite bei der Suche ausschließen
+                        </label>
+                    </div>
+
+                    <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            disabled={article.locked || window.DOKU_USER.acl < 255}
+                            checked={article.locked}
+                            onChange={() => {
+                                dispatch({
+                                    type: 'SET_ARTICLE_DATA',
+                                    key: 'locked',
+                                    payload: !article.locked,
+                                });
+                            }}
+                        />
+
+                        <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
+                            Seite sperren
                         </label>
                     </div>
                 </Panel>

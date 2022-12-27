@@ -11,7 +11,7 @@ type TreeItemType = {
 interface TreeItemProps {
     item: TreeItemType;
     currentID: string;
-    onClickCallback: (event: any) => void;
+    onClickCallback: (id: any, title: any) => void;
 }
 
 const TreeItem = (props: TreeItemProps) => {
@@ -36,7 +36,7 @@ const TreeItem = (props: TreeItemProps) => {
             {!item.children && (
                 <span
                     onClick={event => {
-                        onClickCallback(item.id);
+                        onClickCallback(item.id, item.title);
                     }}
                 >
                     <i className="material-symbols-outlined">text_snippet</i> <span>{item.title}</span>
@@ -52,7 +52,7 @@ const TreeItem = (props: TreeItemProps) => {
                         <i className="material-symbols-outlined">folder</i>
                         <span
                             onClick={event => {
-                                onClickCallback(item.id);
+                                onClickCallback(item.id, item.title);
                             }}
                         >
                             {item.title}

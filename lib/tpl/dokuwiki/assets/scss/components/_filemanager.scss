@@ -111,6 +111,9 @@
         &:hover {
             background: var(--bs-primary);
             color: #fff;
+            a {
+                color: #fff !important;
+            }
         }
     }
 
