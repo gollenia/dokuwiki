@@ -128,6 +128,10 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+
+    &.disabled tag {
+        background-color: #575e71;
+    }
 }
 
 .edit-wrapper {
@@ -224,4 +228,15 @@ input[type='color'] {
         background: #006fff;
         color: #fff;
     }
+}
+
+.font-weight-normal {
+    font-weight: 200 !important;
+}
+
+.btn-saved,
+.btn-saved:hover {
+    background-color: #4f970e;
+    border-color: #4f970e;
+    color: #fff;
 }
