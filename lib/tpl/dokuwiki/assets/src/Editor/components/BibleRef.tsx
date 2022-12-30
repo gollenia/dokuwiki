@@ -3,9 +3,12 @@ import { BibleRef } from '../services/models/Bible';
 import { store } from '../services/store';
 import Combobox from './Elemets/Combobox';
 
-type Props = {};
+type Props = {
+    disabled?: boolean;
+};
 
-const BibleRef = (props: Props) => {
+const BibleRef: React.FC<Props> = props => {
+    const { disabled } = props;
     const globalState = useContext(store);
     const {
         state: { article, files, site },
@@ -75,7 +78,7 @@ const BibleRef = (props: Props) => {
                 {article.bibleref?.map((ref, index) => {
                     const book = site.bible.books.find(book => book.id == ref.book_id);
                     return (
-                        <span key={index} className="badge tag bg-primary">
+                        <span key={index} className={'badge tag ' + (disabled ? 'bg-secondary' : 'bg-primary')}>
                             {book.long_name} {ref.chapter}{' '}
                             <i
                                 className="material-symbols-outlined"
@@ -92,6 +95,7 @@ const BibleRef = (props: Props) => {
             <div className="d-flex gap-1">
                 <Combobox
                     placeholder="Buch wählen"
+                    disabled={disabled}
                     onChange={item => {
                         setSelectedBookId(item);
                     }}
@@ -100,6 +104,7 @@ const BibleRef = (props: Props) => {
                 <input
                     max={getMaxChapters()}
                     value={selectedChapter}
+                    disabled={disabled}
                     onChange={event => setSelectedChapter(parseInt(event.target.value))}
                     type="number"
                     className="form-control"
@@ -107,6 +112,7 @@ const BibleRef = (props: Props) => {
                 />
                 <button
                     className="btn btn-primary"
+                    disabled={disabled}
                     onClick={() =>
                         addBibleRef({
                             book_id: 10,
@@ -122,6 +128,10 @@ const BibleRef = (props: Props) => {
             </div>
         </div>
     );
+};
+
+BibleRef.defaultProps = {
+    disabled: false,
 };
 
 export default BibleRef;

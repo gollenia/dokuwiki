@@ -5,13 +5,14 @@ interface ComboboxProps {
     placeholder?: string;
     default?: string | number;
     onChange?: (option: string | number) => void;
+    disabled?: boolean;
 }
 
 const Combobox: React.FC<ComboboxProps> = props => {
-    const { options, onChange, placeholder } = props;
+    const { options, onChange, placeholder, disabled } = props;
 
     const input = useRef<HTMLInputElement>(null);
-
+    console.log(disabled);
     const [inputField, setInputField] = useState<string>('');
     const [selection, setSelection] = useState<number>(-1);
     const [listSelect, setListSelect] = useState<number>(-1);
@@ -51,11 +52,12 @@ const Combobox: React.FC<ComboboxProps> = props => {
     };
 
     return (
-        <div className="combobox" onKeyDown={event => keyPress(event)}>
+        <div className={'combobox ' + (disabled ? 'disabled' : '')} onKeyDown={event => keyPress(event)}>
             <input
                 className="form-control"
                 ref={input}
                 type="text"
+                disabled={disabled}
                 onMouseOver={() => {
                     setListSelect(-1);
                 }}
@@ -86,6 +88,7 @@ const Combobox: React.FC<ComboboxProps> = props => {
 
 Combobox.defaultProps = {
     placeholder: '',
+    disabled: false,
 };
 
 export default Combobox;

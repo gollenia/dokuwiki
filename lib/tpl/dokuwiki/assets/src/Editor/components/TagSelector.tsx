@@ -6,11 +6,12 @@ interface TagSelectorProps {
     placeholder?: string;
     default?: string | number;
     tagList?: Array<string>;
+    disabled?: boolean;
     onChange?: (option: Array<string>) => void;
 }
 
 const TagSelector: React.FC<TagSelectorProps> = props => {
-    const { availableTags, onChange, placeholder, tagList } = props;
+    const { availableTags, onChange, placeholder, tagList, disabled } = props;
 
     const input = useRef<HTMLInputElement>(null);
 
@@ -57,32 +58,35 @@ const TagSelector: React.FC<TagSelectorProps> = props => {
 
     return (
         <div>
-            <div className="tagList tags mb-4 mt-2">
+            <div className={'tagList tags mb-4 mt-2 ' + (disabled ? 'disabled' : '')}>
                 {' '}
                 {tagList.map((tagId, index) => {
                     const tag = availableTags.find(item => item.id == tagId);
                     if (!tag) return;
                     return (
-                        <span className="badge tag bg-primary">
+                        <span className={'badge tag ' + (disabled ? 'bg-secondary' : 'bg-primary')}>
                             {tag.name}
-                            <i
-                                className="material-symbols-outlined"
-                                onClick={() => {
-                                    removeTag(index);
-                                }}
-                            >
-                                cancel
-                            </i>
+                            {!disabled && (
+                                <i
+                                    className="material-symbols-outlined"
+                                    onClick={() => {
+                                        removeTag(index);
+                                    }}
+                                >
+                                    cancel
+                                </i>
+                            )}
                         </span>
                     );
                 })}
             </div>
             <label>Schlagworte hinzufügen</label>
-            <div className="combobox" onKeyDown={event => keyPress(event)}>
+            <div className={'combobox ' + (disabled ? 'disabled' : '')} onKeyDown={event => keyPress(event)}>
                 <input
                     className="form-control"
                     ref={input}
                     type="text"
+                    disabled={disabled}
                     onMouseOver={() => {
                         setListSelect(-1);
                     }}
@@ -114,6 +118,7 @@ const TagSelector: React.FC<TagSelectorProps> = props => {
 
 TagSelector.defaultProps = {
     placeholder: '',
+    disabled: false,
 };
 
 export default TagSelector;
