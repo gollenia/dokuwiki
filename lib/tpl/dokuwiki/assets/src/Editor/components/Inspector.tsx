@@ -9,11 +9,12 @@ import TagSelector from './TagSelector';
 const Inspector = () => {
     const globalState = useContext(store);
     const {
-        state: { article, files, site },
+        state: { article, files, site, status },
         dispatch,
     } = globalState;
 
     const saveArticle = () => {
+        dispatch({ type: 'SET_STATUS', payload: 'SAVING' });
         fetch('/?lang=' + window.DOKU_LANG + '&controller=edit&method=save&id=' + window.DOKU_ID, {
             method: 'POST',
             body: JSON.stringify(article),
@@ -22,11 +23,60 @@ const Inspector = () => {
             },
         })
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => {
+                dispatch({ type: 'SET_STATUS', payload: 'SAVED' });
+            });
     };
 
     const saveForbidden =
         (article.locked && window.DOKU_USER.acl < 255) || article.title === '' || article.content === '';
+
+    const saveButtonClass = () => {
+        switch (status) {
+            case 'SAVED':
+                return 'btn-saved';
+            case 'SAVING':
+                return 'btn-warning';
+            case 'CHANGED':
+                return 'btn-primary';
+            case 'ERROR':
+                return 'btn-error';
+            default:
+                return 'btn-secondary';
+        }
+    };
+
+    const saveButtonText = () => {
+        switch (status) {
+            case 'SAVED':
+                return (
+                    <>
+                        <i className="material-symbols-outlined font-weight-normal">done</i>Gespeichert
+                    </>
+                );
+            case 'SAVING':
+                return (
+                    <>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="sr-only">Speichern...</span>
+                    </>
+                );
+            case 'CHANGED':
+                return (
+                    <>
+                        <i className="material-symbols-outlined font-weight-normal">save</i>Speichern
+                    </>
+                );
+            case 'ERROR':
+                return (
+                    <>
+                        <i className="material-symbols-outlined font-weight-normal">warning</i>Speichern
+                    </>
+                );
+            default:
+                return <>Speichern</>;
+        }
+    };
 
     return (
         <div className="inspector">
@@ -35,11 +85,11 @@ const Inspector = () => {
                     Löschen
                 </button>
                 <button
-                    disabled={article.locked && window.DOKU_USER.acl < 255}
-                    className="right btn btn-primary"
+                    disabled={(article.locked && window.DOKU_USER.acl < 255) || status == 'SAVING'}
+                    className={'right btn ' + saveButtonClass()}
                     onClick={() => saveArticle()}
                 >
-                    Speichern
+                    {saveButtonText()}
                 </button>
             </div>
             <div className="inspector-panels">
@@ -118,15 +168,17 @@ const Inspector = () => {
                 <Panel title="Zusammenfassung">
                     <div className="input-textarea">
                         <textarea
-                            onChange={() => {}}
+                            onChange={e => {
+                                dispatch({ type: 'SET_ARTICLE_DATA', key: 'abstract', payload: e.target.value });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
+                            }}
                             className="w-full form-control form-control-sm"
                             rows={5}
                             disabled={article.locked}
                             value={article.abstract}
                         ></textarea>
                         <p className="text-xs text-secondary">
-                            Die Zusammenfassung wird als Vortschau auf den Übersichtsseiten angezeigt. Maximal 100
-                            Buchstaben.
+                            Die Zusammenfassung wird als Vorschau auf den Karten angezeigt.
                         </p>
                     </div>
                 </Panel>
@@ -137,7 +189,11 @@ const Inspector = () => {
                         <Combobox
                             placeholder={site.categories?.find(category => category.value == article.category)?.label}
                             options={site.categories}
-                            onChange={e => dispatch({ type: 'SET_ARTICLE_DATA', key: 'category', payload: e })}
+                            disabled={article.locked}
+                            onChange={e => {
+                                dispatch({ type: 'SET_ARTICLE_DATA', key: 'category', payload: e });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
+                            }}
                         />
                     </div>
 
@@ -146,7 +202,11 @@ const Inspector = () => {
                         <Combobox
                             placeholder={site.audience?.find(audience => audience.value == article.audience)?.label}
                             options={site.audience}
-                            onChange={e => dispatch({ type: 'SET_ARTICLE_DATA', key: 'audience', payload: e })}
+                            disabled={article.locked}
+                            onChange={e => {
+                                dispatch({ type: 'SET_ARTICLE_DATA', key: 'audience', payload: e });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
+                            }}
                         />
                     </div>
 
@@ -156,6 +216,7 @@ const Inspector = () => {
                             disabled={article.locked}
                             onChange={event => {
                                 dispatch({ type: 'SET_ARTICLE_DATA', key: 'label', payload: event.target.value });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
                             }}
                             type="text"
                             className="w-full  form-control form-control-sm"
@@ -173,15 +234,17 @@ const Inspector = () => {
                         <TagSelector
                             availableTags={site.tags}
                             tagList={article.tags}
+                            disabled={article.locked}
                             onChange={tags => {
                                 dispatch({ type: 'SET_ARTICLE_DATA', key: 'tags', payload: tags });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
                             }}
                         />
                     </div>
                 </Panel>
 
                 <Panel title="Bibelstellen">
-                    <BibleRef />
+                    <BibleRef disabled={article.locked} />
                 </Panel>
 
                 <Panel title="Extras">
@@ -191,6 +254,7 @@ const Inspector = () => {
                             disabled={article.locked}
                             onChange={event => {
                                 dispatch({ type: 'SET_ARTICLE_DATA', key: 'icon', payload: event.target.value });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
                             }}
                             type="text"
                             className="w-full form-control form-control-sm"
@@ -210,6 +274,7 @@ const Inspector = () => {
                             disabled={article.locked}
                             onChange={event => {
                                 dispatch({ type: 'SET_ARTICLE_DATA', key: 'copyright', payload: event.target.value });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
                             }}
                             type="text"
                             className="w-full  form-control form-control-sm"
@@ -231,6 +296,7 @@ const Inspector = () => {
                                     key: 'exclude',
                                     payload: !article.exclude,
                                 });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
                             }}
                         />
 
@@ -251,6 +317,7 @@ const Inspector = () => {
                                     key: 'locked',
                                     payload: !article.locked,
                                 });
+                                dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
                             }}
                         />
 
