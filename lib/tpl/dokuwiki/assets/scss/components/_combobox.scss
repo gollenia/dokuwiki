@@ -1,85 +1,81 @@
 .combobox {
-	position: relative;
-	ul {
-		position: absolute;
-		visibility: hidden;
-		max-height: 10rem;
-		padding: 0;
-		width: 100%;
-		overflow-y: auto;
-		background: #fff;
-		border-radius: 5px;
-		box-shadow: 0px 1px 4px rgb(0 0 0 / 30%);
-		margin-top: 1px;
-		display: flex;
-		flex-direction: column;
+    position: relative;
+    ul {
+        position: absolute;
+        visibility: hidden;
+        max-height: 10rem;
+        padding: 0;
+        width: 100%;
+        overflow-y: auto;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 1px 4px rgb(0 0 0 / 30%);
+        margin-top: 1px;
+        display: flex;
+        flex-direction: column;
 
-		li {
-			line-height: 1.5rem;
-			display: flex;
-			align-items: center;
-			gap: 1rem;
-			padding: 0.25rem 1rem;
-			cursor: pointer;
+        li {
+            line-height: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.25rem 1rem;
+            cursor: pointer;
 
-			&:hover,
-			&.selected {
-				background-color: var(--bs-primary);
-				color: #fff;
+            &:hover,
+            &.selected {
+                background-color: var(--bs-primary);
+                color: #fff;
 
-				span {
-					color: #ffffff88
-				}
-			}
+                span {
+                    color: #ffffff88;
+                }
+            }
 
-			img {
-				width: 32px;
-				height: 32px;
-				border-radius: 99px;
-			}
+            img {
+                width: 32px;
+                height: 32px;
+                border-radius: 99px;
+            }
 
-			.combobox__dummy {
-				width: 32px;
-				height: 32px;
-			}
+            .combobox__dummy {
+                width: 32px;
+                height: 32px;
+            }
 
-			span {
-				font-size: 0.75rem;
-				line-height: 0.5rem;
-				color: var(--gray-600);
-			}
+            span {
+                font-size: 0.75rem;
+                line-height: 0.5rem;
+                color: var(--gray-600);
+            }
 
-			&.muted {
-				color: var(--gray-600);
-			}
-		}
-	}
+            &.muted {
+                color: var(--gray-600);
+            }
+        }
+    }
 
-	&--open,
-	&:focus-within {
-		input[type=text] {
-			
-		}
+    &--open:not(.disabled),
+    &:focus-within:not(.disabled) {
+        ul {
+            visibility: visible;
+            z-index: 999;
+        }
+    }
 
-		ul {
-			visibility: visible;
-			z-index: 999;
-		}
-	}
-
-	&::after {
-		display: inline-block;
-		width: 0;
-		height: 0;
-		margin-left: 0.255em;
-		vertical-align: 0.255em;
-		content: "";
-		border-top: 0.4em solid;
-		border-right: 0.4em solid transparent;
-		border-bottom: 0;
-		border-left: 0.4em solid transparent;
-		position: absolute;
-		top: 14px;
-		right: 14px;
-	}
+    &::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: '';
+        border-top: 0.4em solid;
+        border-right: 0.4em solid transparent;
+        border-bottom: 0;
+        border-left: 0.4em solid transparent;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+    }
 }
