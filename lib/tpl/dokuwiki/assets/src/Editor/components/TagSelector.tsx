@@ -11,9 +11,13 @@ interface TagSelectorProps {
 }
 
 const TagSelector: React.FC<TagSelectorProps> = props => {
-    const { availableTags, onChange, placeholder, tagList, disabled } = props;
+    let { availableTags, onChange, placeholder, tagList, disabled } = props;
 
     const input = useRef<HTMLInputElement>(null);
+
+    if (typeof tagList === 'string') {
+        tagList = [tagList];
+    }
 
     const [inputField, setInputField] = useState<string>('');
     const [selection, setSelection] = useState<number>(-1);
