@@ -255,10 +255,15 @@ class Page
 		$i = 0;
 		foreach ($pages as $line => $id) {
 			if (preg_match('/(system|start|wiki|test|tag|category|audience|bibel|bible)/', $id)) continue;
-			$i++;
+			
+			
 			if ($i > $count) break;
 			if(Meta::get($id, 'excludeFromIndex', false)) continue;
-			$result[] = new Page($id);
+			$page = new Page($id);
+			if(!$page->exists()) continue;
+			$result[] = $page;
+			$i++;
+			
 		}
 		return $result;
 	}
@@ -281,7 +286,9 @@ class Page
 		foreach ($pages as $id => $value) {
 			if (preg_match('/(system|start|wiki|test|tag|category|audience|bibel|bible)/', $id)) continue;
 			if(Meta::get($id, 'excludeFromIndex', false)) continue;
-			$result[] = new Page($id);
+			$page = new Page($id);
+			if(!$page->exists()) continue;
+			$result[] = $page;
 			$i++;
 			if ($i == $count) break;
 		}
