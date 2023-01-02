@@ -254,7 +254,7 @@ class Page
 		$result = [];
 		$i = 0;
 		foreach ($pages as $line => $id) {
-			if (preg_match('/(system|start|wiki|test|tag|category|audience)/', $id)) continue;
+			if (preg_match('/(system|start|wiki|test|tag|category|audience|bibel|bible)/', $id)) continue;
 			$i++;
 			if ($i > $count) break;
 			if(Meta::get($id, 'excludeFromIndex', false)) continue;
@@ -279,7 +279,7 @@ class Page
 		$i = 0;
 		$result = [];
 		foreach ($pages as $id => $value) {
-			if (preg_match('/(system|start|wiki|test|tag|category|audience)/', $id)) continue;
+			if (preg_match('/(system|start|wiki|test|tag|category|audience|bibel|bible)/', $id)) continue;
 			if(Meta::get($id, 'excludeFromIndex', false)) continue;
 			$result[] = new Page($id);
 			$i++;
