@@ -75,7 +75,9 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		$lang = $INPUT->str('lang', $conf['lang']);
 		$page = Page::find($id);
 		$ref = $INPUT->str('ref', 'at');
-
+		http_response_code(301);
+		header('Location: https://downloads.kids-team." . $ref . "/" . $id . "');
+		echo "<html><head>";
 		echo "<meta name='author' content='kids-team' />";
 		echo "<meta name='keywords' content='' />";
 		echo "<meta name='description' content='" . $page->abstract . "' />";
@@ -88,7 +90,7 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		echo "<meta property='og:image:width' content='780' />";
 		echo "<meta property='og:image:height' content='439' />";
 		echo "<meta property='og:site_name' content='test' />";
-		echo "<meta property='og:url' content='downloads.kids-team." . $ref . "/" . $id . "' />";
+		echo "<meta property='og:url' content='https://downloads.kids-team." . $ref . "/" . $id . "' />";
 		echo "<meta property='og:type' content='article' />";
 		echo "<meta property='og:locale' content='" . $lang . "' />";
 		echo "<meta name='twitter:card' content='summary' />";
@@ -98,6 +100,7 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		echo "<meta name='twitter:image' content='https://example.com/img.jpg' />";
 		echo "<base href='downloads.kids-team." . $ref . "' />";
 		echo "<link rel='canonical' href='downloads.kids-team." . $ref . "/" . $id . "' />";
+		echo "</head><body></body></html>";
 		die();
 	}
 }
