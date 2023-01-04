@@ -83,10 +83,10 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		echo "<meta name='description' content='" . $page->abstract . "' />";
 		echo "<meta itemprop='name' content='test' />";
 		echo "<meta itemprop='description' content='" . $page->abstract . "' />";
-		echo "<meta itemprop='image' content='https://dlapi.kids-team.com/_media/" . $page->pageimage . "' />";
+		echo "<meta itemprop='image' content='https://dlapi.kids-team.com/_media/" . $page->pageimage . "?w=780' />";
 		echo "<meta property='og:title' content='" . $page->title . "' />";
 		echo "<meta property='og:description' content='" . $page->abstract . "' />";
-		echo "<meta property='og:image' content='https://dlapi.kids-team.com/_media/" . $page->pageimage . "' />";
+		echo "<meta property='og:image' content='https://dlapi.kids-team.com/_media/" . $page->pageimage . "?w=780' />";
 		echo "<meta property='og:image:width' content='780' />";
 		echo "<meta property='og:image:height' content='439' />";
 		echo "<meta property='og:site_name' content='test' />";
@@ -99,7 +99,7 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		echo "<meta name='twitter:description' content='" . $page->abstract . "' />";
 		echo "<meta name='twitter:image' content='https://example.com/img.jpg' />";
 		echo "<base href='downloads.kids-team." . $ref . "' />";
-		echo "<link rel='canonical' href='downloads.kids-team." . $ref . "/" . $id . "' />";
+		echo "<link rel='canonical' href='https://downloads.kids-team." . $ref . "/" . $id . "' />";
 		echo "</head><body></body></html>";
 		die();
 	}
