@@ -76,7 +76,7 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		$page = Page::find($id);
 		$ref = $INPUT->str('ref', 'at');
 		http_response_code(301);
-		header('Location: https://downloads.kids-team." . $ref . "/" . $id . "');
+		header("Location: https://downloads.kids-team." . $ref . "/" . $id);
 		echo "<html><head>";
 		echo "<meta name='author' content='kids-team' />";
 		echo "<meta name='keywords' content='' />";
