@@ -3,10 +3,12 @@
 use Contexis\Core\Controller;
 use Contexis\Database\Tag;
 use dokuwiki\Extension\Event;
+use dokuwiki\plugins\rest\Models\Page;
 
 class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 {
-	public function register(Doku_Event_Handler $controller)
+	
+	public function register($controller)
 	{
 		$controller->register_hook(
 			"DOKUWIKI_INIT_DONE",
@@ -16,6 +18,7 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		);
 
 		$controller->register_hook('INDEXER_PAGE_ADD', 'BEFORE', $this, 'addTagsToIndex', array());
+		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_get_opengraph');
 		$controller->register_hook('INDEXER_PAGE_ADD', 'BEFORE', $this, 'addCategoriesToIndex', array());
 		$controller->register_hook('INDEXER_PAGE_ADD', 'BEFORE', $this, 'addAudienceToIndex', array());
 	}
@@ -55,5 +58,46 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 	{
 		$audience = p_get_metadata($event->data['page'], 'audience');
 		$event->data['metadata']['audience'] = $audience;
+	}
+
+	public function _get_opengraph($event, $param)
+	{
+		global $INPUT;
+		global $conf;
+		
+		if ($event->data !== "opengraph") return;
+		
+		$url = $_SERVER['REQUEST_URI'];
+		$parts = explode("/", $url);
+		$last = end($parts);
+		
+		$id = base64_decode($last);
+		$lang = $INPUT->str('lang', $conf['lang']);
+		$page = Page::find($id);
+		$ref = $INPUT->str('ref', 'at');
+
+		echo "<meta name='author' content='kids-team' />";
+		echo "<meta name='keywords' content='' />";
+		echo "<meta name='description' content='" . $page->abstract . "' />";
+		echo "<meta itemprop='name' content='test' />";
+		echo "<meta itemprop='description' content='" . $page->abstract . "' />";
+		echo "<meta itemprop='image' content='https://dlapi.kids-team.com/_media/" . $page->pageimage . "' />";
+		echo "<meta property='og:title' content='" . $page->title . "' />";
+		echo "<meta property='og:description' content='" . $page->abstract . "' />";
+		echo "<meta property='og:image' content='https://dlapi.kids-team.com/_media/" . $page->pageimage . "' />";
+		echo "<meta property='og:image:width' content='780' />";
+		echo "<meta property='og:image:height' content='439' />";
+		echo "<meta property='og:site_name' content='test' />";
+		echo "<meta property='og:url' content='downloads.kids-team." . $ref . "/" . $id . "' />";
+		echo "<meta property='og:type' content='article' />";
+		echo "<meta property='og:locale' content='" . $lang . "' />";
+		echo "<meta name='twitter:card' content='summary' />";
+		echo "<meta name='twitter:site' content='downloads.kids-team." . $ref . "/" . $id . "' />";
+		echo "<meta name='twitter:title' content='test' />";
+		echo "<meta name='twitter:description' content='" . $page->abstract . "' />";
+		echo "<meta name='twitter:image' content='https://example.com/img.jpg' />";
+		echo "<base href='downloads.kids-team." . $ref . "' />";
+		echo "<link rel='canonical' href='downloads.kids-team." . $ref . "/" . $id . "' />";
+		die();
 	}
 }
