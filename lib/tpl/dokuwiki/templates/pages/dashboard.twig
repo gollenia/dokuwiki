@@ -82,7 +82,7 @@
 
 			<script data-id="misc-data">
 
-				const DOKU_STATS = {{ stats|json_encode()|raw }};
+				window.DOKU_STATS = {{ stats|json_encode()|raw }};
 			</script>
 
 			<script>
