@@ -6,6 +6,10 @@ import FileList from './FileManager/FileList';
 import Panel from './Panel';
 import TagSelector from './TagSelector';
 
+/*
+ *	this became a monster, maybe we should split it up into smaller components
+ *
+ */
 const Inspector = () => {
     const globalState = useContext(store);
     const {
@@ -51,26 +55,26 @@ const Inspector = () => {
             case 'SAVED':
                 return (
                     <>
-                        <i className="material-symbols-outlined font-weight-normal">done</i>Gespeichert
+                        <i className="material-symbols-outlined font-weight-normal">done</i> Gespeichert
                     </>
                 );
             case 'SAVING':
                 return (
                     <>
                         <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span className="sr-only">Speichern...</span>
+                        <span className="sr-only"> Speichern...</span>
                     </>
                 );
             case 'CHANGED':
                 return (
                     <>
-                        <i className="material-symbols-outlined font-weight-normal">save</i>Speichern
+                        <i className="material-symbols-outlined font-weight-normal">save</i> Speichern
                     </>
                 );
             case 'ERROR':
                 return (
                     <>
-                        <i className="material-symbols-outlined font-weight-normal">warning</i>Speichern
+                        <i className="material-symbols-outlined font-weight-normal">warning</i> Speichern
                     </>
                 );
             default:
@@ -100,7 +104,7 @@ const Inspector = () => {
                                 if (article.locked) return;
                                 dispatch({ type: 'SHOW_MEDIAMANAGER', payload: 'inspector' });
                             }}
-                            className="object-cover w-100 ratio ratio-16x9 cursor-pointer"
+                            className="object-cover w-100 ratio ratio-16x9 cursor-pointer image"
                             src={'/_media/' + article.pageimage + '?w=600'}
                         />
                     )}
@@ -177,7 +181,7 @@ const Inspector = () => {
                             disabled={article.locked}
                             value={article.abstract}
                         ></textarea>
-                        <p className="text-xs text-secondary">
+                        <p className="text-xs text-secondary input-help">
                             Die Zusammenfassung wird als Vorschau auf den Karten angezeigt.
                         </p>
                     </div>
@@ -223,7 +227,7 @@ const Inspector = () => {
                             value={article.label}
                             required
                         />
-                        <p className="text-xs text-secondary">
+                        <p className="text-xs text-secondary input-help">
                             Hier kann ein Label angegeben werden, das in der Kartenübersicht angezeigt wird.
                         </p>
                     </div>
@@ -260,7 +264,7 @@ const Inspector = () => {
                             className="w-full form-control form-control-sm"
                             value={article.icon}
                         />
-                        <p className="text-xs text-secondary">
+                        <p className="text-xs text-secondary input-help">
                             Ein beliebiges Icon von{' '}
                             <a target="_blank" href="https://fonts.google.com/icons">
                                 https://fonts.google.com/icons
@@ -281,7 +285,7 @@ const Inspector = () => {
                             value={article.copyright}
                             required
                         />
-                        <p className="text-xs text-secondary">Optionaler Copyright-Vermerk</p>
+                        <p className="text-xs text-secondary input-help">Optionaler Copyright-Vermerk</p>
                     </div>
 
                     <div className="form-check form-switch mb-4">
