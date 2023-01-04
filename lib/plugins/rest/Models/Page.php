@@ -317,7 +317,7 @@ class Page
 		p_set_metadata($this->id, ['pageimage' => $this->pageimage]);
 
 		lock($this->id);
-		saveWikiText($this->id, $this->content, $this->summary, false);
+		saveWikiText($this->id, $this->content, $this->abstract, false);
 		p_set_metadata($this->id, ['abstract' => $this->abstract]);
 		p_set_metadata($this->id, ['showSubpages' => $this->showSubpages]);
 		p_set_metadata($this->id, ['title' => $this->title]);
