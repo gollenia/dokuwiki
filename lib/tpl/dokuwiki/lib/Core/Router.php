@@ -28,6 +28,6 @@ class Router {
             return "Contexis\\Controllers\\" . $ACT;
         }
 
-        return "Contexis\\Controllers\\Fallback";
+        return "Contexis\\Core\\Controller";
     }
 }
