@@ -46,7 +46,7 @@ class GetPluginList extends CustomFunctions
 			$menu[$type][$p] = array(
 				'plugin' => $p,
 				'prompt' => $obj->getMenuText($conf['lang']),
-				'icon' => $obj->getMenuIcon(),
+				'icon' => $obj->menuIcon,
 				'sort' => $obj->getMenuSort(),
 			);
 		}
