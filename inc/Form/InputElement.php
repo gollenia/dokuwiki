@@ -83,7 +83,7 @@ class InputElement extends Element
      */
     public function addClass($class)
     {
-        if ($this->label) $this->label->addClass($class);
+        
         return parent::addClass($class);
     }
 
