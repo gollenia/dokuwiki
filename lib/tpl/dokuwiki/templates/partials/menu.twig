@@ -1,3 +1,5 @@
+
+
 <nav class="navbar position-fixed bg-white navbar-expand-lg shadow-sm navbar-light bg-light">
 	<div class="container-fluid">
 
@@ -18,18 +20,18 @@
 						{% set admin_menu_items = admin_menu() %}
 						{% for item in admin_menu_items.admin %}
 							<li>
-								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}">{{  item.prompt }}</a>
+								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}"><i class="material-symbols-outlined">{{item.icon}}</i> {{  item.prompt }}</a>
 							</li>
 						{% endfor %}
 						{% for item in admin_menu_items.manager %}
 							<li>
-								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}">{{  item.prompt }}</a>
+								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}"><i class="material-symbols-outlined">{{item.icon}}</i>{{  item.prompt }}</a>
 							</li>
 						{% endfor %}
 						<hr class="dropdown-divider">
 						{% for item in admin_menu_items.other %}
 							<li>
-								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}">{{  item.prompt }}</a>
+								<a class="dropdown-item" href="/?do=admin&page={{ item.plugin }}"><i class="material-symbols-outlined">{{item.icon}}</i>{{  item.prompt }}</a>
 							</li>
 						{% endfor %}
 					</ul>
@@ -41,16 +43,19 @@
 				</a>
 				<ul class="drop-menu" x-show="open" @click.away="open = false">
 					<li>
-						<a class="dropdown-item" href="/system/menu">{{ __("set_menu")}}</a>
+						<a class="dropdown-item" href="/system/menu"><i class="material-symbols-outlined">menu_open</i> {{ __("set_menu")}}</a>
 					</li>
 					<li>
-						<a class="dropdown-item" href="/system/footer">{{ __("set_footer")}}</a>
+						<a class="dropdown-item" href="/system/footer"><i class="material-symbols-outlined">video_label</i> {{ __("set_footer")}}</a>
 					</li>
 					<li>
-						<a class="dropdown-item" href="/system/tags">{{ __("edit_tags")}}</a>
+						<a class="dropdown-item" href="/system/tags"><i class="material-symbols-outlined">label</i> {{ __("edit_tags")}}</a>
 					</li>
 					<li>
-						<a class="dropdown-item" href="/system/categories">{{ __("edit_categories")}}</a>
+						<a class="dropdown-item" href="/system/categories"><i class="material-symbols-outlined">inventory_2</i>{{ __("edit_categories")}}</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="/system/organizations"><i class="material-symbols-outlined">savings</i>{{ __("edit_organizations")}}</a>
 					</li>
 				</ul>
 			</li>
