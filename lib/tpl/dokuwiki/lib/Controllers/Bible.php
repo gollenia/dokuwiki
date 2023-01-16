@@ -89,7 +89,7 @@ class Bible extends Controller implements ControllerInterface
 			http_response_code(200);
 			return json_encode([
 				'verses' => $bible->verses($chapter, $verses),
-				'info' => ['title' => $bible->long_name, 'translation' => $bible->translation]
+				'info' => ['long_name' => $bible->long_name, 'translation' => $bible->translation]
 			]);
 		}
 		http_response_code(400);
