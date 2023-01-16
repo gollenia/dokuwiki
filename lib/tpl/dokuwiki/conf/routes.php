@@ -12,4 +12,5 @@ return [
 	"\\Contexis\\Controllers\\Pages" => array_key_exists("controller", $_GET) && $_GET['controller'] === 'pages',
 	"\\Contexis\\Controllers\\Dashboard" => $ID == "dashboard",
 	"\\Contexis\\Controllers\\Show" => $ACT == "show",
+	"\\Contexis\\Controllers\\Edit" => $ACT == "edit"
 ];
