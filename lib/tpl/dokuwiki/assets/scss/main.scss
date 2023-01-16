@@ -63,6 +63,7 @@ $light: #f7f7f9;
 @import './components/dropdown';
 @import './components/editor';
 @import './components/map';
+@import './components/log';
 
 body {
     background: #f0f6fa;
@@ -239,4 +240,10 @@ input[type='color'] {
     background-color: #4f970e;
     border-color: #4f970e;
     color: #fff;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }

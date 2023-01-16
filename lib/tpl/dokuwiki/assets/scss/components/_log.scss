@@ -1,0 +1,18 @@
+.logview {
+    font-family: 'Source Code Pro';
+    font-weight: 300;
+    padding: 1rem;
+    background: #ebeff2;
+
+    .warning {
+        color: #f0ad4e;
+    }
+
+    .error {
+        color: #d9534f;
+    }
+
+    .deprecated {
+        color: #5bc0de;
+    }
+}
