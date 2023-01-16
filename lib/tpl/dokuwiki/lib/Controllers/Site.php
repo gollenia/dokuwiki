@@ -19,7 +19,6 @@ class Site extends Controller
 
 	public function ajax_get()
 	{
-		global $INFO;
 		global $conf;
 		header('Content-Type: application/json');
 		header("Access-Control-Allow-Origin: *");
