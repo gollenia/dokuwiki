@@ -117,7 +117,7 @@ class Bible extends Controller implements ControllerInterface
 	static function parse_reference(string $reference)
 	{
 		$reference = str_replace(' ', '', $reference);
-		preg_match('/([0-9]*[A-Za-z]+)([0-9]):([0-9\-\,]+)/', $reference, $matches, PREG_UNMATCHED_AS_NULL);
+		preg_match('/([0-9]*[A-Za-z]+)([0-9]+):([0-9\-\,]+)/', $reference, $matches, PREG_UNMATCHED_AS_NULL);
 		if (count($matches) != 4) return false;
 
 		return [
