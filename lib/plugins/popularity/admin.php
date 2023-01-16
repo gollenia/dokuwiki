@@ -11,6 +11,7 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin
     /** @var helper_plugin_popularity */
     protected $helper;
     protected $sentStatus = null;
+	public $menuIcon = 'reviews';
 
     /**
      * admin_plugin_popularity constructor.

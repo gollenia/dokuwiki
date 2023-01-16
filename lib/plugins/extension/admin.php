@@ -14,6 +14,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
     protected $infoFor = null;
     /** @var  helper_plugin_extension_gui */
     protected $gui;
+	public $menuIcon = 'extension';
 
     /**
      * Constructor
@@ -40,7 +41,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
     {
         return true;
     }
-
+	
     /**
      * Execute the requested action(s) and initialize the plugin repository
      */

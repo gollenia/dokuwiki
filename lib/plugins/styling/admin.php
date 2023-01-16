@@ -9,7 +9,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
 {
 
     public $ispopup = false;
-
+	public $menuIcon = 'format_paint';
     /**
      * @return int sort number in admin menu
      */

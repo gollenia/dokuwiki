@@ -30,6 +30,8 @@ class admin_plugin_acl extends DokuWiki_Admin_Plugin
     protected $who = '';
     protected $usersgroups = array();
     protected $specials = array();
+	public $menuIcon = 'key';
+
 
     /**
      * return prompt for admin menu

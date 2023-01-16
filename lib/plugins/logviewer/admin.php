@@ -14,6 +14,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
     protected $facilities;
     protected $facility;
     protected $date;
+	public $menuIcon = 'history_edu';
 
     /** @inheritDoc */
     public function forAdminOnly()
@@ -60,20 +61,20 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         $form->setHiddenField('page', 'logviewer');
         $form->setHiddenField('facility', $this->facility);
         $form->addTextInput('date', $this->getLang('date'))
-            ->attr('type', 'date')->val($this->date)->addClass('quickselect');
-        $form->addButton('submit', '>')->attr('type', 'submit');
+            ->attr('type', 'date')->val($this->date)->addClass('form-control');
+        $form->addButton('submit', 'OK')->attr('type', 'submit')->addClass('btn btn-primary mb-3');
+		$form->addClass('d-flex');
         echo $form->toHTML();
 
-        echo '<ul class="tabs">';
+        echo '<ul class="nav nav-tabs mt-5">';
         foreach ($this->facilities as $facility) {
-            echo '<li>';
-            if ($facility == $this->facility) {
-                echo '<strong>' . hsc($facility) . '</strong>';
-            } else {
-                $link = wl($ID,
-                    ['do' => 'admin', 'page' => 'logviewer', 'date' => $this->date, 'facility' => $facility]);
-                echo '<a href="' . $link . '">' . hsc($facility) . '</a>';
-            }
+			$className = 'nav-link ' . ($facility == $this->facility ? ' active' : '');
+            echo '<li class="nav-item">';
+
+			$link = wl($ID,
+				['do' => 'admin', 'page' => 'logviewer', 'date' => $this->date, 'facility' => $facility]);
+			echo '<a class="' . $className . '" href="' . $link . '">' . ucfirst(hsc($facility)) . '</a>';
+            
             echo '</li>';
         }
         echo '</ul>';
@@ -92,8 +93,9 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         }
 
         // loop through the file an print it
-        echo '<dl>';
+        echo '<dl class="logview">';
         $lines = file($logfile);
+		$lines = array_reverse($lines);
         $cnt = count($lines);
         for ($i = 0; $i < $cnt; $i++) {
             $line = $lines[$i];
@@ -109,12 +111,17 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
                 echo '</dd>';
                 $i -= 1; // rewind the counter
             } else {
+				
                 // other lines are actual log lines in three parts
                 list($dt, $file, $msg) = explode("\t", $line, 3);
+				$msg_array = explode(':', $msg);
+				$type=array_shift($msg_array);
+				$msg = implode(':', $msg_array);
                 echo '<dt>';
-                echo '<span class="datetime">' . hsc($dt) . '</span>';
+                echo '<span class="datetime">' . hsc($dt) . '</span> ';
                 echo '<span class="log">';
-                echo '<span class="msg">' . hsc($msg) . '</span>';
+				echo '<span class="type ' . strtolower($type) . '">' . hsc($type) . ':</span>';
+                echo '<span class="msg"> ' . hsc($msg) . '</span>';
                 echo '<span class="file">' . hsc($file) . '</span>';
                 echo '</span>';
                 echo '</dt>';

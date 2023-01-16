@@ -12,7 +12,7 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin
     // some vars which might need tuning later
     protected $max_lines = 800; // lines to read from changelog
     protected $max_revs  = 20;  // numer of old revisions to check
-
+	public $menuIcon = 'history';
 
     /**
      * Constructor

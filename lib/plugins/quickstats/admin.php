@@ -30,6 +30,8 @@ class admin_plugin_quickstats extends DokuWiki_Admin_Plugin {
     private $page_accessesTotal=0;
     private $page_accessesCurrent=0;
     private $script_max_time = 0;
+	public $menuIcon = 'trending_up';
+
      function __construct() {
      
        $this->helper = $this->loadHelper('quickstats', true);    

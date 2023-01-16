@@ -31,7 +31,7 @@ class admin_plugin_config extends AdminPlugin
 
 	/** @var bool have the settings translations been loaded? */
 	protected $promptsLocalized = false;
-
+	public $menuIcon = 'settings';
 
 	/**
 	 * handle user request
