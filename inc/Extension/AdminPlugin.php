@@ -13,6 +13,8 @@ namespace dokuwiki\Extension;
 abstract class AdminPlugin extends Plugin
 {
 
+	public $menuIcon = '';
+
     /**
      * Return the text that is displayed at the main admin menu
      * (Default localized language string 'menu' is returned, override this function for setting another name)
@@ -45,8 +47,7 @@ abstract class AdminPlugin extends Plugin
      */
     public function getMenuIcon()
     {
-        $plugin = $this->getPluginName();
-        return DOKU_PLUGIN . $plugin . '/admin.svg';
+        return $this->menuIcon ||'';
     }
 
     /**
