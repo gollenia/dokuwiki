@@ -35,6 +35,7 @@ class Site extends Controller
 				'audience' => Audience::findAll(true),
 			],
 			"footer" => rawWiki("system:footer"),
+			"organizations" => rawWiki("system:organizations"),
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);
 	}
