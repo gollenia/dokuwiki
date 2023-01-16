@@ -316,7 +316,7 @@ class Index
 
 			if ($file == "start.txt" || substr($file, -4) != ".txt") continue;
 
-			if ($result && strcmp(end($result)['id'], $item['id']) !== 0) {
+			if ($item && strcmp(end($result)['id'], $item['id']) !== 0) {
 				$result[] = $item;
 			}
 		}
