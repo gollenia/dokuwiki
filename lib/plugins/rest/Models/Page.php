@@ -36,7 +36,7 @@ class Page
 	public array $files = [];
 	public string $pagelink = "";
 	public string $pageimage = "";
-	public string $copyright;
+	public string $copyright = "";
 
 	// Page Settings
 	public bool $showSubpages = false;
