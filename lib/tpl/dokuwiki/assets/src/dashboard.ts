@@ -2,7 +2,6 @@
  *	Vendor imports
  */
 import { Chart, registerables } from 'chart.js';
-import 'jsvectormap/dist/maps/world.js';
 
 /*
  *    Global variables
