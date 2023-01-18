@@ -1,4 +1,4 @@
-const jsVectorMap = require('jsvectormap');
+import jsVectorMap from 'jsvectormap';
 
 const countryMap = (elementId: string) => {
     const mymap = new jsVectorMap({

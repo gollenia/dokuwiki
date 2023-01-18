@@ -10,7 +10,7 @@ declare module '*.svg' {
     export default content;
 }
 
-declare module 'jsVectorMap' {
+declare module 'jsvectormap' {
     const content: any;
     export default content;
 }
