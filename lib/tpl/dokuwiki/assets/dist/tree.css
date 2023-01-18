@@ -1,1 +1,81 @@
-#react-tree{overflow:auto}.tree{font-size:.75rem;padding-left:.8rem;list-style-type:none}.tree ul{list-style-type:none;padding-left:1rem}.tree .icon-chevron{width:1.5rem}.tree .add-page{display:none;font-size:20px;background:#67b82a;border-radius:99px;margin-left:auto}.tree .add-page:hover{transform:scale(1.1)}.tree .new-page-input{margin-left:1.5rem;font-size:.75rem;line-height:1rem;padding:.2rem;width:auto}.tree.tree-root{padding-left:0rem !important}.tree.tree-root li.file{padding-left:1.8rem !important}.tree a{color:#fff;text-decoration:none;font-size:small;white-space:nowrap}.tree span{display:flex;align-items:center;white-space:nowrap;cursor:pointer}.tree span img{margin-right:.35rem}.tree li{padding:.15rem .25rem}.tree li>span:hover .add-page{display:inline-block}.tree li.file{padding-left:1rem}.tree li>ul{max-height:0;overflow:hidden}.tree li.open>ul{max-height:100%}.tree li.open>span>.chevron{transform:rotate(90deg)}.tree li.active>span{background:var(--bs-primary);color:#fff}
+/*!*******************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/Tree/tree.scss ***!
+  \*******************************************************************************************************************************************************/
+#react-tree {
+  overflow: auto;
+}
+
+.tree {
+  font-size: 0.75rem;
+  padding-left: 0.8rem;
+  list-style-type: none;
+}
+.tree ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+.tree .icon-chevron {
+  width: 1.5rem;
+}
+.tree .add-page {
+  display: none;
+  font-size: 20px;
+  background: #67b82a;
+  border-radius: 99px;
+  margin-left: auto;
+}
+.tree .add-page:hover {
+  transform: scale(1.1);
+}
+.tree .new-page-input {
+  margin-left: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding: 0.2rem;
+  width: auto;
+}
+.tree.tree-root {
+  padding-left: 0rem !important;
+}
+.tree.tree-root li.file {
+  padding-left: 1.8rem !important;
+}
+.tree a {
+  color: #fff;
+  text-decoration: none;
+  font-size: small;
+  white-space: nowrap;
+}
+.tree span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tree span img {
+  margin-right: 0.35rem;
+}
+.tree li {
+  padding: 0.15rem 0.25rem;
+}
+.tree li > span:hover .add-page {
+  display: inline-block;
+}
+.tree li.file {
+  padding-left: 1rem;
+}
+.tree li > ul {
+  max-height: 0;
+  /* height: auto; */
+  overflow: hidden;
+}
+.tree li.open > ul {
+  max-height: 100%;
+}
+.tree li.open > span > .chevron {
+  transform: rotate(90deg);
+}
+.tree li.active > span {
+  background: var(--bs-primary);
+  color: white;
+}
