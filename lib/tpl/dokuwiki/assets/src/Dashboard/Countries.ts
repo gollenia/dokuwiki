@@ -1,7 +1,6 @@
 import jsVectorMap from 'jsvectormap';
-window.jsVectorMap = jsVectorMap;
 
-const countryMap = elementId => {
+const countryMap: any = (elementId: string) => {
     const mymap = new jsVectorMap({
         selector: '#' + elementId,
         map: 'world',
@@ -22,7 +21,7 @@ const countryMap = elementId => {
             },
         },
 
-        onRegionTooltipShow(event, tooltip, code) {
+        onRegionTooltipShow(event: any, tooltip: any, code: any) {
             if (!window.DOKU_STATS.country) return;
             if (code in window.DOKU_STATS.country) {
                 tooltip.text(
