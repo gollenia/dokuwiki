@@ -27,9 +27,8 @@ $lang['enter_password'] = "Entrer le mot de passe";
 $lang['remember_me'] = "Souviens-toi de moi";
 $lang['forgot_password'] = "Mot de passe oublié?";
 $lang['welcome'] = "Bienvenue!";
-$lang['german'] = "Allemand";
-$lang['english'] = "Anglais";
-$lang['italian'] = "Italien";
-$lang['greece'] = "Grec";
+$lang['German'] = "Allemand";
+$lang['English'] = "Anglais";
+$lang['Italian'] = "Italien";
+$lang['Greek'] = "Grec";
 $lang['French'] = "Français";
-
