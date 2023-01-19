@@ -188,6 +188,7 @@ class Page
 			$instance = new self($id);
 			$instance->id = $id;
 			foreach ($data as $key => $value) {
+				if(!property_exists($instance, $key) || $key == "id") continue;
 				$instance->$key = $value;
 			}
 		}
@@ -310,8 +311,6 @@ class Page
 		if (checklock($this->id)) {
 			return false;
 		}
-
-		
 
 		p_set_metadata($this->id, ['subject' => Strings::cleanStrings($this->tags)]);
 		p_set_metadata($this->id, ['pageimage' => $this->pageimage]);
