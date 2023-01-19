@@ -48,6 +48,7 @@ class Page
 
 	public function __construct($id = "", $filter = [])
 	{
+		global $INFO;
 		if ($id === "") return;
 		$this->id = cleanID($id);
 		$this->namespace = $this->getNamespace();
@@ -57,7 +58,7 @@ class Page
 		$this->content = rawWiki($id);
 		$this->date = DateTime::createFromFormat('U', Meta::get($id, 'date modified', 0));
 		$this->created = DateTime::createFromFormat('U', Meta::get($id, 'date created', 0));
-
+		$this->user = $INFO['user'] || Meta::get($id, 'user', '');
 		$meta = ['abstract', 'user', 'category', 'icon', 'pagelink', 'copyright', 'audience', 'label'];
 
 		foreach ($meta as $value) {
