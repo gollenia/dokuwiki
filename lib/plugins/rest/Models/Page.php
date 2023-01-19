@@ -58,8 +58,8 @@ class Page
 		$this->content = rawWiki($id);
 		$this->date = DateTime::createFromFormat('U', Meta::get($id, 'date modified', 0));
 		$this->created = DateTime::createFromFormat('U', Meta::get($id, 'date created', 0));
-		$this->user = $INFO['user'] || Meta::get($id, 'user', '');
-		$meta = ['abstract', 'user', 'category', 'icon', 'pagelink', 'copyright', 'audience', 'label'];
+		$this->user = $INFO['editor'] ?? Meta::get($id, 'user', '');
+		$meta = ['abstract', 'category', 'icon', 'pagelink', 'copyright', 'audience', 'label'];
 
 		foreach ($meta as $value) {
 			$this->$value = Meta::get($id, $value, '');
@@ -331,7 +331,7 @@ class Page
 		p_set_metadata($this->id, ['locked' => $this->locked]);
 		p_set_metadata($this->id, ['copyright' => $this->copyright]);
 		p_set_metadata($this->id, ['audience' => $this->audience]);
-		p_set_metadata($this->id, ['user' => $INFO['client'] || $INFO['userinfo']['name']]);
+		p_set_metadata($this->id, ['user' => $INFO['client']]);
 
 		unlock($this->id);
 		$result = idx_addPage($this->id, false, true);
