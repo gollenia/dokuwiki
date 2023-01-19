@@ -12,6 +12,7 @@ $lang['set_menu'] = "Modifier le menu";
 $lang['set_footer'] = "Modifier le pied de page";
 $lang['edit_tags'] = "Mots clés";
 $lang['edit_categories'] = "Catégories";
+$lang['edit_organizations'] = "Organisations";
 
 $lang['dashboard'] = "Dashboard";
 $lang['accesses_ever'] = "Nombre total de visites";

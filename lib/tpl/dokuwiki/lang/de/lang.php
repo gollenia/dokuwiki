@@ -13,6 +13,7 @@ $lang['set_footer'] = "Footer bearbeiten";
 $lang['edit_tags'] = "Tags";
 $lang['edit_categories'] = "Kategorien";
 $lang['edit_donations'] = "Spenden-Buttons";
+$lang['edit_organizations'] = "Organisationen";
 
 $lang['dashboard'] = "Dashboard";
 $lang['accesses_ever'] = "Zugriffe insgesamt";
