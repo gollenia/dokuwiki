@@ -149,6 +149,11 @@ main {
     }
     border-radius: 999px;
     background: #c3c5c8;
+    height: 33px;
+    width: 33px;
+    padding: 0;
+    display: grid;
+    place-items: center;
 }
 
 .search-input {
