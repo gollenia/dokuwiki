@@ -84,7 +84,8 @@ class Edit extends Controller implements ControllerInterface
 	{
 		$id = $request->str("id", "");
 		$page = Page::find($id);
-		$page->delete();
+		return $page->delete();
+		
 	}
 
 	public function ajax_site()
