@@ -304,6 +304,7 @@ class Page
 	public function save()
 	{
 
+		
 		if (auth_quickaclcheck($this->id) < AUTH_EDIT) {
 			return false;
 		}
@@ -328,6 +329,7 @@ class Page
 		p_set_metadata($this->id, ['locked' => $this->locked]);
 		p_set_metadata($this->id, ['copyright' => $this->copyright]);
 		p_set_metadata($this->id, ['audience' => $this->audience]);
+
 		unlock($this->id);
 		$result = idx_addPage($this->id, false, true);
 

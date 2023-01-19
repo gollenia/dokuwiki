@@ -37,6 +37,8 @@ const TextEditor = (props: Props) => {
                 }}
                 basicSetup={setup}
             />
+
+            <span className="text-xs text-gray">Letzter Autor: {article.user}</span>
         </div>
     );
 };
