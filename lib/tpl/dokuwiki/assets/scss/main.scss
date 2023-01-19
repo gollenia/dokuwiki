@@ -152,6 +152,8 @@ main {
     height: 33px;
     width: 33px;
     padding: 0;
+    padding-left: 0 !important;
+    margin-right: 0 !important;
     display: grid;
     place-items: center;
 }
