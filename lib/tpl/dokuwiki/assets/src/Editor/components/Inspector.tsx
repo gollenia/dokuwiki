@@ -29,6 +29,9 @@ const Inspector = () => {
             .then(response => response.json())
             .then(data => {
                 dispatch({ type: 'SET_STATUS', payload: 'SAVED' });
+                const currentUrl = window.location.href;
+
+                window.location.href = currentUrl.split('/').pop();
             });
     };
 
@@ -82,10 +85,29 @@ const Inspector = () => {
         }
     };
 
+    const deleteArticle = () => {
+        if (confirm('Möchten Sie diesen Artikel wirklich löschen?')) {
+            fetch('/?lang=' + window.DOKU_LANG + '&controller=edit&method=delete&id=' + window.DOKU_ID)
+                .then(response => response.json())
+                .then(data => {
+                    if (data === 1) {
+                        const currentUrl = window.location.href.split(':');
+                        currentUrl.pop();
+                        const newUrl = currentUrl.join(':');
+                        window.location.href = newUrl;
+                    }
+                });
+        }
+    };
+
     return (
         <div className="inspector">
             <div className="d-flex justify-content-end gap-2 py-4 px-4">
-                <button disabled={saveForbidden} className="right btn btn-outline-danger">
+                <button
+                    onClick={() => deleteArticle()}
+                    disabled={saveForbidden}
+                    className="right btn btn-outline-danger"
+                >
                     Löschen
                 </button>
                 <button
