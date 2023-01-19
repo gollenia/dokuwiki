@@ -23,23 +23,24 @@ const TextEditor = (props: Props) => {
     };
 
     return (
-        <div className="editor">
-            <ToolBar view={view} />
+        <>
+            <div className="editor">
+                <ToolBar view={view} />
 
-            <CodeMirror
-                value={article.content}
-                readOnly={article.locked}
-                extensions={[EditorView.lineWrapping]}
-                ref={editorRef}
-                onChange={text => {
-                    dispatch({ type: 'SET_ARTICLE_DATA', key: 'content', payload: text });
-                    dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
-                }}
-                basicSetup={setup}
-            />
-
-            <span className="text-xs text-gray">Letzter Autor: {article.user}</span>
-        </div>
+                <CodeMirror
+                    value={article.content}
+                    readOnly={article.locked}
+                    extensions={[EditorView.lineWrapping]}
+                    ref={editorRef}
+                    onChange={text => {
+                        dispatch({ type: 'SET_ARTICLE_DATA', key: 'content', payload: text });
+                        dispatch({ type: 'SET_STATUS', payload: 'CHANGED' });
+                    }}
+                    basicSetup={setup}
+                />
+            </div>
+            <span className="text-xs text-gray align-right">Letzter Autor: {article.user}</span>
+        </>
     );
 };
 
