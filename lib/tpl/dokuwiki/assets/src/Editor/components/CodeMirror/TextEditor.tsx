@@ -1,6 +1,7 @@
 import CodeMirror, { BasicSetupOptions, ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { EditorView } from 'codemirror';
 import React, { useContext, useRef } from 'react';
+import { FormattedDate, FormattedTime } from 'react-intl';
 import { store } from '../../services/store';
 import ToolBar from './ToolBar';
 
@@ -39,7 +40,18 @@ const TextEditor = (props: Props) => {
                     basicSetup={setup}
                 />
             </div>
-            <span className="text-xs text-gray align-right">Letzter Autor: {article.user}</span>
+            <div className="editor-info">
+                {article.user ? (
+                    <>
+                        {article.locked && <i className="material-symbols-outlined">lock</i>}
+                        Zuletzt bearbeitet von {article.user} am{' '}
+                        <FormattedDate value={article.date?.date ?? new Date()} /> um{' '}
+                        <FormattedTime value={article.date?.date ?? new Date()} /> Uhr
+                    </>
+                ) : (
+                    <>Neuer Artikel</>
+                )}
+            </div>
         </>
     );
 };
