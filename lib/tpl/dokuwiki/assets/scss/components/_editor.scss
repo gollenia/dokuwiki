@@ -22,3 +22,19 @@
 .cm-scroller {
     font-family: 'Source Code Pro' !important;
 }
+
+.editor-info {
+    text-align: right;
+    display: block;
+    margin-top: 5px;
+    color: #91999f;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    i {
+        font-size: 12px !important;
+        margin-right: 3px;
+    }
+}
