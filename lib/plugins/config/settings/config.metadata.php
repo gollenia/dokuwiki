@@ -243,3 +243,7 @@ $meta['proxy____user'] = array('string');
 $meta['proxy____pass'] = array('password', '_code' => 'base64');
 $meta['proxy____ssl']  = array('onoff');
 $meta['proxy____except'] = array('string');
+$meta['dontlog'] = ['onoff'];
+$conf['hidewarnings'] = ['onoff'];
+$conf['lang'] = ['string'];
+$conf['start'] = ['string'];
