@@ -19,7 +19,7 @@ export type Box = {
 const Box = (props: Props) => {
     const { showBox, onChange, setShowBox } = props;
     const [boxObject, setBoxObject] = useState<Box>({
-        background: '#eeeeee',
+        background: '#d9435d',
         inline: false,
         padding: 1.5,
     });
