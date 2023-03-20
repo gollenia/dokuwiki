@@ -72,4 +72,16 @@ class Strings
 		if (!$result) return [];
 		return $result;
 	}
+
+	static function id_to_path($id, $dirtype = 'mediadir')
+	{
+		global $conf;
+		$dir = $conf[$dirtype];
+		$dir = rtrim($dir, '/') . '/';
+		$id = str_replace(':', '/', $id);
+		$dir = $dir . $id;
+		$dir = str_replace('//', '/', $dir);
+		$dir = rtrim($dir, '/') . '/';
+		return $dir;
+	}
 }
