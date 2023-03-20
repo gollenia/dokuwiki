@@ -15,13 +15,18 @@ type TreeItemType = {
 interface TreeItemProps {
     item: TreeItemType;
     currentID: string;
+    currentDrag: string;
+    triggerReload: () => void;
+    setCurrentDrag: (value: string) => void;
 }
 
 const TreeItem = (props: TreeItemProps) => {
-    const { item, currentID } = props;
+    const { item, currentID, currentDrag, setCurrentDrag } = props;
 
     const [open, setOpen] = useState<boolean>(false);
     const [addPage, setAddPage] = useState<boolean>(false);
+    const [draggOver, setDraggOver] = useState<boolean>(false);
+    const [dragging, setDragging] = useState<boolean>(false);
 
     const toggleOpen = () => {
         setOpen(!open);
@@ -60,18 +65,76 @@ const TreeItem = (props: TreeItemProps) => {
             inputField.current.value = '';
         }
     };
+    const dragStart = (event: React.DragEvent) => {
+        setDragging(true);
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.dropEffect = 'move';
+    };
+
+    const dragEnter = (event: React.DragEvent) => {
+        event.preventDefault();
+        setDraggOver(true);
+        setCurrentDrag(item.id);
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.dropEffect = 'move';
+    };
+
+    const dragLeave = (event: React.DragEvent) => {
+        event.preventDefault();
+        setDraggOver(false);
+        setCurrentDrag('');
+        event.dataTransfer.effectAllowed = 'none';
+    };
+
+    const dragOver = (event: React.DragEvent) => {
+        event.preventDefault();
+        setDraggOver(true);
+        setCurrentDrag(item.id);
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.dropEffect = 'move';
+    };
+
+    const dragEnd = (e: React.DragEvent) => {
+        setDragging(false);
+        setDraggOver(false);
+        if (item.id == currentDrag) return;
+        if (confirm(`Seite ${item.id} nach ${currentDrag} verschieben?`) == false) return;
+        fetch('/?controller=edit&method=move_page&target=' + currentDrag + '&id=' + item.id)
+            .then(response => response.json())
+            .then(data => {
+                props.triggerReload();
+            });
+    };
+
+    const drop = (event: React.DragEvent) => {
+        event.preventDefault();
+        setDraggOver(false);
+        event.dataTransfer.effectAllowed = 'none';
+    };
 
     return (
         <li className={classes}>
-            {!item.children && (
-                <span>
-                    <img src={item.is_new ? newFileIcon : fileIcon} width="16px" height="16px" />{' '}
-                    <a href={'/' + item.id}>{item.title}</a>
+            {!item.children ? (
+                <span
+                    onDragStart={event => dragStart(event)}
+                    onDragEnd={dragEnd}
+                    className={dragging ? 'dragging' : ''}
+                    draggable={true}
+                >
+                    <img src={item.is_new ? newFileIcon : fileIcon} width="16px" height="16px" />
+                    <a href={'/' + item.id} draggable={false}>
+                        {item.title}
+                    </a>
                 </span>
-            )}
-            {item.children && (
+            ) : (
                 <>
-                    <span>
+                    <span
+                        onDragEnter={e => dragEnter(e)}
+                        onDragOver={e => dragOver(e)}
+                        onDragLeave={e => dragLeave(e)}
+                        onDrop={e => drop(e)}
+                        className={draggOver ? 'drag-over' : ''}
+                    >
                         <i onClick={() => toggleOpen()} className="material-symbols-outlined icon-chevron">
                             chevron_right
                         </i>
@@ -95,8 +158,17 @@ const TreeItem = (props: TreeItemProps) => {
                                 />
                             </li>
                         )}
-                        {item.children.map((child, index) => {
-                            return <TreeItem key={index} currentID={currentID} item={child} />;
+                        {item.children.map((child: any, index: any) => {
+                            return (
+                                <TreeItem
+                                    key={index}
+                                    currentID={currentID}
+                                    item={child}
+                                    currentDrag={currentDrag}
+                                    setCurrentDrag={setCurrentDrag}
+                                    triggerReload={props.triggerReload}
+                                />
+                            );
                         })}
                     </ul>
                 </>
