@@ -89,7 +89,7 @@ const ToolBar = (props: Props) => {
                 </button>
                 <button
                     onClick={() => {
-                        wrapSelection('//');
+                        wrapSelection('*');
                     }}
                 >
                     <i className="material-symbols-outlined">format_italic</i>
