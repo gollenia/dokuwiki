@@ -64,6 +64,36 @@ class Edit extends Controller implements ControllerInterface
 		return json_encode(['request' => $_GET, 'page' => $result]);
 	}
 
+	public function ajax_move_page(Input $request)
+	{
+		$id = $request->str("id", "");
+		$target = $request->str("target", "");
+		if($target == "" || $id == "") return;
+		$target_parts = explode(":", $target);
+		$id_parts = explode(":", $id);
+
+		if(end($target_parts) !== end($id_parts)) {
+			$target .= ":" . end($id_parts);
+		}
+		
+		
+		$page = Page::find($id);
+		return json_encode($page->move($target));
+
+
+	}
+
+	public function ajax_rename_page(Input $request)
+	{
+		$id = $request->str("id", "");
+		$target = $request->str("target", "");
+
+		if($target == "") return;
+
+		$page = Page::find($id);
+		$page->move($target);
+	}
+
 	public function ajax_list(Input $request)
 	{
 		$id = $request->str("id", ":");
