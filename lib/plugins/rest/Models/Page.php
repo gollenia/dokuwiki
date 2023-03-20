@@ -396,5 +396,50 @@ class Page
 	 */
 	public function move($id, $move_files = true)
 	{
+		
+		if (auth_quickaclcheck($this->id) < AUTH_EDIT || checklock($this->id)) {
+			return false;
+		}
+		$old_id = $this->id;
+		$this->id = $id;
+		$success = $this->save();
+
+		if(!$success) return ["success" => false, "message" => "Could not save page"];
+
+		if ($move_files && !empty($this->files)) {
+			$old_files_dir = Strings::id_to_path($old_id);
+			$new_files_dir = Strings::id_to_path($id);
+			if(!file_exists($new_files_dir)) {
+				$success = mkdir($new_files_dir, 0777, true);
+				if(!$success) return ["success" => false, "message" => "Could not create directory $new_files_dir"];
+			}
+			$files = scandir($old_files_dir);
+			foreach ($files as $file) {
+				if ($file == '.' || $file == '..') continue;
+				$success = rename($old_files_dir . $file, $new_files_dir . $file);
+				if(!$success) return ["success" => false, "message" => "Could not move file $file"];
+			}
+
+			rmdir($old_files_dir);
+
+			$old_mediameta_dir = Strings::id_to_path($old_id, 'mediametadir');
+			$new_mediameta_dir = Strings::id_to_path($id, 'mediametadir');
+			if(!file_exists($new_mediameta_dir)) {
+				$success = mkdir($new_mediameta_dir, 0777, true);
+				if(!$success) return ["success" => false, "message" => "Could not create directory $new_mediameta_dir"];
+			}
+			$files = scandir($old_mediameta_dir);
+			foreach ($files as $file) {
+				if ($file == '.' || $file == '..') continue;
+				$success = rename($old_mediameta_dir . $file, $new_mediameta_dir . $file);
+				if(!$success) return ["success" => false, "message" => "Could not move file $file"];
+			}
+
+			rmdir($old_mediameta_dir);
+			
+		}
+		$old_page = new Page($old_id);
+		$old_page->delete();
+		return ["success" => true];
 	}
 }
