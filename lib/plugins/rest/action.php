@@ -21,6 +21,7 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		$controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, '_get_opengraph');
 		$controller->register_hook('INDEXER_PAGE_ADD', 'BEFORE', $this, 'addCategoriesToIndex', array());
 		$controller->register_hook('INDEXER_PAGE_ADD', 'BEFORE', $this, 'addAudienceToIndex', array());
+		$controller->register_hook('MEDIA_SENDFILE', 'BEFORE', $this, 'handle_media_sendfile');
 	}
 
 	function loadModels($event)
@@ -103,4 +104,32 @@ class action_plugin_rest extends \dokuwiki\Extension\ActionPlugin
 		echo "</head><body></body></html>";
 		die();
 	}
+
+	/**
+	 * Download counter action
+	 *
+	 * @param Doku_Event $event
+	 * @param $param
+	 * 
+	 * @return void
+	 */
+	public function handle_media_sendfile(Event $event, $param)
+    {
+        $data = $event->data;       
+
+		if(strpos($data['media'], 'system')) return;
+        
+		$count = p_get_metadata($data['media'], 'downloads') ?? 0;
+		$count++;
+		
+		p_set_metadata($data['media'], ['downloads' => $count]);
+		p_set_metadata($data['media'], ['last_download' => date("Y-m-d")]);
+		idx_addPage($data['media'], false, true);
+		
+		$date_list = p_get_metadata($data['media'], 'download_stats') ?? "";
+		$date_list = explode(",", $date_list);
+
+		$date_list[] = date("Y-m-d");
+		p_set_metadata($data['media'], ['download_stats' => implode(",", $date_list)]);
+    }
 }
