@@ -87,7 +87,7 @@ class File
 		if ($delete === 1) {
 			return "deleted";
 		}
-		return $this->file . " not deleted " . $delete;
+		return $this->filename . " not deleted " . $delete;
 	}
 
 	/**
@@ -156,19 +156,23 @@ class File
 		return $result;
 	}
 
-	public function statistics()
+	public function get_year_stats()
 	{
+		$stats = p_get_metadata($this->id, 'download_stats');
+
+		for ($i = 1; $i <= 12; $i++) {
+			$months[] = date("Y-m%", strtotime( date( 'Y-m' )." -$i months"));
+		}
+
+		$result = [];
+		foreach ($months as $month) {
+			$result[] = [$month.'-01' => substr_count($stats, $month)];
+		}
+
+		return $result;
 	}
 
-	/**
-	 * Move file to new place
-	 *
-	 * @param [type] $ns
-	 * @return void
-	 */
-	public function move($ns)
-	{
-	}
+
 
 	public function rename($name)
 	{
