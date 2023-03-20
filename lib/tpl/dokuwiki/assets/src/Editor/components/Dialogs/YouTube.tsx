@@ -83,7 +83,7 @@ const YouTube = (props: Props) => {
     };
 
     const createSyntax = () => {
-        return '<youtube id="' + videoObject.id + '" autoplay="' + +videoObject.autoplay + '">';
+        return `{{youtube>${videoObject.id}}}`;
     };
 
     const clickOk = () => {
