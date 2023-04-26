@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 interface ComboboxProps {
+    className?: string;
     options: Array<{ label: string; value: string | number; icon?: string }>;
     placeholder?: string;
     default?: string | number;
@@ -9,7 +10,7 @@ interface ComboboxProps {
 }
 
 const Combobox: React.FC<ComboboxProps> = props => {
-    const { options, onChange, placeholder, disabled } = props;
+    const { options, onChange, placeholder, disabled, className } = props;
 
     const input = useRef<HTMLInputElement>(null);
     console.log(disabled);
@@ -52,7 +53,7 @@ const Combobox: React.FC<ComboboxProps> = props => {
     };
 
     return (
-        <div className={'combobox ' + (disabled ? 'disabled' : '')} onKeyDown={event => keyPress(event)}>
+        <div className={className + ' combobox ' + (disabled ? 'disabled' : '')} onKeyDown={event => keyPress(event)}>
             <input
                 className="form-control"
                 ref={input}

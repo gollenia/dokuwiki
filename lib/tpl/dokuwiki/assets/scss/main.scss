@@ -2,8 +2,9 @@ $enable-grid-classes: true;
 $enable-cssgrid: true;
 $btn-font-size: 0.8125rem;
 $btn-font-size-sm: 0.75rem;
-$btn-font-weight: 600;
-$btn-border-radius: 99px;
+$btn-font-weight: 500;
+$btn-border-radius: 10px;
+$btn-border-width: 2px;
 $border-radius: 5px;
 $border-radius-sm: 5px;
 $border-radius-lg: 5px;
@@ -15,15 +16,15 @@ $badge-border-radius: 99px;
 $min-contrast-ratio: 3;
 $modal-header-border-width: 0px;
 $modal-footer-border-width: 0px;
-$modal-content-border-radius: 1.5rem;
+$modal-content-border-radius: 5px;
 
-$primary: #006fff;
+$primary: #0168ff;
 $secondary: #575e71;
-$success: rgb(96, 212, 0);
-$info: #003c9e;
-$warning: #f5d219;
-$danger: #dc3545;
-$dark: rgba(76, 78, 100, 0.87);
+$success: #007a4d;
+$info: #0045b6;
+$warning: #db9e43;
+$danger: #d31510;
+$dark: #666666;
 $light: #f7f7f9;
 
 .object-contain {
@@ -39,20 +40,30 @@ $light: #f7f7f9;
 .sidebar {
     width: 280px;
     top: 0;
-    background-color: #3a3f51;
+    background-color: #e9ecef;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 :root {
-    --bs-font-sans-serif: 'Source Sans Pro';
+    --bs-font-sans-serif: 'IBM Plex Sans';
     --bs-body-font-size: 0.8125rem;
     --bs-body-font-color: #394549;
     --bs-body-color: #394549;
-    --bs-body-font-weight: 600;
+    --bs-body-font-weight: 500;
     --bs-btn-font-size: 0.8125rem;
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+
+.bg-purple {
+    background-color: #e8daff;
+    color: #491d8b;
+}
+
+.bg-blue {
+    background-color: #d6e8ff;
+    color: #0045b6;
 }
 
 @import './components/combobox';
@@ -64,9 +75,10 @@ $light: #f7f7f9;
 @import './components/editor';
 @import './components/map';
 @import './components/log';
+@import './components/tree';
 
 body {
-    background: #f0f6fa;
+    background: #f3f5f7;
 }
 
 .btn-sm {
@@ -79,15 +91,46 @@ body {
 .btn {
     display: inline-flex;
     align-items: center;
+    i {
+        font-size: 20px;
+
+        font-size: 23px;
+        line-height: 0.3;
+        margin-right: 5px;
+        margin-left: -5px;
+    }
+}
+
+.btn-icon-only {
+    padding-left: 0;
+    padding-right: 0;
+    aspect-ratio: 1/1;
+    width: 32px;
+    display: grid;
+    border-radius: 100px;
+
+    i {
+        line-height: 0.5;
+        margin: 0;
+    }
 }
 
 .flex-1 {
     flex: 1;
 }
 
+.mt-auto {
+    margin-top: auto;
+}
+
 .gap-1 {
     gap: 1rem;
 }
+
+.form-control {
+    font-weight: 500 !important;
+}
+
 .form-control:focus {
     border-color: var(--bs-primary);
     box-shadow: 0 0 0 1px var(--bs-primary);
@@ -96,7 +139,6 @@ body {
 main {
     margin-top: 70px;
     margin-left: 280px;
-    background: #f1f5f8;
 }
 
 .navbar {
@@ -186,9 +228,11 @@ main {
 }
 
 .lang-select {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.05);
     padding: 5px 11px;
-    border-radius: 7px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    color: #333;
 
     strong {
         flex: 1;
@@ -244,8 +288,8 @@ input[type='color'] {
 
 .btn-saved,
 .btn-saved:hover {
-    background-color: #4f970e;
-    border-color: #4f970e;
+    background-color: #4cb9a3;
+    border-color: #4cb9a3;
     color: #fff;
 }
 
@@ -253,4 +297,26 @@ input[type='color'] {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.drop-menu {
+    display: none;
+}
+
+.dropdown:focus-within {
+    .drop-menu {
+        display: block;
+    }
+}
+
+.profile {
+    display: flex;
+    gap: 1rem;
+    font-size: 16px;
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+    }
 }

@@ -17,6 +17,13 @@ class GetLangs extends CustomFunctions
 
 	public function render()
 	{
-		return Language::get_available();
+		$langs = Language::get_available();
+		$result = [];
+
+		foreach ($langs as $lang) {
+			$result[$lang] =  Language::get_translation_name($lang);
+		}
+
+		return $result;
 	}
 }

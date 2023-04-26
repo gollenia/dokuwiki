@@ -78,7 +78,7 @@ const BibleRef: React.FC<Props> = props => {
                 {article.bibleref?.map((ref, index) => {
                     const book = site.bible.books.find(book => book.id == ref.book_id);
                     return (
-                        <span key={index} className={'badge tag ' + (disabled ? 'bg-secondary' : 'bg-primary')}>
+                        <span key={index} className={'badge tag ' + (disabled ? 'bg-secondary' : 'bg-blue')}>
                             {book.long_name} {ref.chapter}{' '}
                             <i
                                 className="material-symbols-outlined"
@@ -94,6 +94,7 @@ const BibleRef: React.FC<Props> = props => {
             </div>
             <div className="d-flex gap-1">
                 <Combobox
+                    className="flex-1"
                     placeholder="Buch wählen"
                     disabled={disabled}
                     onChange={item => {
@@ -111,7 +112,7 @@ const BibleRef: React.FC<Props> = props => {
                     style={{ width: '5rem' }}
                 />
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-icon-only"
                     disabled={disabled}
                     onClick={() =>
                         addBibleRef({

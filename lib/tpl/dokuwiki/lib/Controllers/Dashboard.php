@@ -30,5 +30,13 @@ class Dashboard extends Controller
 		$namespaces = Breadcrumbs::get_namespace($ID);
 		$this->site->add_data("namespaces", $namespaces);
 		$this->site->add_data("tree", $pageTree);
+
+		$this->site->add_data("user", [
+			'hash' => md5($INFO['userinfo']['mail']),
+			'name' => $INFO['user'],
+			'fullname' => $INFO['userinfo']['name'],
+			'email' => $INFO['userinfo']['mail'],
+			'acl' => auth_quickaclcheck($ID)
+		]);
 	}
 }

@@ -37,6 +37,7 @@ class Show extends Controller
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);
 		$this->site->add_data("user", [
+			'hash' => md5($INFO['userinfo']['mail']),
 			'name' => $INFO['user'],
 			'fullname' => $INFO['userinfo']['name'],
 			'email' => $INFO['userinfo']['mail'],

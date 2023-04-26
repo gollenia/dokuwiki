@@ -68,7 +68,7 @@ const TagSelector: React.FC<TagSelectorProps> = props => {
                     const tag = availableTags.find(item => item.id == tagId);
                     if (!tag) return;
                     return (
-                        <span className={'badge tag ' + (disabled ? 'bg-secondary' : 'bg-primary')}>
+                        <span className={'badge tag ' + (disabled ? 'bg-secondary' : 'bg-purple')}>
                             {tag.name}
                             {!disabled && (
                                 <i

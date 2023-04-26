@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import removeAccents from 'remove-accents';
 
-import fileIcon from './img/file.svg';
-import newFileIcon from './img/file_new.svg';
-import folderIcon from './img/folder.svg';
-
 type TreeItemType = {
     children: Array<TreeItemType> | undefined;
     title: string;
@@ -55,7 +51,7 @@ const TreeItem = (props: TreeItemProps) => {
             }
 
             let newPage: string = inputField.current.value;
-            newPage = newPage.replace(' ', '_');
+            newPage = newPage.replaceAll(' ', '_');
             newPage = removeAccents(newPage);
             window.location.href = `/${item.id}:${newPage}`;
         }
@@ -121,7 +117,8 @@ const TreeItem = (props: TreeItemProps) => {
                     className={dragging ? 'dragging' : ''}
                     draggable={true}
                 >
-                    <img src={item.is_new ? newFileIcon : fileIcon} width="16px" height="16px" />
+                    <i className="material-symbols-outlined icon">{item.is_new ? 'note_add' : 'draft'}</i>
+
                     <a href={'/' + item.id} draggable={false}>
                         {item.title}
                     </a>
@@ -133,12 +130,15 @@ const TreeItem = (props: TreeItemProps) => {
                         onDragOver={e => dragOver(e)}
                         onDragLeave={e => dragLeave(e)}
                         onDrop={e => drop(e)}
-                        className={draggOver ? 'drag-over' : ''}
+                        className={draggOver ? 'drag-over' : '' + open ? ' open' : ''}
                     >
-                        <i onClick={() => toggleOpen()} className="material-symbols-outlined icon-chevron">
+                        <i onClick={() => toggleOpen()} className="material-symbols-outlined  icon-chevron">
                             chevron_right
                         </i>
-                        <img src={folderIcon} width="16px" height="16px" />
+                        <i onClick={() => toggleOpen()} className="material-symbols-outlined icon">
+                            {open ? 'folder_open' : 'folder'}
+                        </i>
+
                         <a href={'/' + item.id}>{item.title}</a>
                         <i className="add-page material-symbols-outlined" onClick={() => activateAddPage()}>
                             add
@@ -148,7 +148,7 @@ const TreeItem = (props: TreeItemProps) => {
                         {addPage && (
                             <li>
                                 <input
-                                    className="fomr-control new-page-input"
+                                    className="form-control new-page-input"
                                     autoFocus
                                     onKeyDown={event => {
                                         inputKeyDown(event);

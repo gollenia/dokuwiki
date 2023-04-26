@@ -102,22 +102,6 @@ const Inspector = () => {
 
     return (
         <div className="inspector">
-            <div className="d-flex justify-content-end gap-2 py-4 px-4">
-                <button
-                    onClick={() => deleteArticle()}
-                    disabled={saveForbidden}
-                    className="right btn btn-outline-danger"
-                >
-                    Löschen
-                </button>
-                <button
-                    disabled={(article.locked && window.DOKU_USER.acl < 255) || status == 'SAVING'}
-                    className={'right btn ' + saveButtonClass()}
-                    onClick={() => saveArticle()}
-                >
-                    {saveButtonText()}
-                </button>
-            </div>
             <div className="inspector-panels">
                 <Panel title="Beitragsbild">
                     {article.pageimage && article.pageimage !== 'error' && (
