@@ -66,6 +66,12 @@ if (defined('SIMPLE_TEST')) {
         ],
     );
 
+	if($data['ext'] == 'pdf') {
+		header("Content-disposition: attachment; filename=".$data['media']);
+		header("Content-type: application/pdf");
+		readfile($data['file']);
+	}
+
     // handle the file status
     $evt = new Event('FETCH_MEDIA_STATUS', $data);
     if($evt->advise_before()) {
