@@ -124,7 +124,7 @@ const TreeView = () => {
                     <strong>{languages[currentLanguage]}</strong>
                 </a>
                 {langMenu && (
-                    <ul className="dropdown-menu-dark drop-menu text-small shadow">
+                    <ul className="dropdown-menu-dark drop-menu text-small shadow lang-menu">
                         {Object.entries(languages).map(([key, value], index) => {
                             return (
                                 <li key={index}>
