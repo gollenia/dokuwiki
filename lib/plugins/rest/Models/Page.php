@@ -30,7 +30,6 @@ class Page
 	public $tags = [];
 	public array $bibleref;
 	
-
 	// Attachments
 	public string $icon = "";
 	public array $files = [];
@@ -45,7 +44,7 @@ class Page
 
 	// API Settings
 	public array $filter = [];
-
+	
 	public function __construct($id = "", $filter = [])
 	{
 		global $INFO;
