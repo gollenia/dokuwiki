@@ -6,6 +6,7 @@ use Contexis\Core\Controller;
 use Contexis\Core\Utilities\Strings;
 use Contexis\Database\Tag;
 use dokuwiki\plugins\rest\Models\Page;
+use dokuwiki\plugins\rest\Models\Category;
 
 class Search extends Controller
 {
@@ -23,6 +24,7 @@ class Search extends Controller
 		parent::__construct($site);
 	}
 
+	// This is the full search
 	public function ajax_get($request)
 	{
 		header('Content-Type: application/json');
@@ -44,7 +46,7 @@ class Search extends Controller
 			$this->didyoumean = join(' ', $results);
 		}
 
-		//$this->getByTitle();
+		$this->getByTitle();
 		$this->fillTags();
 		$this->getPageLookups();
 		$this->getPageSearch();
@@ -147,6 +149,8 @@ class Search extends Controller
 			$this->add_taxonomy($id);
 		}
 	}
+
+	
 
 	private function  get_query()
 	{
