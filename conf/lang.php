@@ -5,7 +5,7 @@ namespace dokuwiki;
 class Language
 {
 	/**
-	 * Retrieve language either from the current user session of from the request
+	 * Retrieve language either from the domain, the current user session of from the request lang attribute
 	 *
 	 * @param string $default
 	 * @return string
@@ -36,6 +36,8 @@ class Language
 		$available = array_map('basename', glob($_SERVER['DOCUMENT_ROOT'] . '/data/*', GLOB_ONLYDIR));
 		return array_values(array_diff($available, array("_template")));
 	}
+
+	
 
 
 	static function get_translation_name(string $country): string {
