@@ -26,8 +26,7 @@ class Category
 	}
 
 	static function getAllSynonyms() {
-		if (!page_exists("system:categories")) return [];
-		$categories = Strings::json_to_array(rawWiki("system:categories"));
+		$categories = self::findAll();
 		$result = [];
 		foreach($categories as $category) {
 			if(!array_key_exists('synonyms', $category)) continue;
@@ -36,9 +35,9 @@ class Category
 	}
 
 	static function getCategoryBySynonym($synonym) {
-		if (!page_exists("system:categories")) return [];
-		$categories = Strings::json_to_array(rawWiki("system:categories"));
-		$result = null;
+		$categories = self::findAll();
+
+		$result =[];
 		foreach($categories as $category ) {
 			if(!array_key_exists('synonyms', $category)) continue;
 			if(array_search($synonym, $category['synonyms'])) {
