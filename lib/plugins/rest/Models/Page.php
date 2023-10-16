@@ -211,7 +211,7 @@ class Page
 
 		switch ($key) {
 			case "id":
-				$data = explode(';', $value;
+				$data = explode(';', $value);
 				break;
 			case "namespace";
 				global $conf;
