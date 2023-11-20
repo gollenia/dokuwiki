@@ -4,11 +4,15 @@
     right: 0;
     z-index: 50;
     width: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
     bottom: 0;
     top: 70px;
     border-left: 1px solid #d1d5d8;
-    box-shadow: 0px -3px 8px rgb(0 0 0 / 30%);
+    transition: all 300ms;
+
+    &.hidden {
+        left: -400px;
+    }
 }
 
 .inspector-panel {
@@ -26,7 +30,7 @@
 
         align-items: center;
         justify-content: space-between;
-        i {
+        > i {
             display: grid;
             aspect-ratio: 1/1;
             place-content: center;
@@ -35,8 +39,18 @@
             width: 32px;
         }
 
+        span {
+            display: inline-flex;
+            align-items: center;
+
+            i {
+                margin-right: 0.5rem;
+                color: #949ca8;
+            }
+        }
+
         &:hover {
-            background: #e8e8e8;
+            background: #eff6ff;
         }
     }
     .panel-content {
@@ -55,7 +69,7 @@
         }
         .panel-header {
             border-bottom: 1px solid #d1d5d8;
-            i {
+            > i {
                 transform: rotate(180deg);
             }
         }
@@ -109,6 +123,33 @@
 
     &:hover div {
         border: 2px solid #006fff;
+    }
+
+    .spinner-border {
+        margin-right: 7px;
+    }
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    > div {
+        background-color: #f2f8ffcc;
+    }
+}
+
+.inspector-image {
+    position: relative;
+
+    &:hover {
+        .image-overlay {
+            opacity: 1;
+        }
     }
 }
 

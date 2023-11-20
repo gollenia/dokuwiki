@@ -58,7 +58,7 @@ class Statistics
 		$users['platform'] = $sort_platforms ? $this->sort_platforms($users['platform']) : $users['platform'];
 		$users_last['platform'] = $sort_platforms ? $this->sort_platforms($users_last['platform']) : $users_last['platform'];
 		$statistics = [
-			"page" => array_merge($pages['page'], $pages_last['page']),
+			"page" => $pages_last['page'] ? array_merge($pages['page'], $pages_last['page']) : [],
 			"country" => $users_last['country'],
 			"platform" => array_merge($users_last['platform'], $users_last['platform']),
 			"site_total" => $pages['site_total']
@@ -145,8 +145,9 @@ class Statistics
 	 * @param array $platforms
 	 * @return array
 	 */
-	private function sort_platforms(array $platforms): array
+	private function sort_platforms(array | null $platforms): array
 	{
+		if (!$platforms) return [];
 		$sorted = [];
 		foreach ($platforms as $key => $value) {
 			if (substr($key, 0, 3) == 'Win') {

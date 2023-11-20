@@ -61,6 +61,7 @@ const BibleRef: React.FC<Props> = props => {
             .then(data => {
                 if (data) {
                     const refs = article.bibleref;
+                    console.log(article);
                     refs.push({
                         id: data,
                         book_id: selectedBookId,

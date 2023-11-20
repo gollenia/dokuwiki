@@ -1,3 +1,16 @@
+.edit {
+    margin-left: 50px;
+    margin-right: 50px;
+    padding-top: 50px;
+    &.show-inspector {
+        margin-right: 450px;
+    }
+
+    &.show-file-tree {
+        margin-left: 350px;
+    }
+}
+
 .cm-editor {
     padding-top: 1rem;
     padding-bottom: 1rem;

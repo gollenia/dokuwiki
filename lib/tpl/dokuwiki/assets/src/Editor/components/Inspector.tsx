@@ -13,9 +13,12 @@ import TagSelector from './TagSelector';
 const Inspector = () => {
     const globalState = useContext(store);
     const {
-        state: { article, files, site, status },
+        state: { article, files, site, status, showInspector },
         dispatch,
     } = globalState;
+
+    const saveForbidden =
+        (article.locked && window.DOKU_USER.acl < 255) || article.title === '' || article.content === '';
 
     const saveArticle = () => {
         dispatch({ type: 'SET_STATUS', payload: 'SAVING' });
@@ -31,12 +34,9 @@ const Inspector = () => {
                 dispatch({ type: 'SET_STATUS', payload: 'SAVED' });
                 const currentUrl = window.location.href;
 
-                window.location.href = currentUrl.split('/').pop();
+                //window.location.href = currentUrl.split('/').pop();
             });
     };
-
-    const saveForbidden =
-        (article.locked && window.DOKU_USER.acl < 255) || article.title === '' || article.content === '';
 
     const saveButtonClass = () => {
         switch (status) {
@@ -58,7 +58,7 @@ const Inspector = () => {
             case 'SAVED':
                 return (
                     <>
-                        <i className="material-symbols-outlined font-weight-normal">done</i> Gespeichert
+                        <i className="material-symbols-outlined font-weight-normal">check_circle</i> Gespeichert
                     </>
                 );
             case 'SAVING':
@@ -101,18 +101,56 @@ const Inspector = () => {
     };
 
     return (
-        <div className="inspector">
+        <div className={`inspector ${showInspector ? '' : 'hidden'}`}>
             <div className="inspector-panels">
-                <Panel title="Beitragsbild">
+                <div>
+                    <div className="d-flex justify-content-end gap-2 py-4 px-4">
+                        <a
+                            target="_blank"
+                            href={`https://downloads.kids-team.at/` + article.id}
+                            className="btn btn-outline-secondary"
+                        >
+                            <i className="material-symbols-outlined no-margin">open_in_new</i>
+                        </a>
+                        <button
+                            onClick={() => deleteArticle()}
+                            disabled={saveForbidden}
+                            className="right btn btn-outline-danger"
+                        >
+                            Löschen
+                        </button>
+                        <button
+                            disabled={(article.locked && window.DOKU_USER.acl < 255) || status == 'SAVING'}
+                            className={'right btn ' + saveButtonClass()}
+                            onClick={() => saveArticle()}
+                        >
+                            {saveButtonText()}
+                        </button>
+                    </div>
+                </div>
+                <Panel title="Beitragsbild" icon="image">
                     {article.pageimage && article.pageimage !== 'error' && (
-                        <img
-                            onClick={() => {
-                                if (article.locked) return;
-                                dispatch({ type: 'SHOW_MEDIAMANAGER', payload: 'inspector' });
-                            }}
-                            className="object-cover w-100 ratio ratio-16x9 cursor-pointer image"
-                            src={'/_media/' + article.pageimage + '?w=600'}
-                        />
+                        <div className="inspector-image">
+                            <img
+                                onClick={() => {
+                                    if (article.locked) return;
+                                    dispatch({ type: 'SHOW_MEDIAMANAGER', payload: 'inspector' });
+                                }}
+                                className="object-cover w-100 ratio ratio-16x9 cursor-pointer image"
+                                src={'/_media/' + article.pageimage + '?w=600'}
+                            />
+                            <div
+                                onClick={() => {
+                                    dispatch({ type: 'SHOW_MEDIAMANAGER', payload: 'inspector' });
+                                }}
+                                className="image-empty w-100 ratio ratio-16x9 image-overlay"
+                            >
+                                <div>
+                                    <i className="material-symbols-outlined">photo_library</i>
+                                    <span>Bild ändern</span>
+                                </div>
+                            </div>
+                        </div>
                     )}
                     {article.pageimage && article.pageimage === 'error' && (
                         <div
@@ -143,15 +181,6 @@ const Inspector = () => {
                     <div className="d-flex mt-2 gap-2">
                         <button
                             disabled={article.locked}
-                            className="btn btn-outline-secondary btn-sm d-flex"
-                            onClick={() => {
-                                dispatch({ type: 'SHOW_MEDIAMANAGER', payload: 'inspector' });
-                            }}
-                        >
-                            <i className="material-symbols-outlined">image</i> Ändern
-                        </button>
-                        <button
-                            disabled={article.locked}
                             className="btn btn-outline-danger btn-sm d-flex"
                             onClick={() => {}}
                         >
@@ -160,7 +189,7 @@ const Inspector = () => {
                     </div>
                 </Panel>
 
-                <Panel title="Dateien" open={true}>
+                <Panel title="Dateien" open={true} icon="news">
                     <FileList />
                     <div className="d-flex flex-row-reverse mt-4">
                         <button
@@ -170,12 +199,20 @@ const Inspector = () => {
                             }}
                             className="btn btn-primary btn-sm"
                         >
-                            Dateimanager
+                            {article.files.length == 0 ? (
+                                <>
+                                    <i className="material-symbols-outlined">cloud_upload</i> Dateien hinzufügen
+                                </>
+                            ) : (
+                                <>
+                                    <i className="material-symbols-outlined">home_storage</i> Dateimanager
+                                </>
+                            )}
                         </button>
                     </div>
                 </Panel>
 
-                <Panel title="Zusammenfassung">
+                <Panel title="Zusammenfassung" icon="edit_note">
                     <div className="input-textarea">
                         <textarea
                             onChange={e => {
@@ -193,7 +230,7 @@ const Inspector = () => {
                     </div>
                 </Panel>
 
-                <Panel title="Taxonomie">
+                <Panel title="Taxonomie" icon="category">
                     <div className="input-text mb-4">
                         <label className="label label-sm">Kategorie</label>
                         <Combobox
@@ -239,7 +276,7 @@ const Inspector = () => {
                     </div>
                 </Panel>
 
-                <Panel title="Schlagworte">
+                <Panel title="Schlagworte" icon="label">
                     <div className="editor-tags input-text">
                         <TagSelector
                             availableTags={site.tags}
@@ -253,11 +290,11 @@ const Inspector = () => {
                     </div>
                 </Panel>
 
-                <Panel title="Bibelstellen">
+                <Panel title="Bibelstellen" icon="book">
                     <BibleRef disabled={article.locked} />
                 </Panel>
 
-                <Panel title="Extras">
+                <Panel title="Erweitert" icon="settings">
                     <div className="input-text">
                         <label className="label label-sm">Icon</label>
                         <input

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { store } from '../Editor/services/store';
 import NewPage from './NewPage';
 import TreeItem from './TreeItem';
 
@@ -24,6 +25,12 @@ const TreeView = () => {
     const languages = window.DOKU_LANGS ?? [];
     const currentLanguage = window.DOKU_LANG ?? '';
 
+    const globalState = useContext(store);
+    const {
+        state: { showFileTree },
+        dispatch,
+    } = globalState;
+
     useEffect(() => {
         fetch('/?controller=edit&method=tree&current_id=' + currentId)
             .then(response => response.json())
@@ -44,28 +51,11 @@ const TreeView = () => {
     };
 
     return (
-        <div className="sidebar position-fixed bottom-0 left-0 d-flex flex-column flex-shrink-0 p-3">
-            <div>
-                <div className="nav-item dropdown">
-                    <a className="nav-link profile" href="#">
-                        <img src={'https://www.gravatar.com/avatar/' + window.DOKU_USER.hash} /> {window.DOKU_USER.name}
-                    </a>
-                    <ul className="dropdown-menu  end-0 ">
-                        <li>
-                            <a className="dropdown-item" href="/?do=profile">
-                                Profil
-                            </a>
-                        </li>
-                        <li>
-                            <a className="dropdown-item" href="/?do=logout&sectok={{tpl_sectok()}}">
-                                Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <hr />
-
+        <div
+            className={`sidebar position-fixed bottom-0 left-0 d-flex flex-column flex-shrink-0 p-3 ${
+                showFileTree ? '' : 'hidden'
+            }`}
+        >
             <input
                 type="text"
                 className="form-control search"

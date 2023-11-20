@@ -15,6 +15,7 @@ declare global {
         DOKU_ID: string;
         DOKU_SITE: Site;
         DOKU_USER: User;
+        DOKU_BREADCRUMBS: any;
     }
 }
 
@@ -23,12 +24,11 @@ const Editor = () => {
 
     const globalState = useContext(store);
     const {
-        state: { article },
+        state: { article, showFileTree, showInspector },
         dispatch,
     } = globalState;
 
     const messages = useTranslation(currentLanguage);
-    console.log(article);
 
     useEffect(() => {
         dispatch({ type: 'SET_SITE', payload: window.DOKU_SITE });
@@ -46,9 +46,29 @@ const Editor = () => {
             });
     }, []);
 
+    const breadcrumbs = window.DOKU_BREADCRUMBS;
+
+    console.log('breadcrumbs', breadcrumbs);
+
+    const classes = ['edit', showFileTree ? 'show-file-tree' : '', showInspector ? 'show-inspector' : ''].join(' ');
+
     return (
         <IntlProvider locale={currentLanguage} defaultLocale="en" messages={messages}>
-            <div className="d-flex container">
+            <div className={classes}>
+                <nav aria-label="breadcrumb">
+                    <ol className="breadcrumb">
+                        {breadcrumbs.map((item: any, index: number) => {
+                            const active = index + 1 === breadcrumbs.length;
+                            const classes = `breadcrumb-item ${active ? 'active' : ''}`;
+
+                            return (
+                                <li key={index} className={classes}>
+                                    <a href={item.link}>{item.title}</a>
+                                </li>
+                            );
+                        })}
+                    </ol>
+                </nav>
                 <div className="edit-wrapper">
                     <div className="input-text my-4">
                         <label className="label">Titel</label>
@@ -67,6 +87,7 @@ const Editor = () => {
                     </div>
                     <div className="">
                         <TextEditor />
+
                         <MediaManager />
                         <FileManager />
                     </div>

@@ -30,6 +30,7 @@
 				DOKU_USER = {{ user|json_encode|raw }};
 				DOKU_LANGS = {{ get_langs()|json_encode|raw }};
 				DOKU_MENU = {{ admin_menu()|json_encode|raw }};
+				DOKU_BREADCRUMBS = {{ breadcrumbs|json_encode|raw }};
 			</script>
 			<script src="{{tpl_basedir}}assets/dist/main.js" type="text/javascript"></script>
 			<script defer src="{{tpl_basedir}}/assets/dist/editor.js?ver=29334568" type="text/javascript"></script>

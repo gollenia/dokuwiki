@@ -111,18 +111,40 @@ const TreeItem = (props: TreeItemProps) => {
     return (
         <li className={classes}>
             {!item.children ? (
-                <span
-                    onDragStart={event => dragStart(event)}
-                    onDragEnd={dragEnd}
-                    className={dragging ? 'dragging' : ''}
-                    draggable={true}
-                >
-                    <i className="material-symbols-outlined icon">{item.is_new ? 'note_add' : 'draft'}</i>
+                <>
+                    <span
+                        onDragStart={event => dragStart(event)}
+                        onDragEnd={dragEnd}
+                        className={dragging ? 'dragging' : ''}
+                        draggable={true}
+                    >
+                        <i className="material-symbols-outlined icon">{item.is_new ? 'note_add' : 'draft'}</i>
 
-                    <a href={'/' + item.id} draggable={false}>
-                        {item.title}
-                    </a>
-                </span>
+                        <a href={'/' + item.id} draggable={false}>
+                            {item.title}
+                        </a>
+
+                        <i className="add-page material-symbols-outlined" onClick={() => activateAddPage()}>
+                            add
+                        </i>
+                    </span>
+
+                    {addPage && (
+                        <ul>
+                            <li>
+                                <input
+                                    className="form-control new-page-input"
+                                    autoFocus
+                                    onKeyDown={event => {
+                                        inputKeyDown(event);
+                                    }}
+                                    ref={inputField}
+                                    type="text"
+                                />
+                            </li>
+                        </ul>
+                    )}
+                </>
             ) : (
                 <>
                     <span

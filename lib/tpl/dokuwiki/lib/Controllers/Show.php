@@ -22,14 +22,16 @@ class Show extends Controller
 		global $ID;
 		parent::__construct($site);
 		global $INFO;
+		global $USERINFO;
 
 
 		$pageTree = Page::getTree($ID, false, "bibel,system");
 		$namespaces = Breadcrumbs::get_namespace($ID);
+		$breadcrumps = Breadcrumbs::get($ID);
 
 
 		//$this->site->add_data("content", $content);
-		$this->site->add_data("namespaces", $namespaces);
+		$this->site->add_data("breadcrumbs", $breadcrumps);
 		$this->site->add_data('site', [
 			"tags" => Tag::findAll(),
 			"categories" => Category::findAll(),
@@ -37,13 +39,14 @@ class Show extends Controller
 			"bible" => ["books" => \dokuwiki\plugin\bible\Book::findAll($conf['lang']), "info" => \dokuwiki\plugin\bible\Bible::info($conf['lang'])]
 		]);
 		$this->site->add_data("user", [
-			'hash' => md5($INFO['userinfo']['mail']),
-			'name' => $INFO['user'],
-			'fullname' => $INFO['userinfo']['name'],
-			'email' => $INFO['userinfo']['mail'],
+			'hash' => md5($USERINFO['mail']),
+			'name' => $USERINFO['name'],
+			'fullname' => $USERINFO['name'],
+			'email' => $USERINFO['name'],
 			'acl' => auth_quickaclcheck($ID)
 		]);
 		$this->site->add_data("page", Page::find($ID));
 		$this->site->add_data("tree", $pageTree);
 	}
+
 }

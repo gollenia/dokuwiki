@@ -4,7 +4,7 @@ $btn-font-size: 0.8125rem;
 $btn-font-size-sm: 0.75rem;
 $btn-font-weight: 500;
 $btn-border-radius: 10px;
-$btn-border-width: 2px;
+$btn-border-width: 1px;
 $border-radius: 5px;
 $border-radius-sm: 5px;
 $border-radius-lg: 5px;
@@ -17,15 +17,18 @@ $min-contrast-ratio: 3;
 $modal-header-border-width: 0px;
 $modal-footer-border-width: 0px;
 $modal-content-border-radius: 5px;
+$bs-breadcrumb-divider: '>';
 
 $primary: #0168ff;
 $secondary: #575e71;
-$success: #007a4d;
-$info: #0045b6;
+$success: #059650;
+$info: #3d83f6;
 $warning: #db9e43;
 $danger: #d31510;
-$dark: #666666;
-$light: #f7f7f9;
+$dark: #9aa1ad;
+$light: #f9fafb;
+$white: #ffffff;
+$black: #0c111f;
 
 .object-contain {
     object-fit: contain;
@@ -38,9 +41,15 @@ $light: #f7f7f9;
 @import '~bootstrap/scss/bootstrap';
 
 .sidebar {
-    width: 280px;
-    top: 0;
-    background-color: #e9ecef;
+    width: 300px;
+    top: 70px;
+    background-color: #f9fafb;
+    border-right: 1px solid #e1e3e8;
+    transition: all 300ms;
+
+    &.hidden {
+        left: -300px;
+    }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400&display=swap');
@@ -58,12 +67,24 @@ $light: #f7f7f9;
 
 .bg-purple {
     background-color: #e8daff;
-    color: #491d8b;
+    color: #632dba;
+    border: 1px solid #dbd4fe;
 }
 
 .bg-blue {
-    background-color: #d6e8ff;
-    color: #0045b6;
+    background-color: #f7fbff;
+    color: #0228a5;
+    border: 1px solid #bbd9fe;
+}
+
+.breadcrumb-item {
+    a {
+        text-decoration: none;
+    }
+
+    &.active a {
+        color: #394549;
+    }
 }
 
 @import './components/combobox';
@@ -78,7 +99,7 @@ $light: #f7f7f9;
 @import './components/tree';
 
 body {
-    background: #f3f5f7;
+    background: #f9fafb;
 }
 
 .btn-sm {
@@ -98,6 +119,10 @@ body {
         line-height: 0.3;
         margin-right: 5px;
         margin-left: -5px;
+
+        &.no-margin {
+            margin: 0;
+        }
     }
 }
 
@@ -138,16 +163,15 @@ body {
 
 main {
     margin-top: 70px;
-    margin-left: 280px;
 }
 
 .navbar {
     z-index: 99;
     top: 0;
-    left: 280px;
+    left: 0;
     right: 0;
     height: 70px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e1e3e8;
     background: #f1f5f8;
     font-size: 1rem;
 
@@ -155,6 +179,13 @@ main {
         margin-top: 15px;
         border-radius: 0;
     }
+}
+
+.inspector-toggle {
+    padding: 0;
+    height: 100%;
+    display: grid;
+    place-content: center;
 }
 
 .tag {
@@ -177,27 +208,12 @@ main {
     }
 }
 
-.edit-wrapper {
-    width: calc(100% - 400px);
-}
-
 .text-xs {
     font-size: 0.75rem;
 }
 
-.profile {
-    &::after {
-        display: none;
-    }
-    border-radius: 999px;
-    background: #c3c5c8;
-    height: 33px;
-    width: 33px;
-    padding: 0;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    display: grid;
-    place-items: center;
+.nav-item a {
+    align-items: center;
 }
 
 .search-input {
@@ -228,11 +244,11 @@ main {
 }
 
 .lang-select {
-    background: rgba(0, 0, 0, 0.05);
+    background: transparent;
     padding: 5px 11px;
     border-radius: 5px;
-    border: 2px solid #ccc;
-    color: #333;
+    border: 1px solid #ccc;
+    color: var(--black);
 
     strong {
         flex: 1;
@@ -288,9 +304,13 @@ input[type='color'] {
 
 .btn-saved,
 .btn-saved:hover {
-    background-color: #4cb9a3;
-    border-color: #4cb9a3;
-    color: #fff;
+    background-color: #f2faf6;
+    border: 1px solid #059650;
+    color: #111726;
+
+    i {
+        color: #059650;
+    }
 }
 
 .dropdown-item {

@@ -28,7 +28,7 @@ class Page
 	public string $category = "";
 	public string $audience = "";
 	public $tags = [];
-	public array $bibleref;
+	public array $bibleref = [];
 	
 	// Attachments
 	public string $icon = "";
@@ -69,9 +69,8 @@ class Page
 		$this->exclude = Meta::get($id, 'excludeFromIndex', false);
 		$this->locked = Meta::get($id, 'locked', false);
 
-		if (class_exists("dokuwiki\\plugin\\bible\\Article")) {
-			$this->bibleref = \dokuwiki\plugin\bible\Article::hasBiblerefs($id);
-		}
+		$this->bibleref = class_exists("dokuwiki\\plugin\\bible\\Article") ? \dokuwiki\plugin\bible\Article::hasBiblerefs($id) : [];
+		
 
 		$this->files = File::findAll($id);
 

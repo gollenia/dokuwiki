@@ -17,6 +17,8 @@ type InitialStateType = {
     status: Status;
     mediamanager: 'editor' | 'inspector' | '';
     filemanager: boolean;
+    showInspector: boolean;
+    showFileTree: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -37,6 +39,8 @@ const initialState: InitialStateType = {
     status: 'UNCHANGED',
     mediamanager: '',
     filemanager: false,
+    showInspector: true,
+    showFileTree: true,
 };
 
 type Action =
@@ -45,7 +49,7 @@ type Action =
     | AttachmentAction
     | BibleRefAction
     | { type: 'SET_ERROR' | 'SET_LANG'; payload: string }
-    | { type: 'SHOW_FILEMANAGER'; payload: boolean }
+    | { type: 'SHOW_FILEMANAGER' | 'SHOW_INSPECTOR' | 'SHOW_FILETREE'; payload: boolean }
     | { type: 'SHOW_MEDIAMANAGER'; payload: 'editor' | 'inspector' | '' }
     | { type: 'SET_STATUS'; payload: Status };
 
@@ -119,6 +123,10 @@ const StateProvider: React.FC<ProviderProps> = props => {
                 return { ...state, mediamanager: action.payload };
             case 'SHOW_FILEMANAGER':
                 return { ...state, filemanager: action.payload };
+            case 'SHOW_INSPECTOR':
+                return { ...state, showInspector: action.payload };
+            case 'SHOW_FILETREE':
+                return { ...state, showFileTree: action.payload };
             default:
                 return state;
         }
@@ -128,4 +136,4 @@ const StateProvider: React.FC<ProviderProps> = props => {
     return <Provider value={{ state, dispatch }}>{props.children}</Provider>;
 };
 
-export { store, StateProvider, getState, Status };
+export { getState, StateProvider, Status, store };

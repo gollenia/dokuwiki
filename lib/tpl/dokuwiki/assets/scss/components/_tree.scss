@@ -34,6 +34,7 @@
     color: #fff;
     border-radius: 99px;
     margin-left: auto;
+    transition: all 0.2s ease-in-out;
 }
 .tree .add-page:hover {
     transform: scale(1.1);
@@ -74,6 +75,7 @@
     margin-right: 0.35rem;
     display: grid;
     aspect-ratio: 1/1;
+    color: #949ca8;
 }
 .tree li {
     padding: 0.15rem 0.25rem;
@@ -99,19 +101,23 @@
     transform: rotate(90deg);
 }
 .tree li.active > span {
-    background: var(--bs-primary);
+    background: #eff6ff;
     border-radius: 0.25rem;
-    border: 2px solid var(--bs-primary);
-    color: white;
+    border: 1px solid var(--bs-primary);
+    color: var(--black);
     padding: 0 0.25rem;
 
-    a {
-        color: white;
+    > a {
+        color: var(--black);
+    }
+
+    > .icon {
+        color: var(--bs-primary);
     }
 }
 
 .tree li > span:hover {
-    background: #d9dcdf;
+    background: #eff6ff;
 }
 
 .drag-ok {
