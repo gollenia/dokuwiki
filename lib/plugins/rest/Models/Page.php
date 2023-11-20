@@ -210,7 +210,7 @@ class Page
 
 		switch ($key) {
 			case "id":
-				$data = is_array($value) ? $value : [$value];
+				$data = explode(';', $value);
 				break;
 			case "namespace";
 				global $conf;
