@@ -2,6 +2,7 @@ import { EditorView } from 'codemirror';
 import React, { useState } from 'react';
 import BibleVerse from '../Dialogs/BibleVerse';
 import Box from '../Dialogs/Box';
+import ExternalLink from '../Dialogs/ExternalLink';
 import LinkPicker, { Link } from '../Dialogs/LinkPicker';
 import YouTube from '../Dialogs/YouTube';
 
@@ -17,6 +18,7 @@ const ToolBar = (props: Props) => {
     const [box, setBox] = useState<boolean>(false);
     const [bible, setBible] = useState<boolean>(false);
     const [selection, setSelection] = useState<string>('');
+    const [externalLink, setExternalLink] = useState<boolean>(false);
 
     const wrapSelection = (wrapper: string, wrapperEnd: string | false = false) => {
         if (!wrapperEnd) wrapperEnd = wrapper;
@@ -149,7 +151,12 @@ const ToolBar = (props: Props) => {
                     </i>
                     <span>Interner Link</span>
                 </button>
-                <button>
+                <button
+                    onClick={() => {
+                        console.log('externalLink', externalLink);
+                        setExternalLink(true);
+                    }}
+                >
                     <i className="material-symbols-outlined">public</i>
                     <span>Externer Link</span>
                 </button>
@@ -248,6 +255,13 @@ const ToolBar = (props: Props) => {
                 onChange={bibleRef => {
                     insertAtSelection(bibleRef);
                 }}
+            />
+            <ExternalLink
+                onChange={link => {
+                    insertAtSelection(link);
+                }}
+                setOpen={setExternalLink}
+                open={externalLink}
             />
         </>
     );
